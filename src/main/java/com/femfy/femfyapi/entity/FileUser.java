@@ -1,6 +1,5 @@
 package com.femfy.femfyapi.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,21 +11,18 @@ import lombok.Data;
 @Data
 @Entity
 
-@Table(name="usuario")
-public class User {
+@Table(name="fileuser")
+public class FileUser {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	
-	private String firstName;
-	private String lastName;
-	private Integer age;
-	private String phone;
-	@Column(name="mailAddress",unique = true, nullable = false)
-	private String email;
-	
+	private Long idUser;
+	private String fileName;
+	private String fileExt;
 
-	public User() {
+
+	public FileUser() {
 		
 	}
 }
