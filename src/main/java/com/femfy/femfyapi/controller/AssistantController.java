@@ -23,8 +23,15 @@ public class AssistantController {
         String responseMessage = chatgptService.sendMessage(message);
         log.info("response is: {}", responseMessage);
 
-        return ResponseDTO.success(responseMessage);
-
+        if (responseMessage.contains("error") || responseMessage.contains("Error")) {
+            // Si el mensaje de respuesta contiene "error", devolver una respuesta de fallo
+            return ResponseDTO.fail(responseMessage);
+        } else {
+            // En otros casos, devolver una respuesta de éxito
+            return ResponseDTO.success(responseMessage);
+        }
     }
+
+
 
 }
