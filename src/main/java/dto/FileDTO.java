@@ -7,7 +7,7 @@ import lombok.Data;
 public class FileDTO {
 	@Schema(description = "ID del USUARIO", example = "2")
 	Long idUser;
-	@Schema(description = "Nombre del USUARIO", example = "archivos de prueba")
+	@Schema(description = "Nombre del Documento", example = "archivos de prueba")
 	String fileName;
 	@Schema(description = "Archivo que se quiere trabajar, en formato base64", example = "UHJ1ZWJhIC0gSE9MQSBNVU5ETw0K")
 	String fileBase64;
