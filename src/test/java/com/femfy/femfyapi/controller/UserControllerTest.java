@@ -1,6 +1,8 @@
 package com.femfy.femfyapi.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.femfy.femfyapi.entity.User;
+
+import dto.UserDTO;
 
 @SpringBootTest
 @WebAppConfiguration
@@ -34,11 +37,33 @@ class UserControllerTest {
 	}
 
 	@Test
-	void saveUpdate() {
+	void saveUser() {
 		try {
-			User user = builduser();
+			UserDTO user = builduser();
 			
-			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL+"/createUser")
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(MapToJson(user))).andReturn();
+			
+			assertEquals(201, mockMvcResult.getResponse().getStatus());
+			
+			getUsers();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void updateUser() {
+		try {
+			UserDTO user = builduser();
+			user.setIdUser(1L);
+			user.setUserName("MariaArg");
+			
+			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL+"/updateUser")
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(MapToJson(user))).andReturn();
@@ -50,15 +75,15 @@ class UserControllerTest {
 			e.printStackTrace();
 		}
 	}
-	
 
 
 	@Test
 	void getUsers() {
 		try {
-			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL)
+			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/getUsers")
 					.accept(MediaType.APPLICATION_JSON)).andReturn();
 			assertEquals(200, mockMvcResult.getResponse().getStatus());
+			System.out.println("Usuarios = " + mockMvcResult.getResponse().getContentAsString());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -71,23 +96,20 @@ class UserControllerTest {
 		return mapper.writeValueAsString(object);
 	}
 	
-	private User builduser() {
-		/*User user=User.builder()
-				.age(20)
-				.firstName("pepe")
-				.lastName("lopez")
-				.gender("M")
-				.phone("123456789")
-				.email("pi@gmail.com")
-				.build();*/
-		User user= new User();
-		user.setAge(20);
-		user.setEmail("peperr@gmail.com");
-		user.setFirstName("pepe");
-		//user.setGender("Masculino");
-		user.setLastName("lopez");
-		user.setPhone("123456789");
-		return user;
+	private UserDTO builduser() {
+
+		UserDTO userDTO = new UserDTO();
+
+		userDTO.setBirthdate(new Date());
+		userDTO.setFirstName("Maria");
+		userDTO.setLastName("Argento");
+		userDTO.setPhone("1122334455");
+		userDTO.setEmail("femfy2023@gmail.com");
+		userDTO.setIsSuscriptor(true);
+		userDTO.setPassword("pass1234");
+		userDTO.setUserName("MariaArgento2023");
+
+		return userDTO;
 	}
 
 }
