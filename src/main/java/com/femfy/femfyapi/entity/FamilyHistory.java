@@ -25,7 +25,7 @@ public class FamilyHistory {
     private boolean menopausia_temprana;
 
     public FamilyHistory (){
-        
+
     }
 
 
