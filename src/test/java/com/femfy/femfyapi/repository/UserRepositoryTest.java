@@ -25,7 +25,7 @@ class UserRepositoryTest {
 	@BeforeEach
 	public void setUp() throws Exception {
 		User user= new User();
-		user.setAge(20);
+		/*user.setAge(20);*/
 		user.setEmail("peper2r@gmail.com");
 		user.setFirstName("pepe");
 		//user.setGender("Masculino");

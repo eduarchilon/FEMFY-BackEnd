@@ -16,7 +16,6 @@ public class FileUser {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	
 	private Long idUser;
 	private String fileName;
 	private String fileExt;

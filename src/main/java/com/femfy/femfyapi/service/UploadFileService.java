@@ -1,7 +1,7 @@
 package com.femfy.femfyapi.service;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+/*import java.io.File;*/
 import java.util.Base64;
 
 import org.springframework.stereotype.Service;
