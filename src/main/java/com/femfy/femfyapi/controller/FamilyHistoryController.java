@@ -2,6 +2,8 @@ package com.femfy.femfyapi.controller;
 
 import java.util.List;
 import java.util.Optional;
+
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,6 @@ import com.femfy.femfyapi.service.IFamilyHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping(path = "api/v1/familyHistory", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,11 +37,7 @@ public class FamilyHistoryController {
     @GetMapping("/{historialId}")
     public ResponseEntity<FamilyHistory> getFamilyHistoryById(@PathVariable("historialId") Long historialId) {
         Optional<FamilyHistory> historialFamiliar = familyHistoryService.getFamilyHistory(historialId);
-        if (historialFamiliar.isPresent()) {
-            return ResponseEntity.ok(historialFamiliar.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return historialFamiliar.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Obtener todos los historiales familiares de un usuario")
@@ -92,7 +89,7 @@ public class FamilyHistoryController {
                     content = {@Content(mediaType = "application/json")})
     })
 
-    @DeleteMapping("/{historialId}")
+    @DeleteMapping("/delete/{historialId}")
     public ResponseEntity<Void> deleteFamilyHistory(@PathVariable("historialId") Long historialId) {
         familyHistoryService.deleteFamilyHistory(historialId);
         return ResponseEntity.noContent().build();
