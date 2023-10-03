@@ -13,15 +13,19 @@ import dto.TypeUserDTO;
 
 @Service
 public class TypeUserService implements ITypeUserService {
+
+    private TypeUserRepository typeUserRepository;
     @Autowired
-    TypeUserRepository typeUserRepository;
+    public TypeUserService(TypeUserRepository typeUserRepository) {
+        this.typeUserRepository = typeUserRepository;
+    }
 
     @Override
     public TypeUserDTO saveTypeUser(TypeUserDTO typeUserDTO) {
         try {
             TypeUser typeUser = new TypeUser();
             typeUser.setDescription(typeUserDTO.getDescription());
-            typeUserRepository.save(typeUser);
+            this.typeUserRepository.save(typeUser);
         } catch (Exception e) {
             System.out.print("NO SE LOGRA HACER EL MAPEO");
             // TODO: handle exception
@@ -35,7 +39,7 @@ public class TypeUserService implements ITypeUserService {
             TypeUser typeUser = new TypeUser();
             typeUser.setId(typeUserDTO.getIdTypeUser());
             typeUser.setDescription(typeUserDTO.getDescription());
-            typeUserRepository.save(typeUser);
+            this.typeUserRepository.save(typeUser);
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -46,7 +50,7 @@ public class TypeUserService implements ITypeUserService {
     public String deleteTypeUser(Long idTypeUser) {
         String responseDelete = "";
         try {
-            typeUserRepository.deleteById(idTypeUser);
+            this.typeUserRepository.deleteById(idTypeUser);
             responseDelete = "OK";
             return responseDelete;
         } catch (Exception e) {
@@ -62,7 +66,7 @@ public class TypeUserService implements ITypeUserService {
         TypeUser typeUser = new TypeUser();
         TypeUserDTO typeUserDTO = new TypeUserDTO();
         try {
-            typeUser = typeUserRepository.findById(idTypeUser).get();
+            typeUser = this.typeUserRepository.findById(idTypeUser).get();
             typeUserDTO.setIdTypeUser(typeUser.getId());
             typeUserDTO.setDescription(typeUser.getDescription());
             return typeUserDTO;
@@ -76,7 +80,7 @@ public class TypeUserService implements ITypeUserService {
     public List<TypeUserDTO> getTypeUsers() {
         List<TypeUserDTO> typeUserList = new ArrayList<>();
         List<TypeUser> typeUserListdb = new ArrayList<>();
-        typeUserListdb = typeUserRepository.findAll();
+        typeUserListdb = this.typeUserRepository.findAll();
 
         for (TypeUser typeUser : typeUserListdb) {
             TypeUserDTO dto = new TypeUserDTO();

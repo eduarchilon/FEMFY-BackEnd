@@ -25,9 +25,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping(path = "api/v1/typeuser", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TypeUserController {
-
-    @Autowired
     private TypeUserService typeUserService;
+    @Autowired
+    public TypeUserController(TypeUserService typeUserService) {
+        this.typeUserService = typeUserService;
+    }
 
     @Operation(summary = "Obtener un tipo de usuario por su ID")
     @ApiResponses(value = {
@@ -42,7 +44,7 @@ public class TypeUserController {
     })
     @GetMapping("/{typeUserId}")
     public ResponseEntity<TypeUserDTO> getTypeUserById(@PathVariable("typeUserId") Long typeUserId) {
-        TypeUserDTO typeUser = typeUserService.getTypeUser(typeUserId);
+        TypeUserDTO typeUser = this.typeUserService.getTypeUser(typeUserId);
         if (typeUser.getIdTypeUser() != null) {
             return new ResponseEntity<>(typeUser, HttpStatus.OK);
         } else {
@@ -63,7 +65,7 @@ public class TypeUserController {
     })
     @GetMapping("/getTypeUsers")
     public ResponseEntity<List<TypeUserDTO>> getTypeUsers() {
-        List<TypeUserDTO> typeUsers = typeUserService.getTypeUsers();
+        List<TypeUserDTO> typeUsers = this.typeUserService.getTypeUsers();
         if (!typeUsers.isEmpty()) {
             return new ResponseEntity<>(typeUsers, HttpStatus.OK);
         } else {
@@ -82,7 +84,7 @@ public class TypeUserController {
     })
     @PostMapping("/createTypeUser")
     public ResponseEntity<TypeUserDTO> saveTypeUser(@RequestBody TypeUserDTO typeUserDTO) {
-        typeUserDTO = typeUserService.saveTypeUser(typeUserDTO);
+        typeUserDTO = this.typeUserService.saveTypeUser(typeUserDTO);
         return new ResponseEntity<>(typeUserDTO, HttpStatus.CREATED);
     }
 
@@ -99,7 +101,7 @@ public class TypeUserController {
     })
     @PostMapping("/updateTypeUser")
     public ResponseEntity<TypeUserDTO> updateTypeUser(@RequestBody TypeUserDTO typeUserDTO) {
-        typeUserDTO = typeUserService.updateTypeUser(typeUserDTO);
+        typeUserDTO = this.typeUserService.updateTypeUser(typeUserDTO);
         return new ResponseEntity<>(typeUserDTO, HttpStatus.OK);
     }
 
@@ -116,7 +118,7 @@ public class TypeUserController {
     })
     @DeleteMapping("/delete/{typeUserId}")
     public ResponseEntity<String> deleteTypeUser(@PathVariable("typeUserId") Long typeUserId) {
-        String responseDelete = typeUserService.deleteTypeUser(typeUserId);
+        String responseDelete = this.typeUserService.deleteTypeUser(typeUserId);
         if (responseDelete.equalsIgnoreCase("OK")) {
             return new ResponseEntity<>("TypeUser delete OK", HttpStatus.OK);
         } else {
