@@ -1,17 +1,17 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.entity.FamilyHistory;
+import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IFamilyHistoryService {
 
-    List<FamilyHistory> getFamilyHistories();
+    List<QuestionsUserFamilyHistory> getFamilyHistories();
 
-    Optional<FamilyHistory> getFamilyHistory(Long id);
+    Optional<QuestionsUserFamilyHistory> getFamilyHistory(Long id);
 
-    FamilyHistory saveOrUpdateFamilyHistory(FamilyHistory familyHistory);
+    QuestionsUserFamilyHistory saveOrUpdateFamilyHistory(QuestionsUserFamilyHistory questionsUserFamilyHistory);
 
     void deleteFamilyHistory(Long id);
 }

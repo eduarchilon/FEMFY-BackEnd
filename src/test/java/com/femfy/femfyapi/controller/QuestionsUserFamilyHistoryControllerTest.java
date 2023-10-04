@@ -1,6 +1,6 @@
 package com.femfy.femfyapi.controller;
 
-import com.femfy.femfyapi.entity.FamilyHistory;
+import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
 import com.femfy.femfyapi.service.IFamilyHistoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(FamilyHistoryController.class)
-public class FamilyHistoryControllerTest {
+public class QuestionsUserFamilyHistoryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,11 +36,11 @@ public class FamilyHistoryControllerTest {
     @Test
     public void testGetFamilyHistoryById() throws Exception {
         Long historialId = 1L;
-        FamilyHistory familyHistory = new FamilyHistory();
-        familyHistory.setId(historialId);
-        when(familyHistoryService.getFamilyHistory(historialId)).thenReturn(Optional.of(familyHistory));
+        QuestionsUserFamilyHistory questionsUserFamilyHistory = new QuestionsUserFamilyHistory();
+        questionsUserFamilyHistory.setId(historialId);
+        when(familyHistoryService.getFamilyHistory(historialId)).thenReturn(Optional.of(questionsUserFamilyHistory));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/familyHistory/{historialId}", historialId)
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/questionsUserFamilyHistory/{historialId}", historialId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(historialId))
@@ -51,16 +51,16 @@ public class FamilyHistoryControllerTest {
 
     @Test
     public void testGetAllFamilyHistories() throws Exception {
-        List<FamilyHistory> familyHistories = new ArrayList<>();
-        FamilyHistory familyHistory1 = new FamilyHistory();
-        familyHistory1.setId(1L);
-        familyHistories.add(familyHistory1);
-        FamilyHistory familyHistory2 = new FamilyHistory();
-        familyHistory2.setId(2L);
-        familyHistories.add(familyHistory2);
+        List<QuestionsUserFamilyHistory> familyHistories = new ArrayList<>();
+        QuestionsUserFamilyHistory questionsUserFamilyHistory1 = new QuestionsUserFamilyHistory();
+        questionsUserFamilyHistory1.setId(1L);
+        familyHistories.add(questionsUserFamilyHistory1);
+        QuestionsUserFamilyHistory questionsUserFamilyHistory2 = new QuestionsUserFamilyHistory();
+        questionsUserFamilyHistory2.setId(2L);
+        familyHistories.add(questionsUserFamilyHistory2);
         when(familyHistoryService.getFamilyHistories()).thenReturn(familyHistories);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/familyHistory")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/questionsUserFamilyHistory")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(2))
@@ -71,18 +71,18 @@ public class FamilyHistoryControllerTest {
 
     @Test
     public void testSaveOrUpdateFamilyHistory() throws Exception {
-        FamilyHistory familyHistory = new FamilyHistory();
-        familyHistory.setId(1L);
-        when(familyHistoryService.saveOrUpdateFamilyHistory(any(FamilyHistory.class))).thenReturn(familyHistory);
+        QuestionsUserFamilyHistory questionsUserFamilyHistory = new QuestionsUserFamilyHistory();
+        questionsUserFamilyHistory.setId(1L);
+        when(familyHistoryService.saveOrUpdateFamilyHistory(any(QuestionsUserFamilyHistory.class))).thenReturn(questionsUserFamilyHistory);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/familyHistory")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/questionsUserFamilyHistory")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": 1, \"otherField\": \"value\"}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
                 .andDo(print());
 
-        verify(familyHistoryService, times(1)).saveOrUpdateFamilyHistory(any(FamilyHistory.class));
+        verify(familyHistoryService, times(1)).saveOrUpdateFamilyHistory(any(QuestionsUserFamilyHistory.class));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class FamilyHistoryControllerTest {
         Long historialId = 1L;
         doNothing().when(familyHistoryService).deleteFamilyHistory(historialId);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/familyHistory/delete/{historialId}", historialId)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/questionsUserFamilyHistory/delete/{historialId}", historialId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent())
                 .andDo(print());

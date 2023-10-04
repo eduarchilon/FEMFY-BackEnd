@@ -1,9 +1,9 @@
 package com.femfy.femfyapi.service;
 
+import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.femfy.femfyapi.entity.FamilyHistory;
 import com.femfy.femfyapi.repository.FamilyHistoryRepository;
 
 import java.util.List;
@@ -16,19 +16,19 @@ public class FamilyHistoryService implements IFamilyHistoryService {
     private FamilyHistoryRepository familyHistoryRepository;
 
     @Override
-    public List<FamilyHistory> getFamilyHistories() {
+    public List<QuestionsUserFamilyHistory> getFamilyHistories() {
         return familyHistoryRepository.findAll();
     }
 
     @Override
-    public Optional<FamilyHistory> getFamilyHistory(Long id) {
+    public Optional<QuestionsUserFamilyHistory> getFamilyHistory(Long id) {
         return familyHistoryRepository.findById(id);
     }
 
     @Override
-    public FamilyHistory saveOrUpdateFamilyHistory(FamilyHistory familyHistory) {
-        familyHistoryRepository.save(familyHistory);
-        return familyHistory;
+    public QuestionsUserFamilyHistory saveOrUpdateFamilyHistory(QuestionsUserFamilyHistory questionsUserFamilyHistory) {
+        familyHistoryRepository.save(questionsUserFamilyHistory);
+        return questionsUserFamilyHistory;
     }
 
     @Override
