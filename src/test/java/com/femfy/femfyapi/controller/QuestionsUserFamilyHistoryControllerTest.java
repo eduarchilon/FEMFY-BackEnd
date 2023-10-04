@@ -1,7 +1,7 @@
 package com.femfy.femfyapi.controller;
 
 import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
-import com.femfy.femfyapi.service.IFamilyHistoryService;
+import com.femfy.femfyapi.service.IQuestionsUserFamilyHistoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -19,14 +19,14 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest(FamilyHistoryController.class)
+@WebMvcTest(QuestionsUserFamilyHistoryController.class)
 public class QuestionsUserFamilyHistoryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private IFamilyHistoryService familyHistoryService;
+    private IQuestionsUserFamilyHistoryService familyHistoryService;
 
     @BeforeEach
     public void setUp() {

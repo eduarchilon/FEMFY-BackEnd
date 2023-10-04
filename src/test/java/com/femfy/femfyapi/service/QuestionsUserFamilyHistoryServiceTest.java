@@ -1,7 +1,7 @@
 package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
-import com.femfy.femfyapi.repository.FamilyHistoryRepository;
+import com.femfy.femfyapi.repository.QuestionsUserFamilyHistoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,10 +16,10 @@ import static org.mockito.Mockito.*;
 public class QuestionsUserFamilyHistoryServiceTest {
 
     @InjectMocks
-    private FamilyHistoryService familyHistoryService;
+    private QuestionsUserFamilyHistoryService questionsUserFamilyHistoryService;
 
     @Mock
-    private FamilyHistoryRepository familyHistoryRepository;
+    private QuestionsUserFamilyHistoryRepository questionsUserFamilyHistoryRepository;
 
     @BeforeEach
     public void setUp() {
@@ -32,11 +32,11 @@ public class QuestionsUserFamilyHistoryServiceTest {
         QuestionsUserFamilyHistory history2 = new QuestionsUserFamilyHistory();
         List<QuestionsUserFamilyHistory> expectedHistories = Arrays.asList(history1, history2);
 
-        when(familyHistoryRepository.findAll()).thenReturn(expectedHistories);
+        when(questionsUserFamilyHistoryRepository.findAll()).thenReturn(expectedHistories);
 
-        List<QuestionsUserFamilyHistory> actualHistories = familyHistoryService.getFamilyHistories();
+        List<QuestionsUserFamilyHistory> actualHistories = questionsUserFamilyHistoryService.getFamilyHistories();
 
-        verify(familyHistoryRepository, times(1)).findAll();
+        verify(questionsUserFamilyHistoryRepository, times(1)).findAll();
         assertEquals(expectedHistories, actualHistories);
     }
 
@@ -47,11 +47,11 @@ public class QuestionsUserFamilyHistoryServiceTest {
         QuestionsUserFamilyHistory expectedHistory = new QuestionsUserFamilyHistory();
         expectedHistory.setId(id);
 
-        when(familyHistoryRepository.findById(id)).thenReturn(Optional.of(expectedHistory));
+        when(questionsUserFamilyHistoryRepository.findById(id)).thenReturn(Optional.of(expectedHistory));
 
-        Optional<QuestionsUserFamilyHistory> actualHistory = familyHistoryService.getFamilyHistory(id);
+        Optional<QuestionsUserFamilyHistory> actualHistory = questionsUserFamilyHistoryService.getFamilyHistory(id);
 
-        verify(familyHistoryRepository, times(1)).findById(id);
+        verify(questionsUserFamilyHistoryRepository, times(1)).findById(id);
         assertEquals(expectedHistory, actualHistory.orElse(null));
     }
 
@@ -62,11 +62,11 @@ public class QuestionsUserFamilyHistoryServiceTest {
         questionsUserFamilyHistory.setOvarianCancer(false);
         questionsUserFamilyHistory.setEndometriosis(true);
 
-        when(familyHistoryRepository.save(questionsUserFamilyHistory)).thenReturn(questionsUserFamilyHistory);
+        when(questionsUserFamilyHistoryRepository.save(questionsUserFamilyHistory)).thenReturn(questionsUserFamilyHistory);
 
-        QuestionsUserFamilyHistory savedQuestionsUserFamilyHistory = familyHistoryService.saveOrUpdateFamilyHistory(questionsUserFamilyHistory);
+        QuestionsUserFamilyHistory savedQuestionsUserFamilyHistory = questionsUserFamilyHistoryService.saveOrUpdateFamilyHistory(questionsUserFamilyHistory);
 
-        verify(familyHistoryRepository, times(1)).save(questionsUserFamilyHistory);
+        verify(questionsUserFamilyHistoryRepository, times(1)).save(questionsUserFamilyHistory);
         assertEquals(questionsUserFamilyHistory, savedQuestionsUserFamilyHistory);
     }
 
@@ -74,9 +74,9 @@ public class QuestionsUserFamilyHistoryServiceTest {
     public void testDeleteFamilyHistory() {
         Long id = 1L;
 
-        familyHistoryService.deleteFamilyHistory(id);
+        questionsUserFamilyHistoryService.deleteFamilyHistory(id);
 
-        verify(familyHistoryRepository, times(1)).deleteById(id);
+        verify(questionsUserFamilyHistoryRepository, times(1)).deleteById(id);
     }
 
 }

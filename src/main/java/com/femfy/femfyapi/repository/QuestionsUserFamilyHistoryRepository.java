@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
 
 @Repository
-public interface FamilyHistoryRepository extends JpaRepository<QuestionsUserFamilyHistory, Long> {
+public interface QuestionsUserFamilyHistoryRepository extends JpaRepository<QuestionsUserFamilyHistory, Long> {
 
 }

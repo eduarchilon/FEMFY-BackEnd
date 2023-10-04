@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.femfy.femfyapi.service.IFamilyHistoryService;
+import com.femfy.femfyapi.service.IQuestionsUserFamilyHistoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,10 +17,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping(path = "api/v1/questionsUserFamilyHistory", produces = MediaType.APPLICATION_JSON_VALUE)
-public class FamilyHistoryController {
+public class QuestionsUserFamilyHistoryController {
 
     @Autowired
-    private IFamilyHistoryService familyHistoryService;
+    private IQuestionsUserFamilyHistoryService familyHistoryService;
 
     @Operation(summary = "Obtener el historial familiar de un usuario por su ID")
     @ApiResponses(value = {
@@ -40,7 +40,7 @@ public class FamilyHistoryController {
         return historialFamiliar.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Obtener todos los historiales familiares de un usuario")
+    @Operation(summary = "Obtener todos los historiales familiares de los usuario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Respuesta OK",
                     content = {@Content(mediaType = "application/json")}),
