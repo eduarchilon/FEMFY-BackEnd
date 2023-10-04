@@ -40,6 +40,7 @@ public class CycleService implements ICycleService{
             CycleDTO cycleDTO = this.getCycleByIdUserAndDateBeging(cycle.getIdUser(), String.valueOf(cycle.getDateBeging()));
             cycle.setDateBeging(parseDate(cycleDTO.getDateBeging()));
             cycleDTO.setDateEnd(String.valueOf(parseDate(String.valueOf(cycle.getDateEnd()))));
+            cycle.setId(cycleDTO.getId());
             cycleRepository.save(cycle);
             return cycleDTO;
         }catch (Exception e){
@@ -74,11 +75,14 @@ public class CycleService implements ICycleService{
         CycleDTO cycleDTO = new CycleDTO();
 
         try{
+            System.out.println("Fecha String que llega" + dateBeging);
             Date dateSql = this.parseDate(dateBeging);
+            System.out.println("Fecha sql: "+dateSql);
             Cycle cycle =  cycleRepository.findByIdUserAndDateBeging(idUser, dateSql);
             cycleDTO.setDateBeging(String.valueOf(cycle.getDateBeging()));
             cycleDTO.setStatus(cycle.getStatus());
             cycleDTO.setIdUser(cycle.getIdUser());
+            cycleDTO.setId(cycle.getId());
 
         }catch (Exception e){
             throw new CustomException("Error al obtener el ciclo del usuario: " + e.getMessage());

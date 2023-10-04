@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class CycleDTO {
 
+    Long id;
     @Schema(description = "ID del USUARIO", example = "2")
     Long idUser;
     @Schema(description = "Fecha inicio del ciclo", example = "yyyy-MM-dd")
