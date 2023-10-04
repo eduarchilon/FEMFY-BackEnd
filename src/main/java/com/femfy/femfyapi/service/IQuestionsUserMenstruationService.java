@@ -1,17 +1,17 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
+import dto.QuestionsUserMenstruationDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IQuestionsUserMenstruationService {
 
-    List<QuestionsUserMenstruation> getQuestionsUserMenstruations();
+    List<QuestionsUserMenstruationDTO> getQuestionsUserMenstruations();
 
-    Optional<QuestionsUserMenstruation> getQuestionsUserMenstruation(Long id);
+    Optional<QuestionsUserMenstruationDTO> getQuestionsUserMenstruation(Long id);
 
-    QuestionsUserMenstruation saveOrUpdateQuestionsUserMenstruation(QuestionsUserMenstruation questionsUserMenstruation);
+    QuestionsUserMenstruationDTO saveOrUpdateQuestionsUserMenstruation(QuestionsUserMenstruationDTO questionsUserMenstruationDTO);
 
     void deleteQuestionsUserMenstruation(Long id);
 }

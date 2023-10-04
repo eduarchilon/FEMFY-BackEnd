@@ -1,12 +1,13 @@
 package com.femfy.femfyapi.controller;
 
-import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
+import dto.QuestionsUserMenstruationDTO;
 import com.femfy.femfyapi.service.IQuestionsUserMenstruationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,41 +15,69 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/questionsUserMenstruation", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/api/v1/questionsUserMenstruation")
 public class QuestionsUserMenstruationController {
 
+    private final IQuestionsUserMenstruationService questionsUserMenstruationService;
+
     @Autowired
-    private IQuestionsUserMenstruationService menstruationService;
-
-    @Operation(summary = "Obtener las respuestas básicas sobre menstruación de un usuario por su ID")
-    @ApiResponse(responseCode = "200", description = "Respuesta OK", content = {@Content(mediaType = "application/json")})
-    @GetMapping("/{id}")
-    public ResponseEntity<QuestionsUserMenstruation> getQuestionsUserMenstruationById(@PathVariable("id") Long id) {
-        Optional<QuestionsUserMenstruation> menstruation = menstruationService.getQuestionsUserMenstruation(id);
-        return menstruation.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public QuestionsUserMenstruationController(IQuestionsUserMenstruationService questionsUserMenstruationService) {
+        this.questionsUserMenstruationService = questionsUserMenstruationService;
     }
 
-    @Operation(summary = "Obtener todas las respuestas básicas sobre menstruación")
-    @ApiResponse(responseCode = "200", description = "Respuesta OK", content = {@Content(mediaType = "application/json")})
-    @GetMapping
-    public ResponseEntity<List<QuestionsUserMenstruation>> getAllQuestionsUserMenstruations() {
-        List<QuestionsUserMenstruation> menstruations = menstruationService.getQuestionsUserMenstruations();
-        return menstruations.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(menstruations);
+    @Operation(summary = "Obtener una respuesta básica sobre persona que menstrua por su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Pregunta sobre menstruación no encontrada",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @GetMapping("/{questionId}")
+    public ResponseEntity<QuestionsUserMenstruationDTO> getQuestionById(@PathVariable("questionId") Long questionId) {
+        Optional<QuestionsUserMenstruationDTO> question = questionsUserMenstruationService.getQuestionsUserMenstruation(questionId);
+        return question.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Crear o actualizar las respuestas básicas sobre menstruación")
-    @ApiResponse(responseCode = "200", description = "Respuesta OK", content = {@Content(mediaType = "application/json")})
-    @PostMapping
-    public ResponseEntity<QuestionsUserMenstruation> saveOrUpdateQuestionsUserMenstruation(@RequestBody QuestionsUserMenstruation menstruation) {
-        QuestionsUserMenstruation savedMenstruation = menstruationService.saveOrUpdateQuestionsUserMenstruation(menstruation);
-        return ResponseEntity.ok(savedMenstruation);
+    @Operation(summary = "Obtener todas las respuestas básicas sobre personas que menstruan")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+    })
+    @GetMapping("/getAllQuestions")
+    public ResponseEntity<List<QuestionsUserMenstruationDTO>> getAllQuestions() {
+        List<QuestionsUserMenstruationDTO> questions = questionsUserMenstruationService.getQuestionsUserMenstruations();
+        return ResponseEntity.ok(questions);
     }
 
-    @Operation(summary = "Eliminar las respuestas básicas sobre menstruación por su ID")
-    @ApiResponse(responseCode = "204", description = "Preguntas sobre menstruación eliminadas con éxito")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteQuestionsUserMenstruation(@PathVariable("id") Long id) {
-        menstruationService.deleteQuestionsUserMenstruation(id);
+    @Operation(summary = "Crear o actualizar una pregunta sobre menstruación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Pregunta sobre menstruación creada o actualizada",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+    })
+    @PostMapping("/createOrUpdateQuestion")
+    public ResponseEntity<QuestionsUserMenstruationDTO> createOrUpdateQuestion(@RequestBody QuestionsUserMenstruationDTO questionDTO) {
+        QuestionsUserMenstruationDTO savedQuestion = questionsUserMenstruationService.saveOrUpdateQuestionsUserMenstruation(questionDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestion);
+    }
+
+    @Operation(summary = "Eliminar una respuesta básica sobre persona que menstrua por su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Pregunta sobre menstruación eliminada"),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Pregunta sobre menstruación no encontrada",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @DeleteMapping("/delete/{questionId}")
+    public ResponseEntity<Void> deleteQuestion(@PathVariable("questionId") Long questionId) {
+        questionsUserMenstruationService.deleteQuestionsUserMenstruation(questionId);
         return ResponseEntity.noContent().build();
     }
 }
