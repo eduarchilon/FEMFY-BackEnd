@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class QuestionsUserFamilyHistoryRepositoryTest {
 
     @Autowired
-    private FamilyHistoryRepository familyHistoryRepository;
+    private QuestionsUserFamilyHistoryRepository questionsUserFamilyHistoryRepository;
 
     @BeforeEach
     public void setUp() {
@@ -25,7 +25,7 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
         questionsUserFamilyHistory.setSop(true);
         questionsUserFamilyHistory.setEarlyMenopause(false);
 
-        familyHistoryRepository.save(questionsUserFamilyHistory);
+        questionsUserFamilyHistoryRepository.save(questionsUserFamilyHistory);
     }
 
     @Test
@@ -33,10 +33,10 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
         // Inserta
         QuestionsUserFamilyHistory history = new QuestionsUserFamilyHistory();
         history.setBreastCancer(true);
-        familyHistoryRepository.save(history);
+        questionsUserFamilyHistoryRepository.save(history);
 
         // Busca
-        Optional<QuestionsUserFamilyHistory> foundFamilyHistory = familyHistoryRepository.findById(history.getId());
+        Optional<QuestionsUserFamilyHistory> foundFamilyHistory = questionsUserFamilyHistoryRepository.findById(history.getId());
 
         // Verifica
         assertThat(foundFamilyHistory).isPresent();
@@ -48,14 +48,14 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
         // Inserta
         QuestionsUserFamilyHistory history1 = new QuestionsUserFamilyHistory();
         history1.setBreastCancer(true);
-        familyHistoryRepository.save(history1);
+        questionsUserFamilyHistoryRepository.save(history1);
 
         QuestionsUserFamilyHistory history2 = new QuestionsUserFamilyHistory();
         history2.setBreastCancer(false);
-        familyHistoryRepository.save(history2);
+        questionsUserFamilyHistoryRepository.save(history2);
 
         // Obtiene
-        List<QuestionsUserFamilyHistory> allFamilyHistories = familyHistoryRepository.findAll();
+        List<QuestionsUserFamilyHistory> allFamilyHistories = questionsUserFamilyHistoryRepository.findAll();
 
         // Verifica
         assertThat(allFamilyHistories).hasSize(2);
@@ -66,7 +66,7 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
         // Crea
         QuestionsUserFamilyHistory history = new QuestionsUserFamilyHistory();
         history.setBreastCancer(true);
-        QuestionsUserFamilyHistory savedQuestionsUserFamilyHistory = familyHistoryRepository.save(history);
+        QuestionsUserFamilyHistory savedQuestionsUserFamilyHistory = questionsUserFamilyHistoryRepository.save(history);
 
         // Verifica
         assertThat(savedQuestionsUserFamilyHistory.getId()).isNotNull();
@@ -78,13 +78,13 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
         // Inserta
         QuestionsUserFamilyHistory questionsUserFamilyHistory = new QuestionsUserFamilyHistory();
         questionsUserFamilyHistory.setBreastCancer(true);
-        familyHistoryRepository.save(questionsUserFamilyHistory);
+        questionsUserFamilyHistoryRepository.save(questionsUserFamilyHistory);
 
         // Elimina
-        familyHistoryRepository.deleteById(questionsUserFamilyHistory.getId());
+        questionsUserFamilyHistoryRepository.deleteById(questionsUserFamilyHistory.getId());
 
         // Verifica
-        Optional<QuestionsUserFamilyHistory> deletedFamilyHistory = familyHistoryRepository.findById(questionsUserFamilyHistory.getId());
+        Optional<QuestionsUserFamilyHistory> deletedFamilyHistory = questionsUserFamilyHistoryRepository.findById(questionsUserFamilyHistory.getId());
         assertThat(deletedFamilyHistory).isNotPresent();
     }
 }
