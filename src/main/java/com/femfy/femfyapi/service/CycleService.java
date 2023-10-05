@@ -49,7 +49,7 @@ public class CycleService implements ICycleService{
     }
 
     @Override
-    public List<CycleDTO> getCycleHistory(Long idUser) {
+    public List<CycleDTO> getCycleHistory(Long idUser) throws CustomException {
         List<CycleDTO> dtoList = new ArrayList<>();
         List<Cycle> cycleList = new ArrayList<>();
         try {
@@ -65,7 +65,7 @@ public class CycleService implements ICycleService{
                 dtoList.add(dto);
             }
         }catch (Exception e) {
-
+            throw new CustomException("Error al obtener el historial de ciclos: " + e.getMessage());
         }
         return dtoList;
     }
@@ -75,9 +75,7 @@ public class CycleService implements ICycleService{
         CycleDTO cycleDTO = new CycleDTO();
 
         try{
-            System.out.println("Fecha String que llega" + dateBeging);
             Date dateSql = this.parseDate(dateBeging);
-            System.out.println("Fecha sql: "+dateSql);
             Cycle cycle =  cycleRepository.findByIdUserAndDateBeging(idUser, dateSql);
             cycleDTO.setDateBeging(String.valueOf(cycle.getDateBeging()));
             cycleDTO.setStatus(cycle.getStatus());

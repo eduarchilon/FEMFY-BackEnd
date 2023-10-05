@@ -79,13 +79,35 @@ public class CycleController {
 
     })
     @GetMapping("/getCycleHistory/{idUser}")
-    public ResponseEntity<List<CycleDTO>> getCycleHistory(@PathVariable(value = "idUser") Long idUser) {
-        List<CycleDTO> list = null;
+    public ResponseEntity<?> getCycleHistory(@PathVariable(value = "idUser") Long idUser) {
         try {
-            list = iCycleService.getCycleHistory(idUser);
+            List<CycleDTO> list = iCycleService.getCycleHistory(idUser);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(list, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @Operation(summary = "Devuelve el ciclos de la usuario")
+    @ApiResponses(value ={// -
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Unexpected system error",
+                    content = {@Content (mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
+                    content = {@Content (mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Usuario inexistente",
+                    content = {@Content (mediaType = "application/json")})
+
+    })
+    @GetMapping("/getCycle/{idUser}")
+    public ResponseEntity<?> getCycle(@PathVariable(value = "idUser") Long idUser, @RequestParam("dateBeging") String dateBeging ) {
+        try {
+            CycleDTO dto = iCycleService.getCycleByIdUserAndDateBeging(idUser, dateBeging);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
