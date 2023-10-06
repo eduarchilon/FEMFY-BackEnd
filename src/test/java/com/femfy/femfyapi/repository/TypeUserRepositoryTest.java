@@ -15,12 +15,6 @@ public class TypeUserRepositoryTest {
     @Autowired
     private TypeUserRepository typeUserRepository;
 
-    private TypeUser createAndSaveTypeUser(String description) {
-        TypeUser typeUser = new TypeUser();
-        typeUser.setDescription(description);
-        return typeUserRepository.save(typeUser);
-    }
-
     @BeforeEach
     public void setUp() {
         createAndSaveTypeUser("Menopausica");
@@ -73,5 +67,11 @@ public class TypeUserRepositoryTest {
         // Verifica
         Optional<TypeUser> deletedTypeUser = typeUserRepository.findById(typeUser.getId());
         assertThat(deletedTypeUser).isNotPresent();
+    }
+
+    private TypeUser createAndSaveTypeUser(String description) {
+        TypeUser typeUser = new TypeUser();
+        typeUser.setDescription(description);
+        return typeUserRepository.save(typeUser);
     }
 }
