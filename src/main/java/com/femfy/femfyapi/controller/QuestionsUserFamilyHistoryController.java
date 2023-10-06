@@ -3,24 +3,24 @@ package com.femfy.femfyapi.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.femfy.femfyapi.entity.FamilyHistory;
-import com.femfy.femfyapi.service.IFamilyHistoryService;
+import com.femfy.femfyapi.service.IQuestionsUserFamilyHistoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
-@RequestMapping(path = "api/v1/familyHistory", produces = MediaType.APPLICATION_JSON_VALUE)
-public class FamilyHistoryController {
+@RequestMapping(path = "api/v1/questionsUserFamilyHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+public class QuestionsUserFamilyHistoryController {
 
     @Autowired
-    private IFamilyHistoryService familyHistoryService;
+    private IQuestionsUserFamilyHistoryService familyHistoryService;
 
     @Operation(summary = "Obtener el historial familiar de un usuario por su ID")
     @ApiResponses(value = {
@@ -35,12 +35,12 @@ public class FamilyHistoryController {
     })
 
     @GetMapping("/{historialId}")
-    public ResponseEntity<FamilyHistory> getFamilyHistoryById(@PathVariable("historialId") Long historialId) {
-        Optional<FamilyHistory> historialFamiliar = familyHistoryService.getFamilyHistory(historialId);
+    public ResponseEntity<QuestionsUserFamilyHistory> getFamilyHistoryById(@PathVariable("historialId") Long historialId) {
+        Optional<QuestionsUserFamilyHistory> historialFamiliar = familyHistoryService.getFamilyHistory(historialId);
         return historialFamiliar.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Obtener todos los historiales familiares de un usuario")
+    @Operation(summary = "Obtener todos los historiales familiares de los usuario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Respuesta OK",
                     content = {@Content(mediaType = "application/json")}),
@@ -53,8 +53,8 @@ public class FamilyHistoryController {
     })
 
     @GetMapping
-    public ResponseEntity<List<FamilyHistory>> getAllFamilyHistories() {
-        List<FamilyHistory> historialesFamiliares = familyHistoryService.getFamilyHistories();
+    public ResponseEntity<List<QuestionsUserFamilyHistory>> getAllFamilyHistories() {
+        List<QuestionsUserFamilyHistory> historialesFamiliares = familyHistoryService.getFamilyHistories();
         if (!historialesFamiliares.isEmpty()) {
             return ResponseEntity.ok(historialesFamiliares);
         } else {
@@ -75,8 +75,8 @@ public class FamilyHistoryController {
     })
 
     @PostMapping
-    public ResponseEntity<FamilyHistory> saveOrUpdateFamilyHistory(@RequestBody FamilyHistory historialFamiliar) {
-        FamilyHistory savedHistorialFamiliar = familyHistoryService.saveOrUpdateFamilyHistory(historialFamiliar);
+    public ResponseEntity<QuestionsUserFamilyHistory> saveOrUpdateFamilyHistory(@RequestBody QuestionsUserFamilyHistory historialFamiliar) {
+        QuestionsUserFamilyHistory savedHistorialFamiliar = familyHistoryService.saveOrUpdateFamilyHistory(historialFamiliar);
         return ResponseEntity.ok(savedHistorialFamiliar);
     }
 
