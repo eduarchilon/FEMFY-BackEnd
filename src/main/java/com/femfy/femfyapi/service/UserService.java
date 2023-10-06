@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.femfy.femfyapi.entity.TypeUser;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.repository.UserRepository;
 
@@ -22,7 +23,10 @@ public class UserService implements IUserService{
 	@Override
 	public UserDTO saveUser(UserDTO userDTO) {
 		try{
+			TypeUser typeUser = new TypeUser();
+			typeUser.setId(userDTO.getTypeUserID());
 			User user = new User();
+			user.setTypeUser(typeUser);
 			user.setFirstName(userDTO.getFirstName());
 			user.setLastName(userDTO.getLastName());
 			user.setBirthdate(userDTO.getBirthdate());
@@ -43,8 +47,12 @@ public class UserService implements IUserService{
 	@Override
 	public UserDTO updateUser(UserDTO userDTO) {
 		try{
+			TypeUser typeUser = new TypeUser();
+			typeUser.setId(userDTO.getTypeUserID());
+			
 			User user = new User();
 			user.setId(userDTO.getIdUser());
+			user.setTypeUser(typeUser);
 			user.setFirstName(userDTO.getFirstName());
 			user.setLastName(userDTO.getLastName());
 			user.setBirthdate(userDTO.getBirthdate());
@@ -86,6 +94,7 @@ public class UserService implements IUserService{
 			user = userRepository.findById(idUser).get();
 			if(!user.getEmail().isEmpty()){
 				userDTO.setIdUser(user.getId());
+				userDTO.setTypeUserID(user.getTypeUser().getId());
 				userDTO.setFirstName(user.getFirstName());
 				userDTO.setLastName(user.getLastName());
 				userDTO.setBirthdate(user.getBirthdate());
@@ -112,6 +121,7 @@ public class UserService implements IUserService{
 		for (User user : userListdb) {
 			UserDTO dto = new UserDTO();
 			dto.setIdUser(user.getId());
+			dto.setTypeUserID(user.getTypeUser().getId());
 			dto.setFirstName(user.getFirstName());
 			dto.setLastName(user.getLastName());
 			dto.setBirthdate(user.getBirthdate());

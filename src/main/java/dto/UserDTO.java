@@ -9,6 +9,8 @@ import lombok.Data;
 public class UserDTO {
 	@Schema(description = "ID del USUARIO", example = "2")
 	Long idUser;
+	@Schema(description = "ID tipo USUARIO", example = "2")
+	Long typeUserID;
 	@Schema(description = "Nombre del USUARIO", example = "Maria")
 	String firstName;
 	@Schema(description = "Apellido del USUARIO", example = "Argento")

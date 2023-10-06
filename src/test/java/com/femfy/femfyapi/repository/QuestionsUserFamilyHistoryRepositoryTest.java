@@ -45,6 +45,8 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
 
     @Test
     public void testFindAll() {
+        // Obtiene
+        List<QuestionsUserFamilyHistory> pepino = questionsUserFamilyHistoryRepository.findAll();
         // Inserta
         QuestionsUserFamilyHistory history1 = new QuestionsUserFamilyHistory();
         history1.setBreastCancer(true);

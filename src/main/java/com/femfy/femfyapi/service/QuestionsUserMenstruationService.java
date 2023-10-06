@@ -2,6 +2,7 @@ package com.femfy.femfyapi.service;
 
 import dto.QuestionsUserMenstruationDTO;
 import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
+import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.repository.QuestionsUserMenstruationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,10 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
     }
 
     private static QuestionsUserMenstruationDTO mapToDTO(QuestionsUserMenstruation menstruation) {
+    	
         QuestionsUserMenstruationDTO dto = new QuestionsUserMenstruationDTO();
         dto.setId(menstruation.getId());
+        dto.setUserId(menstruation.getUser().getId());
         dto.setLastTime((Date) menstruation.getLastTime());
         dto.setLastCycleDuration(menstruation.getLastCycleDuration());
         dto.setRegular(menstruation.getRegular());
@@ -59,8 +62,12 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
     }
 
     private static QuestionsUserMenstruation mapToEntity(QuestionsUserMenstruationDTO dto) {
-        QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();
+        User user = new User();
+        user.setId(dto.getUserId());
+    	
+    	QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();     
         menstruation.setId(dto.getId());
+        menstruation.setUser(user);
         menstruation.setLastTime(dto.getLastTime());
         menstruation.setLastCycleDuration(dto.getLastCycleDuration());
         menstruation.setRegular(dto.getRegular());

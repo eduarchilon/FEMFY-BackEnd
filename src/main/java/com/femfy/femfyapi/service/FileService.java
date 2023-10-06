@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.femfy.femfyapi.entity.FileUser;
+import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.repository.FileRepository;
 
 import dto.FileDTO;
@@ -20,8 +21,10 @@ public class FileService implements IFileService{
 	@Override
 	public FileDTO insertFile(FileDTO fileDTO) {
 		try {
+			User user = new User();
+			user.setId(fileDTO.getIdUser());
 			FileUser fileUser = new FileUser();
-			fileUser.setIdUser(fileDTO.getIdUser());
+			//fileUser.setUser(user);
 			fileUser.setFileExt(fileDTO.getFileExt());
 			fileUser.setFileName(fileDTO.getFileName());
 			fileRepository.save(fileUser);
@@ -54,7 +57,7 @@ public class FileService implements IFileService{
 			
 			for (FileUser fileUser : fileUsers) {
 				FileDTO dto = new FileDTO();
-				dto.setIdUser(fileUser.getIdUser());
+				//dto.setIdUser(fileUser.getUser().getId());
 				dto.setFileName(fileUser.getFileName());
 				dto.setFileExt(fileUser.getFileExt());
 				

@@ -7,6 +7,9 @@ import lombok.Data;
 public class QuestionsUserMenstruationDTO {
     @Schema(description = "ID de la respuesta básica sobre persona que menstrua", example = "1")
     private Long id;
+    
+    @Schema(description = "ID del usuario relacionado", example = "1")
+    private Long userId;
 
     @Schema(description = "Fecha de la última vez que menstruó", example = "2023-10-04")
     private java.sql.Date lastTime;
