@@ -60,7 +60,7 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
         List<QuestionsUserFamilyHistory> allFamilyHistories = questionsUserFamilyHistoryRepository.findAll();
 
         // Verifica
-        assertThat(allFamilyHistories).hasSize(2);
+        assertThat(allFamilyHistories).hasSize(3);
     }
 
     @Test

@@ -1,4 +1,4 @@
-/*package com.femfy.femfyapi.repository;
+package com.femfy.femfyapi.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,4 +49,4 @@ class UserRepositoryTest {
 	    assertThat(users).hasSize(1);
 	}
 
-}*/
+}
