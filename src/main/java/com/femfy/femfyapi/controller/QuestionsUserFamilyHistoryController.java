@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/questionsUserFamilyHistory", produces = MediaType.APPLICATION_JSON_VALUE)
 public class QuestionsUserFamilyHistoryController {
 
