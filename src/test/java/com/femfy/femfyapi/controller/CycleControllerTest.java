@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.femfy.femfyapi.entity.Cycle;
 import com.femfy.femfyapi.exception.CustomException;
 import com.femfy.femfyapi.service.CycleService;
 import com.femfy.femfyapi.service.ICycleService;
@@ -106,6 +107,70 @@ public class CycleControllerTest {
         when(cycleServiceMock.getCycleHistory(anyLong())).thenThrow(new CustomException("error"));
 
         mockMvc.perform(get("/api/v1/cycle/getCycleHistory/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("error"));
+    }
+
+    @Test()
+    void registerCycleEndTest() throws Exception {
+
+        when(cycleServiceMock.registerCycleEnd(any(Cycle.class))).thenReturn(dto);
+
+        mockMvc.perform(put("/api/v1/cycle/registerCycleEnd")
+                        .content( this.mapper.writeValueAsBytes(dto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.idUser").value(1))
+                .andExpect(jsonPath("$.dateBeging").value("2023-10-05"))
+                .andExpect(jsonPath("$.dateEnd").value("2023-10-09"))
+                .andExpect(jsonPath("$.status").value("Alegre"));
+    }
+
+    @Test()
+    void registerCycleEndExceptionTest() throws Exception {
+
+        when(cycleServiceMock.registerCycleEnd(any(Cycle.class))).thenThrow(new CustomException("error"));
+
+        mockMvc.perform(put("/api/v1/cycle/registerCycleEnd")
+                        .content( this.mapper.writeValueAsBytes(dto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("error"));
+    }
+
+    @Test()
+    void registerCycleStartTest() throws Exception {
+
+        when(cycleServiceMock.registerCycleStart(any(Cycle.class))).thenReturn(dto);
+
+        mockMvc.perform(post("/api/v1/cycle/registerCycleStart")
+                        .content( this.mapper.writeValueAsBytes(dto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.idUser").value(1))
+                .andExpect(jsonPath("$.dateBeging").value("2023-10-05"))
+                .andExpect(jsonPath("$.dateEnd").value("2023-10-09"))
+                .andExpect(jsonPath("$.status").value("Alegre"));
+    }
+
+    @Test()
+    void registerCycleStarExceptionTest() throws Exception {
+
+        when(cycleServiceMock.registerCycleStart(any(Cycle.class))).thenThrow(new CustomException("error"));
+
+        mockMvc.perform(post("/api/v1/cycle/registerCycleStart")
+                        .content( this.mapper.writeValueAsBytes(dto))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isInternalServerError())
