@@ -11,7 +11,7 @@ public interface ICalendarEventService {
 
     Optional<CalendarEventDTO> getCalendarEvent(Long id);
 
-    List<CalendarEventDTO> getCalendarEventByUser(Long user_id);
+    List<CalendarEventDTO> getCalendarEventByUser(Long userId);
 
     CalendarEventDTO saveCalendarEvent(CalendarEventDTO calendarEventDTO);
 

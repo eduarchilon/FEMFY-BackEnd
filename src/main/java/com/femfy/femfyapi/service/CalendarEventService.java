@@ -4,7 +4,7 @@ import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import dto.CalendarEventDTO;
 import com.femfy.femfyapi.entity.CalendarEvent;
-import com.femfy.femfyapi.repository.CalendarEventReporitory;
+import com.femfy.femfyapi.repository.CalendarEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 @Service
 public class CalendarEventService implements ICalendarEventService {
 
-    private final CalendarEventReporitory calendarEventRepository;
+    private final CalendarEventRepository calendarEventRepository;
 
     @Autowired
-    public CalendarEventService(CalendarEventReporitory calendarEventRepository) {
+    public CalendarEventService(CalendarEventRepository calendarEventRepository) {
         this.calendarEventRepository = calendarEventRepository;
     }
 
@@ -101,5 +101,4 @@ public class CalendarEventService implements ICalendarEventService {
         existingEvent.setHourAlert(calendarEventDTO.getHourAlert());
         existingEvent.setDescription(calendarEventDTO.getDescription());
     }
-
 }
