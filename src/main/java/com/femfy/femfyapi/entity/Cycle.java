@@ -19,6 +19,7 @@ public class Cycle {
     private Date dateBeging;
     private Date dateEnd;
     private String status;
+    private int daysOfBleeding;
 
     public Cycle(){
 

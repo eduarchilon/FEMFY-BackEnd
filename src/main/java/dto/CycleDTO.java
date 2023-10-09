@@ -16,4 +16,7 @@ public class CycleDTO {
     String dateEnd;
     @Schema(description = "Estado de animo", example = "Enojada - Alegre - Pensativa - Triste")
     String status;
+    @Schema(description = "Dias de sangrado", example = "Ej. 5")
+    int daysOfBleeding;
+
 }

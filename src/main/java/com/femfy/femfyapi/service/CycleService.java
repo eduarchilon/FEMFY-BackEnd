@@ -28,6 +28,7 @@ public class CycleService implements ICycleService{
             dto.setStatus(cycle.getStatus());
             dto.setIdUser(cycle.getIdUser());
             dto.setDateBeging(String.valueOf(Utils.parseDate(String.valueOf(cycle.getDateBeging()))));
+            
             cycleRepository.save(cycle);
             return dto;
         }catch (Exception e){
