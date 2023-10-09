@@ -1,7 +1,7 @@
 package com.femfy.femfyapi.controller;
 
-import dto.QuestionsUserMenstruationDTO;
 import com.femfy.femfyapi.service.IQuestionsUserMenstruationService;
+import dto.QuestionsUserMenstruationDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,8 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class QuestionsUserMenstruationControllerTest {
 
@@ -69,16 +75,61 @@ public class QuestionsUserMenstruationControllerTest {
     }
 
     @Test
-    public void testCreateOrUpdateQuestion() {
+    public void testCreateQuestion() {
         QuestionsUserMenstruationDTO questionDTO = new QuestionsUserMenstruationDTO();
-        when(service.saveOrUpdateQuestionsUserMenstruation(questionDTO)).thenReturn(questionDTO);
+        when(service.saveQuestionsUserMenstruation(questionDTO)).thenReturn(questionDTO);
 
-        ResponseEntity<QuestionsUserMenstruationDTO> response = controller.createOrUpdateQuestion(questionDTO);
+        ResponseEntity<QuestionsUserMenstruationDTO> response = controller.createQuestion(questionDTO);
 
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED, response.getStatusCode()),
                 () -> assertEquals(questionDTO, response.getBody())
         );
+    }
+
+    @Test
+    public void testUpdateQuestion() {
+        QuestionsUserMenstruationDTO questionDTO = new QuestionsUserMenstruationDTO();
+        questionDTO.setId(1L);
+        when(service.updateQuestionsUserMenstruation(questionDTO)).thenReturn(questionDTO);
+
+        ResponseEntity<QuestionsUserMenstruationDTO> response = controller.updateQuestion(questionDTO);
+
+        verify(service, times(1)).updateQuestionsUserMenstruation(questionDTO);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateQuestionNotFound() {
+        QuestionsUserMenstruationDTO questionDTO = new QuestionsUserMenstruationDTO();
+        questionDTO.setId(1L);
+
+        QuestionsUserMenstruationDTO updatedQuestion = new QuestionsUserMenstruationDTO();
+        updatedQuestion.setId(1L);
+
+        when(service.updateQuestionsUserMenstruation(questionDTO)).thenReturn(updatedQuestion);
+
+        ResponseEntity<QuestionsUserMenstruationDTO> response = controller.updateQuestion(questionDTO);
+
+        verify(service, times(1)).updateQuestionsUserMenstruation(questionDTO);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateQuestionInvalidId() {
+        QuestionsUserMenstruationDTO questionDTO = new QuestionsUserMenstruationDTO();
+        questionDTO.setId(null);
+
+        IQuestionsUserMenstruationService serviceMock = org.mockito.Mockito.mock(IQuestionsUserMenstruationService.class);
+
+        QuestionsUserMenstruationController controller = new QuestionsUserMenstruationController(serviceMock);
+
+        ResponseEntity<QuestionsUserMenstruationDTO> response = controller.updateQuestion(questionDTO);
+
+        verify(serviceMock, never()).updateQuestionsUserMenstruation(any());
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test

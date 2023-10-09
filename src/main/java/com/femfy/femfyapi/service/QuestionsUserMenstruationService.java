@@ -4,6 +4,7 @@ import dto.QuestionsUserMenstruationDTO;
 import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.repository.QuestionsUserMenstruationRepository;
+import com.femfy.femfyapi.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,21 +27,46 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
     public List<QuestionsUserMenstruationDTO> getQuestionsUserMenstruations() {
         List<QuestionsUserMenstruation> menstruationList = questionsUserMenstruationRepository.findAll();
         return menstruationList.stream()
-                .map(QuestionsUserMenstruationService::mapToDTO)
+                .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<QuestionsUserMenstruationDTO> getQuestionsUserMenstruation(Long id) {
         Optional<QuestionsUserMenstruation> menstruation = questionsUserMenstruationRepository.findById(id);
-        return menstruation.map(QuestionsUserMenstruationService::mapToDTO);
+        return menstruation.map(this::mapToDTO);
     }
 
     @Override
-    public QuestionsUserMenstruationDTO saveOrUpdateQuestionsUserMenstruation(QuestionsUserMenstruationDTO questionsUserMenstruationDTO) {
+    public QuestionsUserMenstruationDTO saveQuestionsUserMenstruation(QuestionsUserMenstruationDTO questionsUserMenstruationDTO) {
         QuestionsUserMenstruation menstruation = mapToEntity(questionsUserMenstruationDTO);
         menstruation = questionsUserMenstruationRepository.save(menstruation);
         return mapToDTO(menstruation);
+    }
+
+    @Override
+    public QuestionsUserMenstruationDTO updateQuestionsUserMenstruation(QuestionsUserMenstruationDTO updatedDTO) {
+        Long idToUpdate = updatedDTO.getId();
+        if (idToUpdate == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
+        }
+
+        QuestionsUserMenstruation existingMenstruation = questionsUserMenstruationRepository.findById(idToUpdate)
+                .orElseThrow(() -> new RuntimeException("No se encontró el objeto para actualizar"));
+
+        copyProperties(updatedDTO, existingMenstruation);
+
+        existingMenstruation = questionsUserMenstruationRepository.save(existingMenstruation);
+
+        return mapToDTO(existingMenstruation);
+    }
+
+    private void copyProperties(QuestionsUserMenstruationDTO source, QuestionsUserMenstruation target) {
+        target.setLastTime(source.getLastTime());
+        target.setLastCycleDuration(source.getLastCycleDuration());
+        target.setRegular(source.getRegular());
+        target.setRegularCycleDuration(source.getRegularCycleDuration());
+        target.setBleedingDuration(source.getBleedingDuration());
     }
 
     @Override
@@ -48,11 +74,18 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
         questionsUserMenstruationRepository.deleteById(id);
     }
 
-    private static QuestionsUserMenstruationDTO mapToDTO(QuestionsUserMenstruation menstruation) {
-    	
+    private QuestionsUserMenstruationDTO mapToDTO(QuestionsUserMenstruation menstruation) {
+        if (menstruation == null) {
+            throw new EntityNotFoundException("Menstruation not found");
+        }
+
         QuestionsUserMenstruationDTO dto = new QuestionsUserMenstruationDTO();
         dto.setId(menstruation.getId());
-        dto.setUserId(menstruation.getUser().getId());
+
+        if (menstruation.getUser() != null) {
+            dto.setUserId(menstruation.getUser().getId());
+        }
+
         dto.setLastTime((Date) menstruation.getLastTime());
         dto.setLastCycleDuration(menstruation.getLastCycleDuration());
         dto.setRegular(menstruation.getRegular());
@@ -61,11 +94,11 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
         return dto;
     }
 
-    private static QuestionsUserMenstruation mapToEntity(QuestionsUserMenstruationDTO dto) {
+    private QuestionsUserMenstruation mapToEntity(QuestionsUserMenstruationDTO dto) {
         User user = new User();
         user.setId(dto.getUserId());
-    	
-    	QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();     
+
+        QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();
         menstruation.setId(dto.getId());
         menstruation.setUser(user);
         menstruation.setLastTime(dto.getLastTime());
