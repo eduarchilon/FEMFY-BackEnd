@@ -1,20 +1,23 @@
 package com.femfy.femfyapi.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.femfy.femfyapi.entity.TypeUser;
 import com.femfy.femfyapi.repository.TypeUserRepository;
 
 import dto.TypeUserDTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TypeUserService implements ITypeUserService {
 
-    private TypeUserRepository typeUserRepository;
+    private final TypeUserRepository typeUserRepository;
+
     @Autowired
     public TypeUserService(TypeUserRepository typeUserRepository) {
         this.typeUserRepository = typeUserRepository;
@@ -22,72 +25,55 @@ public class TypeUserService implements ITypeUserService {
 
     @Override
     public TypeUserDTO saveTypeUser(TypeUserDTO typeUserDTO) {
-        try {
-            TypeUser typeUser = new TypeUser();
-            typeUser.setDescription(typeUserDTO.getDescription());
-            this.typeUserRepository.save(typeUser);
-        } catch (Exception e) {
-            System.out.print("NO SE LOGRA HACER EL MAPEO");
-            // TODO: handle exception
-        }
-        return typeUserDTO;
+        TypeUser typeUser = mapToTypeUser(typeUserDTO);
+        typeUser = this.typeUserRepository.save(typeUser);
+        return mapToTypeUserDTO(typeUser);
     }
 
     @Override
     public TypeUserDTO updateTypeUser(TypeUserDTO typeUserDTO) {
-        try {
-            TypeUser typeUser = new TypeUser();
-            typeUser.setId(typeUserDTO.getIdTypeUser());
-            typeUser.setDescription(typeUserDTO.getDescription());
-            this.typeUserRepository.save(typeUser);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        return typeUserDTO;
+        TypeUser typeUser = mapToTypeUser(typeUserDTO);
+        typeUser = this.typeUserRepository.save(typeUser);
+        return mapToTypeUserDTO(typeUser);
     }
 
     @Override
     public String deleteTypeUser(Long idTypeUser) {
-        String responseDelete = "";
         try {
             this.typeUserRepository.deleteById(idTypeUser);
-            responseDelete = "OK";
-            return responseDelete;
+            return "OK";
+        } catch (EmptyResultDataAccessException e) {
+            return "Error: No se encontró ningún registro con el ID proporcionado.";
+        } catch (DataIntegrityViolationException e) {
+            return "Error: No se puede eliminar este registro debido a restricciones de integridad de datos.";
         } catch (Exception e) {
-            System.out.print("Error" + e.getMessage());
-            responseDelete = "Error";
-            return responseDelete;
-            // TODO: handle exception
+            return "Error: " + e.getMessage();
         }
     }
 
     @Override
     public TypeUserDTO getTypeUser(Long idTypeUser) {
-        TypeUser typeUser = new TypeUser();
-        TypeUserDTO typeUserDTO = new TypeUserDTO();
-        try {
-            typeUser = this.typeUserRepository.findById(idTypeUser).get();
-            typeUserDTO.setIdTypeUser(typeUser.getId());
-            typeUserDTO.setDescription(typeUser.getDescription());
-            return typeUserDTO;
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return typeUserDTO;
+        TypeUser typeUser = this.typeUserRepository.findById(idTypeUser).orElseGet(TypeUser::new);
+        return mapToTypeUserDTO(typeUser);
     }
 
     @Override
     public List<TypeUserDTO> getTypeUsers() {
-        List<TypeUserDTO> typeUserList = new ArrayList<>();
-        List<TypeUser> typeUserListdb = new ArrayList<>();
-        typeUserListdb = this.typeUserRepository.findAll();
+        List<TypeUser> typeUserListdb = this.typeUserRepository.findAll();
+        return typeUserListdb.stream().map(this::mapToTypeUserDTO).collect(Collectors.toList());
+    }
 
-        for (TypeUser typeUser : typeUserListdb) {
-            TypeUserDTO dto = new TypeUserDTO();
-            dto.setIdTypeUser(typeUser.getId());
-            dto.setDescription(typeUser.getDescription());
-            typeUserList.add(dto);
-        }
-        return typeUserList;
+    private TypeUserDTO mapToTypeUserDTO(TypeUser typeUser) {
+        TypeUserDTO dto = new TypeUserDTO();
+        dto.setIdTypeUser(typeUser.getId());
+        dto.setDescription(typeUser.getDescription());
+        return dto;
+    }
+
+    private TypeUser mapToTypeUser(TypeUserDTO typeUserDTO) {
+        TypeUser typeUser = new TypeUser();
+        typeUser.setId(typeUserDTO.getIdTypeUser());
+        typeUser.setDescription(typeUserDTO.getDescription());
+        return typeUser;
     }
 }

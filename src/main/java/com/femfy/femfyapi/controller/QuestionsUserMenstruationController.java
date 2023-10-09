@@ -55,17 +55,36 @@ public class QuestionsUserMenstruationController {
         return ResponseEntity.ok(questions);
     }
 
-    @Operation(summary = "Crear o actualizar una pregunta sobre menstruación")
+    @Operation(summary = "Crear una pregunta sobre menstruación")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Pregunta sobre menstruación creada o actualizada",
+            @ApiResponse(responseCode = "201", description = "Pregunta sobre menstruación creada",
                     content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
                     content = {@Content(mediaType = "application/json")}),
     })
-    @PostMapping("/createOrUpdateQuestion")
-    public ResponseEntity<QuestionsUserMenstruationDTO> createOrUpdateQuestion(@RequestBody QuestionsUserMenstruationDTO questionDTO) {
-        QuestionsUserMenstruationDTO savedQuestion = questionsUserMenstruationService.saveOrUpdateQuestionsUserMenstruation(questionDTO);
+    @PostMapping("/createQuestion")
+    public ResponseEntity<QuestionsUserMenstruationDTO> createQuestion(@RequestBody QuestionsUserMenstruationDTO questionDTO) {
+        QuestionsUserMenstruationDTO savedQuestion = questionsUserMenstruationService.saveQuestionsUserMenstruation(questionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestion);
+    }
+
+    @Operation(summary = "Actualizar una pregunta sobre menstruación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pregunta sobre menstruación actualizada",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Pregunta sobre menstruación no encontrada",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+    })
+    @PutMapping("/updateQuestion")
+    public ResponseEntity<QuestionsUserMenstruationDTO> updateQuestion(@RequestBody QuestionsUserMenstruationDTO questionDTO) {
+        if (questionDTO == null || questionDTO.getId() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        QuestionsUserMenstruationDTO updatedQuestion = questionsUserMenstruationService.updateQuestionsUserMenstruation(questionDTO);
+        return ResponseEntity.ok(updatedQuestion);
     }
 
     @Operation(summary = "Eliminar una respuesta básica sobre persona que menstrua por su ID")

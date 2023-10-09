@@ -1,82 +1,122 @@
 package com.femfy.femfyapi.service;
 
-import dto.QuestionsUserMenstruationDTO;
 import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
 import com.femfy.femfyapi.repository.QuestionsUserMenstruationRepository;
+import dto.QuestionsUserMenstruationDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class QuestionsUserMenstruationServiceTest {
+class QuestionsUserMenstruationServiceTest {
 
     @Mock
     private QuestionsUserMenstruationRepository repository;
 
+    @InjectMocks
     private QuestionsUserMenstruationService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new QuestionsUserMenstruationService(repository);
     }
 
     @Test
-    public void testGetQuestionsUserMenstruations() {
-        List<QuestionsUserMenstruation> menstruationList = new ArrayList<>();
+    void testGetQuestionsUserMenstruationsWithData() {
+        List<QuestionsUserMenstruation> menstruationList = Collections.singletonList(new QuestionsUserMenstruation());
         when(repository.findAll()).thenReturn(menstruationList);
 
         List<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruations();
 
-        assertThat(result).isEmpty();
+        assertEquals(1, result.size());
     }
 
     @Test
-    public void testGetQuestionsUserMenstruationsWithData() {
-        List<QuestionsUserMenstruation> menstruationList = new ArrayList<>();
-        menstruationList.add(new QuestionsUserMenstruation());
-        when(repository.findAll()).thenReturn(menstruationList);
+    void testGetQuestionsUserMenstruationsWithNoData() {
+        when(repository.findAll()).thenReturn(Collections.emptyList());
 
         List<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruations();
 
-        assertThat(result).isNotEmpty();
+        assertTrue(result.isEmpty());
     }
 
     @Test
-    public void testGetQuestionsUserMenstruation() {
+    void testGetQuestionsUserMenstruationFound() {
         Long id = 1L;
         QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();
+        menstruation.setId(id);
         when(repository.findById(id)).thenReturn(Optional.of(menstruation));
 
         Optional<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruation(id);
 
-        assertThat(result).isPresent();
+        assertTrue(result.isPresent());
+        assertEquals(id, result.get().getId());
     }
 
     @Test
-    public void testSaveOrUpdateQuestionsUserMenstruation() {
-        QuestionsUserMenstruationDTO dto = new QuestionsUserMenstruationDTO();
-        QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();
-        when(repository.save(menstruation)).thenReturn(menstruation);
-
-        QuestionsUserMenstruationDTO result = service.saveOrUpdateQuestionsUserMenstruation(dto);
-
-        assertThat(result).isNotNull();
-    }
-
-    @Test
-    public void testDeleteQuestionsUserMenstruation() {
+    void testGetQuestionsUserMenstruationNotFound() {
         Long id = 1L;
+        when(repository.findById(id)).thenReturn(Optional.empty());
 
-        service.deleteQuestionsUserMenstruation(id);
+        Optional<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruation(id);
 
-        verify(repository, times(1)).deleteById(id);
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    void testSaveQuestionsUserMenstruation() {
+        QuestionsUserMenstruationDTO dtoToSave = new QuestionsUserMenstruationDTO();
+        dtoToSave.setLastTime(new Date(System.currentTimeMillis()));
+
+        QuestionsUserMenstruation savedEntity = new QuestionsUserMenstruation();
+        savedEntity.setId(1L);
+        savedEntity.setLastTime(dtoToSave.getLastTime());
+
+        when(repository.save(any(QuestionsUserMenstruation.class))).thenReturn(savedEntity);
+
+        QuestionsUserMenstruationDTO result = service.saveQuestionsUserMenstruation(dtoToSave);
+
+        assertNotNull(result.getId());
+        assertEquals(dtoToSave.getLastTime(), result.getLastTime());
+    }
+
+    @Test
+    void testUpdateQuestionsUserMenstruation() {
+        Long idToUpdate = 1L;
+        QuestionsUserMenstruationDTO updatedDTO = new QuestionsUserMenstruationDTO();
+        updatedDTO.setId(idToUpdate);
+        updatedDTO.setLastTime(new Date(System.currentTimeMillis()));
+
+        QuestionsUserMenstruation existingEntity = new QuestionsUserMenstruation();
+        existingEntity.setId(idToUpdate);
+        existingEntity.setLastTime(new Date(System.currentTimeMillis()));
+
+        when(repository.findById(idToUpdate)).thenReturn(Optional.of(existingEntity));
+        when(repository.save(any(QuestionsUserMenstruation.class))).thenReturn(existingEntity);
+
+        QuestionsUserMenstruationDTO result = service.updateQuestionsUserMenstruation(updatedDTO);
+
+        assertEquals(idToUpdate, result.getId());
+        assertEquals(updatedDTO.getLastTime(), result.getLastTime());
+    }
+
+    @Test
+    void testUpdateQuestionsUserMenstruationNotFound() {
+        Long idToUpdate = 1L;
+        QuestionsUserMenstruationDTO updatedDTO = new QuestionsUserMenstruationDTO();
+        updatedDTO.setId(idToUpdate);
+
+        when(repository.findById(idToUpdate)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> service.updateQuestionsUserMenstruation(updatedDTO));
     }
 }
