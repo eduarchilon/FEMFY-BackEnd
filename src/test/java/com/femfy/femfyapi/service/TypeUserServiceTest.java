@@ -66,7 +66,7 @@ class TypeUserServiceTest {
 
         String result = typeUserService.deleteTypeUser(idToDelete);
 
-        assertEquals("Error", result);
+        assertEquals("Error: No se encontró ningún registro con el ID proporcionado.", result);
     }
 
     @Test
