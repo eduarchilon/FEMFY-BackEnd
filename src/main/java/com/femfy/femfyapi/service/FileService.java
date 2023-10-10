@@ -25,9 +25,13 @@ public class FileService implements IFileService{
 			user.setId(fileDTO.getIdUser());
 			FileUser fileUser = new FileUser();
 			//fileUser.setUser(user);
+			fileUser.setIdUser(fileDTO.getIdUser());
 			fileUser.setFileExt(fileDTO.getFileExt());
 			fileUser.setFileName(fileDTO.getFileName());
+			
 			fileRepository.save(fileUser);
+			
+			fileDTO.setIdFile(fileUser.getId());
 			return fileDTO;
 		} catch (Exception e) {
 			return fileDTO;
@@ -49,7 +53,7 @@ public class FileService implements IFileService{
 	}
 
 	@Override
-	public List<FileDTO> findDocumentsByIsUser(Long idUser) {
+	public List<FileDTO> findDocumentsByIdUser(Long idUser) {
 		List<FileDTO> documents = new ArrayList<>();
 		List<FileUser> fileUsers = new ArrayList<>();
 		try {
@@ -57,9 +61,10 @@ public class FileService implements IFileService{
 			
 			for (FileUser fileUser : fileUsers) {
 				FileDTO dto = new FileDTO();
-				//dto.setIdUser(fileUser.getUser().getId());
+				dto.setIdUser(fileUser.getIdUser());
 				dto.setFileName(fileUser.getFileName());
 				dto.setFileExt(fileUser.getFileExt());
+				dto.setIdFile(fileUser.getId());
 				
 				documents.add(dto);
 			}
@@ -67,5 +72,21 @@ public class FileService implements IFileService{
 			// TODO: handle exception
 		}
 		return documents;
+	}
+
+	@Override
+	public FileDTO getFileById(Long idFile) {
+		FileUser fileUser = new FileUser();
+		FileDTO dto = new FileDTO();
+		try {
+			fileUser = fileRepository.findById(idFile).get();
+			dto.setIdFile(fileUser.getId());
+			dto.setIdUser(fileUser.getIdUser());
+			dto.setFileName(fileUser.getFileName());
+			dto.setFileExt(fileUser.getFileExt());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dto;
 	}
 }

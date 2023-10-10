@@ -13,4 +13,6 @@ public class FileDTO {
 	String fileBase64;
 	@Schema(description = "Extension del archivos que se esta trabajando", example = "txt")
 	String fileExt;
+	@Schema(description = "ID del Archivo", example = "2")
+	Long idFile;
 }

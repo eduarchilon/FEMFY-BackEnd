@@ -95,20 +95,27 @@ public class FileController {
 	@PostMapping("/deleteFile")
 	public ResponseEntity<String> deleteFile(@RequestBody FileDTO fileDTO)
 	{
-		String deleteResult = iUploadFileService.deleteFile(fileDTO);
+		fileDTO = iFileService.getFileById(fileDTO.getIdFile());
 		
-		if(deleteResult.equalsIgnoreCase("OK")) {
-			String result = iFileService.deleteFile(fileDTO);
+		if(!fileDTO.getFileName().isEmpty() && fileDTO.getFileName()!=null) {
+			String deleteResult = iUploadFileService.deleteFile(fileDTO);
 			
-			if(result.equalsIgnoreCase("OK")){
-				return new ResponseEntity<String>("Documento eliminado",HttpStatus.OK);
+			if(deleteResult.equalsIgnoreCase("OK")) {
+				String result = iFileService.deleteFile(fileDTO);
+				
+				if(result.equalsIgnoreCase("OK")){
+					return new ResponseEntity<String>("Documento eliminado",HttpStatus.OK);
+				}else {
+					return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				
 			}else {
 				return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			
 		}else {
-			return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("No existe el ID del docuemnto enviado",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
 	}
 	
 	@Operation(summary = "Realizar la consulta de todos los documentos de un usuario. Solo es necesaro enviar el ID del usuario, para recuperar todos los documentos")
@@ -128,7 +135,7 @@ public class FileController {
 	@GetMapping("/{userId}") 
 	public ResponseEntity<List<FileDTO>> getUserById(@PathVariable("userId") Long userId) {
 		List<FileDTO> documents = new ArrayList<>();
-		documents = iFileService.findDocumentsByIsUser(userId);
+		documents = iFileService.findDocumentsByIdUser(userId);
 		if(documents.size() >0){
 			return new ResponseEntity<>(documents, HttpStatus.OK);
 		}else {
