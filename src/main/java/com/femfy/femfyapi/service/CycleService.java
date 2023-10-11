@@ -30,6 +30,8 @@ public class CycleService implements ICycleService{
             dto.setDateBeging(String.valueOf(Utils.parseDate(String.valueOf(cycle.getDateBeging()))));
             
             cycleRepository.save(cycle);
+            
+            dto.setId(cycle.getId());
             return dto;
         }catch (Exception e){
             throw new CustomException("Error al registrar inicio del ciclo: " + e.getMessage());
