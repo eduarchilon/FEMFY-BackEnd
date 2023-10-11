@@ -86,11 +86,26 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
             dto.setUserId(menstruation.getUser().getId());
         }
 
-        dto.setLastTime((Date) menstruation.getLastTime());
-        dto.setLastCycleDuration(menstruation.getLastCycleDuration());
-        dto.setRegular(menstruation.getRegular());
-        dto.setRegularCycleDuration(menstruation.getRegularCycleDuration());
-        dto.setBleedingDuration(menstruation.getBleedingDuration());
+        if (menstruation.getLastTime() != null) {
+            dto.setLastTime((Date) menstruation.getLastTime());
+        }
+
+        if (menstruation.getLastCycleDuration() != null) {
+            dto.setLastCycleDuration(menstruation.getLastCycleDuration());
+        }
+
+        if (menstruation.getRegular() != null) {
+            dto.setRegular(menstruation.getRegular());
+        }
+
+        if (menstruation.getRegularCycleDuration() != null) {
+            dto.setRegularCycleDuration(menstruation.getRegularCycleDuration());
+        }
+
+        if (menstruation.getBleedingDuration() != null) {
+            dto.setBleedingDuration(menstruation.getBleedingDuration());
+        }
+
         return dto;
     }
 
