@@ -62,11 +62,25 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
     }
 
     private void copyProperties(QuestionsUserMenstruationDTO source, QuestionsUserMenstruation target) {
-        target.setLastTime(source.getLastTime());
-        target.setLastCycleDuration(source.getLastCycleDuration());
-        target.setRegular(source.getRegular());
-        target.setRegularCycleDuration(source.getRegularCycleDuration());
-        target.setBleedingDuration(source.getBleedingDuration());
+        if (source.getLastTime() != null) {
+            target.setLastTime(source.getLastTime());
+        }
+
+        if (source.getLastCycleDuration() != null) {
+            target.setLastCycleDuration(source.getLastCycleDuration());
+        }
+
+        if (source.getRegular() != null) {
+            target.setRegular(source.getRegular());
+        }
+
+        if (source.getRegularCycleDuration() != null) {
+            target.setRegularCycleDuration(source.getRegularCycleDuration());
+        }
+
+        if (source.getBleedingDuration() != null) {
+            target.setBleedingDuration(source.getBleedingDuration());
+        }
     }
 
     @Override
@@ -86,11 +100,26 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
             dto.setUserId(menstruation.getUser().getId());
         }
 
-        dto.setLastTime((Date) menstruation.getLastTime());
-        dto.setLastCycleDuration(menstruation.getLastCycleDuration());
-        dto.setRegular(menstruation.getRegular());
-        dto.setRegularCycleDuration(menstruation.getRegularCycleDuration());
-        dto.setBleedingDuration(menstruation.getBleedingDuration());
+        if (menstruation.getLastTime() != null) {
+            dto.setLastTime((Date) menstruation.getLastTime());
+        }
+
+        if (menstruation.getLastCycleDuration() != null) {
+            dto.setLastCycleDuration(menstruation.getLastCycleDuration());
+        }
+
+        if (menstruation.getRegular() != null) {
+            dto.setRegular(menstruation.getRegular());
+        }
+
+        if (menstruation.getRegularCycleDuration() != null) {
+            dto.setRegularCycleDuration(menstruation.getRegularCycleDuration());
+        }
+
+        if (menstruation.getBleedingDuration() != null) {
+            dto.setBleedingDuration(menstruation.getBleedingDuration());
+        }
+
         return dto;
     }
 
