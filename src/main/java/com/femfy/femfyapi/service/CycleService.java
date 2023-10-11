@@ -27,6 +27,7 @@ public class CycleService implements ICycleService{
             CycleDTO dto = new CycleDTO();
             dto.setStatus(cycle.getStatus());
             dto.setIdUser(cycle.getIdUser());
+            dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
             dto.setDateBeging(String.valueOf(Utils.parseDate(String.valueOf(cycle.getDateBeging()))));
             
             cycleRepository.save(cycle);
@@ -45,6 +46,7 @@ public class CycleService implements ICycleService{
             cycle.setDateBeging(Utils.parseDate(cycleDTO.getDateBeging()));
             cycleDTO.setDateEnd(String.valueOf(Utils.parseDate(String.valueOf(cycle.getDateEnd()))));
             cycle.setId(cycleDTO.getId());
+            cycle.setDaysOfBleeding(cycleDTO.getDaysOfBleeding());
             cycleRepository.save(cycle);
             return cycleDTO;
         }catch (Exception e){
@@ -64,6 +66,7 @@ public class CycleService implements ICycleService{
                 dto.setStatus(cycle.getStatus());
                 dto.setDateBeging(String.valueOf(cycle.getDateBeging()));
                 dto.setIdUser(cycle.getIdUser());
+                dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
                 dto.setDateEnd(String.valueOf(cycle.getDateEnd()));
 
                 dtoList.add(dto);
@@ -84,6 +87,7 @@ public class CycleService implements ICycleService{
             cycleDTO.setDateBeging(String.valueOf(cycle.getDateBeging()));
             cycleDTO.setStatus(cycle.getStatus());
             cycleDTO.setIdUser(cycle.getIdUser());
+            cycleDTO.setDaysOfBleeding(cycle.getDaysOfBleeding());
             cycleDTO.setId(cycle.getId());
 
         }catch (Exception e){
