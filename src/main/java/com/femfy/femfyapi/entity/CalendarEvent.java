@@ -21,9 +21,11 @@ public class CalendarEvent {
     private String title;
 
     @Column(name = "date_event")
+    @Temporal(TemporalType.DATE)
     private Date dateEvent;
 
     @Column(name = "hour_alert")
+    @Temporal(TemporalType.DATE)
     private Date hourAlert;
 
     @Column(name = "description")

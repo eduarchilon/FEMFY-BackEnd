@@ -3,7 +3,7 @@ package com.femfy.femfyapi.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @Entity
@@ -20,6 +20,7 @@ public class Cycle {
     private Date dateBeging;
 
     @Column(nullable = true)
+    @Temporal(TemporalType.DATE)
     private Date dateEnd;
 
     @Column(nullable = true)
