@@ -27,6 +27,7 @@ public class CycleService implements ICycleService{
             CycleDTO dto = new CycleDTO();
             dto.setStatus(cycle.getStatus());
             dto.setIdUser(cycle.getIdUser());
+            dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
             dto.setDateBeging(String.valueOf(Utils.parseDate(String.valueOf(cycle.getDateBeging()))));
             
             cycleRepository.save(cycle);
