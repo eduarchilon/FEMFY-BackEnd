@@ -16,18 +16,15 @@ public class Cycle {
 
     private Long idUser;
 
-    @Column(nullable = true)
+    @Temporal(TemporalType.DATE)
     private Date dateBeging;
 
-    @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date dateEnd;
 
-    @Column(nullable = true)
     private String status;
 
-    @Column(nullable = true)
-    private int daysOfBleeding;
+    private Integer daysOfBleeding;
 
     public Cycle() {
     }

@@ -6,12 +6,10 @@ import com.femfy.femfyapi.exception.CustomException;
 import com.femfy.femfyapi.repository.CycleRepository;
 import dto.CycleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class CycleService implements ICycleService{
             dto.setStatus(cycle.getStatus());
             dto.setIdUser(cycle.getIdUser());
             dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
-            dto.setDateBeging(String.valueOf(Utils.parseDate(String.valueOf(cycle.getDateBeging()))));
+            dto.setDateBeging(cycle.getDateBeging());
             
             cycleRepository.save(cycle);
             
@@ -43,8 +41,8 @@ public class CycleService implements ICycleService{
     public CycleDTO registerCycleEnd(Cycle cycle) throws IOException, CustomException {
         try{
             CycleDTO cycleDTO = this.getCycleByIdUserAndDateBeging(cycle.getIdUser(), String.valueOf(cycle.getDateBeging()));
-            cycle.setDateBeging(Utils.parseDate(cycleDTO.getDateBeging()));
-            cycleDTO.setDateEnd(String.valueOf(Utils.parseDate(String.valueOf(cycle.getDateEnd()))));
+            cycle.setDateBeging(cycleDTO.getDateBeging());
+            cycleDTO.setDateEnd(cycle.getDateEnd());
             cycle.setId(cycleDTO.getId());
             cycle.setDaysOfBleeding(cycleDTO.getDaysOfBleeding());
             cycleRepository.save(cycle);
@@ -64,10 +62,10 @@ public class CycleService implements ICycleService{
             for(Cycle cycle : cycleList){
                 CycleDTO dto = new CycleDTO();
                 dto.setStatus(cycle.getStatus());
-                dto.setDateBeging(String.valueOf(cycle.getDateBeging()));
+                dto.setDateBeging((cycle.getDateBeging()));
                 dto.setIdUser(cycle.getIdUser());
                 dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
-                dto.setDateEnd(String.valueOf(cycle.getDateEnd()));
+                dto.setDateEnd((cycle.getDateEnd()));
 
                 dtoList.add(dto);
             }
@@ -84,7 +82,7 @@ public class CycleService implements ICycleService{
         try{
             Date dateSql = Utils.parseDate(dateBeging);
             Cycle cycle =  cycleRepository.findByIdUserAndDateBeging(idUser, dateSql);
-            cycleDTO.setDateBeging(String.valueOf(cycle.getDateBeging()));
+            cycleDTO.setDateBeging((cycle.getDateBeging()));
             cycleDTO.setStatus(cycle.getStatus());
             cycleDTO.setIdUser(cycle.getIdUser());
             cycleDTO.setDaysOfBleeding(cycle.getDaysOfBleeding());

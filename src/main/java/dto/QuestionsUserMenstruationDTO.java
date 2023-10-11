@@ -13,7 +13,7 @@ public class QuestionsUserMenstruationDTO {
     private Long userId;
 
     @Schema(description = "Fecha de la última vez que menstruó", example = "2023-10-04")
-    private java.sql.Date lastTime;
+    private java.util.Date lastTime;
 
     @Schema(description = "Duración del último ciclo", example = "5")
     private Integer lastCycleDuration;
