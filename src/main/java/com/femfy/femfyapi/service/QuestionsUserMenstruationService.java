@@ -62,11 +62,25 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
     }
 
     private void copyProperties(QuestionsUserMenstruationDTO source, QuestionsUserMenstruation target) {
-        target.setLastTime(source.getLastTime());
-        target.setLastCycleDuration(source.getLastCycleDuration());
-        target.setRegular(source.getRegular());
-        target.setRegularCycleDuration(source.getRegularCycleDuration());
-        target.setBleedingDuration(source.getBleedingDuration());
+        if (source.getLastTime() != null) {
+            target.setLastTime(source.getLastTime());
+        }
+
+        if (source.getLastCycleDuration() != null) {
+            target.setLastCycleDuration(source.getLastCycleDuration());
+        }
+
+        if (source.getRegular() != null) {
+            target.setRegular(source.getRegular());
+        }
+
+        if (source.getRegularCycleDuration() != null) {
+            target.setRegularCycleDuration(source.getRegularCycleDuration());
+        }
+
+        if (source.getBleedingDuration() != null) {
+            target.setBleedingDuration(source.getBleedingDuration());
+        }
     }
 
     @Override
