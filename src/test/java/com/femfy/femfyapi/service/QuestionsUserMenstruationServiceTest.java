@@ -1,5 +1,7 @@
 package com.femfy.femfyapi.service;
 
+import com.femfy.femfyapi.entity.User;
+
 import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
 import com.femfy.femfyapi.repository.QuestionsUserMenstruationRepository;
 import dto.QuestionsUserMenstruationDTO;
@@ -32,12 +34,24 @@ class QuestionsUserMenstruationServiceTest {
 
     @Test
     void testGetQuestionsUserMenstruationsWithData() {
-        List<QuestionsUserMenstruation> menstruationList = Collections.singletonList(new QuestionsUserMenstruation());
+        QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();
+        menstruation.setId(1L);
+
+        User user = new User();
+        user.setId(1L);
+        menstruation.setUser(user);
+
+        List<QuestionsUserMenstruation> menstruationList = Collections.singletonList(menstruation);
         when(repository.findAll()).thenReturn(menstruationList);
 
         List<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruations();
 
+        assertNotNull(result);
         assertEquals(1, result.size());
+
+        QuestionsUserMenstruationDTO dto = result.get(0);
+        assertEquals(1L, dto.getId());
+        assertEquals(1L, dto.getUserId());
     }
 
     @Test
@@ -52,8 +66,14 @@ class QuestionsUserMenstruationServiceTest {
     @Test
     void testGetQuestionsUserMenstruationFound() {
         Long id = 1L;
+
+        User user = new User();
+        user.setId(1L);
+
         QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();
         menstruation.setId(id);
+        menstruation.setUser(user);
+
         when(repository.findById(id)).thenReturn(Optional.of(menstruation));
 
         Optional<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruation(id);
@@ -75,10 +95,17 @@ class QuestionsUserMenstruationServiceTest {
     @Test
     void testSaveQuestionsUserMenstruation() {
         QuestionsUserMenstruationDTO dtoToSave = new QuestionsUserMenstruationDTO();
+
+        User user = new User();
+        user.setId(1L);
+
+        dtoToSave.setUserId(user.getId());
+
         dtoToSave.setLastTime(new Date(System.currentTimeMillis()));
 
         QuestionsUserMenstruation savedEntity = new QuestionsUserMenstruation();
         savedEntity.setId(1L);
+        savedEntity.setUser(user);
         savedEntity.setLastTime(dtoToSave.getLastTime());
 
         when(repository.save(any(QuestionsUserMenstruation.class))).thenReturn(savedEntity);
@@ -87,18 +114,27 @@ class QuestionsUserMenstruationServiceTest {
 
         assertNotNull(result.getId());
         assertEquals(dtoToSave.getLastTime(), result.getLastTime());
+        assertEquals(user.getId(), result.getUserId());
     }
 
     @Test
     void testUpdateQuestionsUserMenstruation() {
         Long idToUpdate = 1L;
-        QuestionsUserMenstruationDTO updatedDTO = new QuestionsUserMenstruationDTO();
-        updatedDTO.setId(idToUpdate);
-        updatedDTO.setLastTime(new Date(System.currentTimeMillis()));
+
+        User user = new User();
+        user.setId(1L);
 
         QuestionsUserMenstruation existingEntity = new QuestionsUserMenstruation();
         existingEntity.setId(idToUpdate);
-        existingEntity.setLastTime(new Date(System.currentTimeMillis()));
+
+        existingEntity.setUser(user);
+
+        QuestionsUserMenstruationDTO updatedDTO = new QuestionsUserMenstruationDTO();
+        updatedDTO.setId(idToUpdate);
+
+        updatedDTO.setUserId(user.getId());
+
+        updatedDTO.setLastTime(new Date(System.currentTimeMillis()));
 
         when(repository.findById(idToUpdate)).thenReturn(Optional.of(existingEntity));
         when(repository.save(any(QuestionsUserMenstruation.class))).thenReturn(existingEntity);
@@ -107,6 +143,7 @@ class QuestionsUserMenstruationServiceTest {
 
         assertEquals(idToUpdate, result.getId());
         assertEquals(updatedDTO.getLastTime(), result.getLastTime());
+        assertEquals(user.getId(), result.getUserId());
     }
 
     @Test

@@ -15,7 +15,7 @@ public interface ICalendarEventService {
 
     CalendarEventDTO saveCalendarEvent(CalendarEventDTO calendarEventDTO);
 
-    CalendarEventDTO updateCalendarEvent(CalendarEventDTO calendarEventDTO);
+    CalendarEventDTO updateCalendarEvent(CalendarEventDTO updatedDTO);
 
     void deleteCalendarEvent(Long id);
 }

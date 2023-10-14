@@ -1,19 +1,19 @@
 package dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
 import lombok.Data;
+import java.util.Date;
 
 @Data
 public class QuestionsUserMenstruationDTO {
     @Schema(description = "ID de la respuesta básica sobre persona que menstrua", example = "1")
     private Long id;
-    
+
     @Schema(description = "ID del usuario relacionado", example = "1")
     private Long userId;
 
     @Schema(description = "Fecha de la última vez que menstruó", example = "2023-10-04")
-    private java.util.Date lastTime;
+    private Date lastTime;
 
     @Schema(description = "Duración del último ciclo", example = "5")
     private Integer lastCycleDuration;

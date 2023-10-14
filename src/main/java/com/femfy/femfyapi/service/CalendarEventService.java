@@ -1,10 +1,10 @@
 package com.femfy.femfyapi.service;
 
+import com.femfy.femfyapi.entity.CalendarEvent;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
-import dto.CalendarEventDTO;
-import com.femfy.femfyapi.entity.CalendarEvent;
 import com.femfy.femfyapi.repository.CalendarEventRepository;
+import dto.CalendarEventDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,9 +53,16 @@ public class CalendarEventService implements ICalendarEventService {
 
     @Override
     public CalendarEventDTO updateCalendarEvent(CalendarEventDTO calendarEventDTO) {
-        CalendarEvent existingEvent = findCalendarEventById(calendarEventDTO.getId());
+        Long idToUpdate = calendarEventDTO.getId();
+        if (idToUpdate == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
+        }
+
+        CalendarEvent existingEvent = findCalendarEventById(idToUpdate);
 
         updateCalendarEventFields(existingEvent, calendarEventDTO);
+
+        existingEvent = calendarEventRepository.save(existingEvent);
 
         return mapToDTO(existingEvent);
     }
@@ -66,9 +73,17 @@ public class CalendarEventService implements ICalendarEventService {
     }
 
     private CalendarEventDTO mapToDTO(CalendarEvent calendarEvent) {
+        if (calendarEvent == null) {
+            throw new EntityNotFoundException("Evento no encontrado");
+        }
+
         CalendarEventDTO dto = new CalendarEventDTO();
         dto.setId(calendarEvent.getId());
-        dto.setUserId(calendarEvent.getUser().getId());
+
+        if (calendarEvent.getUser() != null) {
+            dto.setUserId(calendarEvent.getUser().getId());
+        }
+
         dto.setTitle(calendarEvent.getTitle());
         dto.setDateEvent(calendarEvent.getDateEvent());
         dto.setHourAlert(calendarEvent.getHourAlert());
