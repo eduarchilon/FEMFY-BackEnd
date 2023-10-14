@@ -17,11 +17,22 @@ public class QuestionsUserFamilyHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "breast_cancer")
     private boolean breastCancer;
+
+    @Column(name = "ovarian_cancer")
     private boolean ovarianCancer;
+
+    @Column(name = "endometriosis")
     private boolean endometriosis;
+
+    @Column(name = "uterine_fibroids")
     private boolean uterineFibroids;
+
+    @Column(name = "sop")
     private boolean sop;
+
+    @Column(name = "early_menopause")
     private boolean earlyMenopause;
 
     public QuestionsUserFamilyHistory(){
