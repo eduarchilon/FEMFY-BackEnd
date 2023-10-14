@@ -8,7 +8,6 @@ import com.femfy.femfyapi.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -86,7 +85,7 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
             dto.setUserId(menstruation.getUser().getId());
         }
 
-        dto.setLastTime((Date) menstruation.getLastTime());
+        dto.setLastTime(menstruation.getLastTime());
         dto.setLastCycleDuration(menstruation.getLastCycleDuration());
         dto.setRegular(menstruation.getRegular());
         dto.setRegularCycleDuration(menstruation.getRegularCycleDuration());
