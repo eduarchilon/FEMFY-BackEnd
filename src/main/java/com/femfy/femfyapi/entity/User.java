@@ -35,6 +35,7 @@ public class User {
 	private String userName;
 	private String password;
 	private Boolean isSuscriptor;
+	@javax.persistence.Temporal(javax.persistence.TemporalType.DATE)
 	private Date birthdate;
 	private String phone;
 	@Column(name="mailAddress",unique = true, nullable = false)

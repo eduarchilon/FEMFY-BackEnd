@@ -18,6 +18,7 @@ public class QuestionsUserMenstruation {
     private User user;
 
     @Column(name = "last_time")
+    @Temporal(TemporalType.DATE)
     private Date lastTime;
 
     @Column(name = "last_cycle_duration")
