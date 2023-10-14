@@ -20,7 +20,7 @@ public class UploadFileService implements IUploadFileService{
 	public String uploadFile(FileDTO fileDTO) {
 
 		String resultService="";
-		String connection = "DefaultEndpointsProtocol=https;AccountName=femfy;AccountKey=p6xKHZi9SQrh3Z/VlBtfoL0/fUF/X+/ODoMhAjMXLECCSYttMsd4CbyKyV2n6Gcycg+2Za1UgPfA+ASt6kesrQ==;EndpointSuffix=core.windows.net";
+		String connection = "DefaultEndpointsProtocol=https;AccountName=femfy;AccountKey=DefaultEndpointsProtocol=https;AccountName=filesfemfy;AccountKey=ZAhrrqbvPUK5P1i2oShfgzNe/bkpKeXyraKXC5TYpIjVPrGqOCGwxTOeeHP55Ecv3IWwlhHO3Xws+AStWJimXg==;EndpointSuffix=core.windows.net;EndpointSuffix=core.windows.net";
 		String containnerName="files";
 		
 		try {
@@ -45,7 +45,7 @@ public class UploadFileService implements IUploadFileService{
 	@Override
 	public FileDTO downloadFile(FileDTO fileDTO) {
 		String resultService="";
-		String connection = "DefaultEndpointsProtocol=https;AccountName=femfy;AccountKey=p6xKHZi9SQrh3Z/VlBtfoL0/fUF/X+/ODoMhAjMXLECCSYttMsd4CbyKyV2n6Gcycg+2Za1UgPfA+ASt6kesrQ==;EndpointSuffix=core.windows.net";
+		String connection = "DefaultEndpointsProtocol=https;AccountName=femfy;AccountKey=DefaultEndpointsProtocol=https;AccountName=filesfemfy;AccountKey=ZAhrrqbvPUK5P1i2oShfgzNe/bkpKeXyraKXC5TYpIjVPrGqOCGwxTOeeHP55Ecv3IWwlhHO3Xws+AStWJimXg==;EndpointSuffix=core.windows.net;EndpointSuffix=core.windows.net";
 		String containnerName="files";
 		
 		try {
@@ -76,7 +76,7 @@ public class UploadFileService implements IUploadFileService{
 	@Override
 	public String deleteFile(FileDTO fileDTO) {
 		String resultService="";
-		String connection = "DefaultEndpointsProtocol=https;AccountName=femfy;AccountKey=p6xKHZi9SQrh3Z/VlBtfoL0/fUF/X+/ODoMhAjMXLECCSYttMsd4CbyKyV2n6Gcycg+2Za1UgPfA+ASt6kesrQ==;EndpointSuffix=core.windows.net";
+		String connection = "DefaultEndpointsProtocol=https;AccountName=femfy;AccountKey=DefaultEndpointsProtocol=https;AccountName=filesfemfy;AccountKey=ZAhrrqbvPUK5P1i2oShfgzNe/bkpKeXyraKXC5TYpIjVPrGqOCGwxTOeeHP55Ecv3IWwlhHO3Xws+AStWJimXg==;EndpointSuffix=core.windows.net;EndpointSuffix=core.windows.net";
 		String containnerName="files";
 		
 		try {

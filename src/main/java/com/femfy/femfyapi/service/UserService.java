@@ -37,6 +37,9 @@ public class UserService implements IUserService{
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
 			userRepository.save(user);
+			
+			userDTO.setIdUser(user.getId());
+			
 		} catch (Exception e) {
 			System.out.print("NO SE LOGRA HACER EL MAPEO");
 			// TODO: handle exception

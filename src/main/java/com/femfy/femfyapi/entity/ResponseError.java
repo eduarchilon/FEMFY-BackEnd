@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.http.HttpStatus;
 
 public class ResponseError {
+    @javax.persistence.Temporal(javax.persistence.TemporalType.DATE)
     private Date timestamp;
     private Integer status;
     private String error;

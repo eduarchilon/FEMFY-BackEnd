@@ -1,13 +1,13 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.entity.Cycle;
-import com.femfy.femfyapi.entity.FileUser;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.util.List;
+import com.femfy.femfyapi.entity.Cycle;
 
 @Repository
 public interface CycleRepository extends JpaRepository<Cycle, Long> {
