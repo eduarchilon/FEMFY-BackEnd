@@ -6,13 +6,12 @@ import com.femfy.femfyapi.exception.CustomException;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.CycleRepository;
 import dto.CycleDTO;
+import org.hibernate.sql.OracleJoinFragment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CycleService implements ICycleService{
@@ -97,10 +96,12 @@ public class CycleService implements ICycleService{
     }
 
     @Override
-    public String deleteCycle(Long id) throws CustomException {
+    public Map<String, String> deleteCycle(Long id) throws CustomException {
         try{
             cycleRepository.deleteById(id);
-            return "OK";
+            Map<String, String> res = new HashMap<>();
+            res.put("Response", "OK");
+            return res;
         }catch (Exception e ){
             throw new CustomException("Error al eliminar ciclo; " + e.getMessage());
         }

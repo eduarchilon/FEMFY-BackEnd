@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -125,7 +126,7 @@ public class CycleController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteCycle(@PathVariable("id") Long id) {
         try {
-                String res = iCycleService.deleteCycle(id);
+            Map<String, String> res = iCycleService.deleteCycle(id);
             return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
