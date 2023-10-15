@@ -25,12 +25,13 @@ class UserRepositoryTest {
 	@BeforeEach
 	public void setUp() throws Exception {
 		User user= new User();
-		/*user.setAge(20);*/
 		user.setEmail("peper2r@gmail.com");
 		user.setFirstName("pepe");
-		//user.setGender("Masculino");
 		user.setLastName("lopez");
 		user.setPhone("123456789");
+		user.setIsSuscriptor(true);
+		user.setEmotion("Cansada");
+		user.setLocalidad("La Matanza");
 		
 		entityManager.persist(user);
 	}

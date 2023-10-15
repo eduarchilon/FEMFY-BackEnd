@@ -27,4 +27,10 @@ public class UserDTO {
 	String phone;
 	@Schema(description = "Email del Usuario", example = "femfy2023@gmail.com")
 	String email;
+	@Schema(description = "Descripcion de la emosión del Usuario", example = "Alegre/Triste")
+	String emotion;
+	@Schema(description = "Localidad del Usuario", example = "La Matanza")
+	String localidad;
+	@Schema(description = "Archivo de Avatar del Usuario, en formato String", example = "avatar")
+	String avatar;
 }
