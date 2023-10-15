@@ -1,8 +1,7 @@
-/*
 package com.femfy.femfyapi.controller;
 
 import com.femfy.femfyapi.service.IQuestionsUserFamilyHistoryService;
-import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
+import dto.QuestionsUserFamilyHistoryDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,15 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-public class QuestionsUserFamilyHistoryControllerTest {
+class QuestionsUserFamilyHistoryControllerTest {
 
     @InjectMocks
     private QuestionsUserFamilyHistoryController controller;
@@ -37,113 +31,88 @@ public class QuestionsUserFamilyHistoryControllerTest {
     }
 
     @Test
-    public void testGetQuestionById() {
-        Long historialId = 1L;
-        QuestionsUserFamilyHistory mockQuestion = createMockQuestion(historialId);
-        when(service.getQuestionsUserFamilyHistory(historialId)).thenReturn(Optional.of(mockQuestion));
+    void testGetQuestionById() {
+        Long questionId = 1L;
+        QuestionsUserFamilyHistoryDTO mockQuestion = new QuestionsUserFamilyHistoryDTO();
+        mockQuestion.setId(questionId);
+        when(service.getQuestionsUserFamilyHistory(questionId)).thenReturn(Optional.of(mockQuestion));
 
-        ResponseEntity<QuestionsUserFamilyHistory> response = controller.getQuestionById(historialId);
+        ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.getQuestionById(questionId);
 
-        assertResponse(HttpStatus.OK, mockQuestion, response);
+        assertAll(
+                () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
+                () -> assertEquals(mockQuestion, response.getBody())
+        );
     }
 
     @Test
-    public void testGetQuestionByIdNotFound() {
-        Long historialId = 1L;
-        when(service.getQuestionsUserFamilyHistory(historialId)).thenReturn(Optional.empty());
+    void testGetQuestionByIdNotFound() {
+        Long questionId = 1L;
+        when(service.getQuestionsUserFamilyHistory(questionId)).thenReturn(Optional.empty());
 
-        ResponseEntity<QuestionsUserFamilyHistory> response = controller.getQuestionById(historialId);
-
-        assertResponse(HttpStatus.NOT_FOUND, null, response);
-    }
-
-    @Test
-    public void testGetAllQuestions() {
-        List<QuestionsUserFamilyHistory> mockQuestions = createMockQuestionList();
-        when(service.getQuestionsUserFamilyHistories()).thenReturn(mockQuestions);
-
-        ResponseEntity<List<QuestionsUserFamilyHistory>> response = controller.getAllQuestions();
-
-        assertResponse(HttpStatus.OK, mockQuestions, response);
-    }
-
-    @Test
-    public void testCreateQuestion() {
-        QuestionsUserFamilyHistory questionDTO = createMockQuestion(1L);
-        when(service.saveQuestionsUserFamilyHistory(any(QuestionsUserFamilyHistory.class))).thenReturn(questionDTO);
-
-        ResponseEntity<QuestionsUserFamilyHistory> response = controller.createQuestion(questionDTO);
-
-        assertResponse(HttpStatus.CREATED, questionDTO, response);
-    }
-
-    @Test
-    public void testUpdateQuestion() {
-        Long historialId = 1L;
-        QuestionsUserFamilyHistory questionDTO = createMockQuestion(historialId);
-        when(service.updateQuestionsUserFamilyHistory(any(QuestionsUserFamilyHistory.class))).thenReturn(questionDTO);
-
-        ResponseEntity<QuestionsUserFamilyHistory> response = controller.updateQuestion(questionDTO);
-
-        verify(service).updateQuestionsUserFamilyHistory(questionDTO);
-        assertResponse(HttpStatus.OK, questionDTO, response);
-    }
-
-    @Test
-    public void testUpdateQuestionNotFound() {
-        Long historialId = 1L;
-        QuestionsUserFamilyHistory questionDTO = createMockQuestion(historialId);
-        QuestionsUserFamilyHistory updatedQuestion = createMockQuestion(historialId);
-        when(service.updateQuestionsUserFamilyHistory(questionDTO)).thenReturn(updatedQuestion);
-
-        ResponseEntity<QuestionsUserFamilyHistory> response = controller.updateQuestion(questionDTO);
-
-        verify(service).updateQuestionsUserFamilyHistory(questionDTO);
-        assertResponse(HttpStatus.OK, updatedQuestion, response);
-    }
-
-    @Test
-    public void testUpdateQuestionInvalidId() {
-        QuestionsUserFamilyHistory questionDTO = createMockQuestion(null);
-
-        IQuestionsUserFamilyHistoryService serviceMock = org.mockito.Mockito.mock(IQuestionsUserFamilyHistoryService.class);
-
-        QuestionsUserFamilyHistoryController controller = new QuestionsUserFamilyHistoryController(serviceMock);
-
-        ResponseEntity<QuestionsUserFamilyHistory> response = controller.updateQuestion(questionDTO);
-
-        verify(serviceMock, never()).updateQuestionsUserFamilyHistory(any());
+        ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.getQuestionById(questionId);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
-    public void testDeleteQuestion() {
-        Long historialId = 1L;
-        doNothing().when(service).deleteQuestionsUserFamilyHistory(historialId);
+    void testGetAllQuestions() {
+        List<QuestionsUserFamilyHistoryDTO> mockQuestions = new ArrayList<>();
+        when(service.getQuestionsUserFamilyHistories()).thenReturn(mockQuestions);
 
-        ResponseEntity<Void> response = controller.deleteQuestion(historialId);
+        ResponseEntity<List<QuestionsUserFamilyHistoryDTO>> response = controller.getAllQuestions();
+
+        assertAll(
+                () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
+                () -> assertEquals(mockQuestions, response.getBody())
+        );
+    }
+
+    @Test
+    void testCreateQuestion() {
+        QuestionsUserFamilyHistoryDTO questionDTO = new QuestionsUserFamilyHistoryDTO();
+        when(service.saveQuestionsUserFamilyHistory(any(QuestionsUserFamilyHistoryDTO.class))).thenReturn(questionDTO);
+
+        ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.createQuestion(questionDTO);
+
+        assertAll(
+                () -> assertEquals(HttpStatus.CREATED, response.getStatusCode()),
+                () -> assertEquals(questionDTO, response.getBody())
+        );
+    }
+
+    @Test
+    void testUpdateQuestion() {
+        QuestionsUserFamilyHistoryDTO questionDTO = new QuestionsUserFamilyHistoryDTO();
+        questionDTO.setId(1L);
+        when(service.updateQuestionsUserFamilyHistory(questionDTO)).thenReturn(questionDTO);
+
+        ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.updateQuestion(questionDTO);
+
+        verify(service, times(1)).updateQuestionsUserFamilyHistory(questionDTO);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testUpdateQuestionNotFound() {
+        Long questionId = 1L;
+        QuestionsUserFamilyHistoryDTO questionDTO = new QuestionsUserFamilyHistoryDTO();
+        questionDTO.setId(questionId);
+
+        when(service.updateQuestionsUserFamilyHistory(questionDTO)).thenReturn(null);
+
+        ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.updateQuestion(questionDTO);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testDeleteQuestion() {
+        Long questionId = 1L;
+        doNothing().when(service).deleteQuestionsUserFamilyHistory(questionId);
+
+        ResponseEntity<Void> response = controller.deleteQuestion(questionId);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
-
-    private QuestionsUserFamilyHistory createMockQuestion(Long historialId) {
-        QuestionsUserFamilyHistory mockQuestion = new QuestionsUserFamilyHistory();
-        mockQuestion.setId(historialId);
-        return mockQuestion;
-    }
-
-    private List<QuestionsUserFamilyHistory> createMockQuestionList() {
-        List<QuestionsUserFamilyHistory> mockQuestions = new ArrayList<>();
-        mockQuestions.add(createMockQuestion(1L));
-        mockQuestions.add(createMockQuestion(2L));
-        return mockQuestions;
-    }
-
-    private <T> void assertResponse(HttpStatus expectedStatus, T expectedBody, ResponseEntity<T> response) {
-        assertAll(
-                () -> assertEquals(expectedStatus, response.getStatusCode()),
-                () -> assertEquals(expectedBody, response.getBody())
-        );
-    }
-}*/
+}

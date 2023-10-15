@@ -79,7 +79,6 @@ public class QuestionsUserFamilyHistoryService implements IQuestionsUserFamilyHi
         if(source.isEarlyMenopause()){
             target.setEarlyMenopause(source.isEarlyMenopause());
         }
-
     }
 
     @Override

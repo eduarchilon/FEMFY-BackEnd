@@ -84,6 +84,9 @@ public class QuestionsUserFamilyHistoryController {
         }
 
         QuestionsUserFamilyHistoryDTO updatedQuestion = questionsUserFamilyHistoryService.updateQuestionsUserFamilyHistory(questionDTO);
+        if (updatedQuestion == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(updatedQuestion);
     }
 
