@@ -123,7 +123,7 @@ public class CycleController {
                     content = {@Content(mediaType = "application/json")})
     })
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteCycle(@PathVariable("cycleId") Long id) {
+    public ResponseEntity<?> deleteCycle(@PathVariable("id") Long id) {
         try {
                 String res = iCycleService.deleteCycle(id);
             return new ResponseEntity<>(res, HttpStatus.OK);
