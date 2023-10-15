@@ -142,9 +142,9 @@ public class CycleController {
                     content = {@Content(mediaType = "application/json")})
     })
     @PutMapping("/updateCycle")
-    public ResponseEntity<?> updateCycle(@RequestBody CycleDTO cycleDTO) {
+    public ResponseEntity<?> updateCycle(@RequestBody Cycle cycle) {
         try {
-            CycleDTO dto = iCycleService.updateCycle(cycleDTO);
+            CycleDTO dto = iCycleService.updateCycle(cycle);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

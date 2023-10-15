@@ -108,21 +108,21 @@ public class CycleService implements ICycleService{
     }
 
     @Override
-    public CycleDTO updateCycle(CycleDTO cycleDTO) throws CustomException {
-        Long idToUpdate = cycleDTO.getId();
+    public CycleDTO updateCycle(Cycle cycle) throws CustomException {
+        Long idToUpdate = cycle.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
         }
 
         Cycle cycleDB = cycleRepository.findById(idToUpdate).orElseThrow();
-        cycleDB.setStatus(cycleDTO.getStatus());
-        cycleDB.setDateEnd(Utils.parseDate(String.valueOf(cycleDTO.getDateEnd())));
-        cycleDB.setDateBeging(Utils.parseDate(String.valueOf(cycleDTO.getDateBeging())));
-        cycleDB.setDaysOfBleeding(cycleDTO.getDaysOfBleeding());
+        cycleDB.setStatus(cycle.getStatus());
+        cycleDB.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+        cycleDB.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
+        cycleDB.setDaysOfBleeding(cycle.getDaysOfBleeding());
 
-        Cycle cycle = cycleRepository.save(cycleDB);
+        Cycle cycleUpdate = cycleRepository.save(cycleDB);
 
-        return mapToDTO(cycle);
+        return mapToDTO(cycleUpdate);
     }
 
     private CycleDTO mapToDTO (Cycle cycle){
