@@ -112,6 +112,25 @@ public class CycleController {
         }
     }
 
+    @Operation(summary = "Eliminar un ciclo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteEvent(@PathVariable("eventId") Long id) {
+        try {
+                String res = iCycleService.deleteCycle(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
 

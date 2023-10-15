@@ -94,6 +94,16 @@ public class CycleService implements ICycleService{
         return cycleDTO;
     }
 
+    @Override
+    public String deleteCycle(Long id) throws CustomException {
+        try{
+            cycleRepository.deleteById(id);
+            return "OK";
+        }catch (Exception e ){
+            throw new CustomException("Error al eliminar ciclo; " + e.getMessage());
+        }
+
+    }
 
 
 }
