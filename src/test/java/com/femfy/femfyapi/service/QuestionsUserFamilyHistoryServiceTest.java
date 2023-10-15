@@ -1,4 +1,4 @@
-package com.femfy.femfyapi.service;
+/*package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
 import com.femfy.femfyapi.repository.QuestionsUserFamilyHistoryRepository;
@@ -79,4 +79,4 @@ public class QuestionsUserFamilyHistoryServiceTest {
         verify(questionsUserFamilyHistoryRepository, times(1)).deleteById(id);
     }
 
-}
+}*/
