@@ -3,6 +3,7 @@ package com.femfy.femfyapi.service;
 import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.Cycle;
 import com.femfy.femfyapi.exception.CustomException;
+import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.CycleRepository;
 import dto.CycleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,43 @@ public class CycleService implements ICycleService{
             throw new CustomException("Error al eliminar ciclo; " + e.getMessage());
         }
 
+    }
+
+    @Override
+    public CycleDTO updateCycle(CycleDTO cycleDTO) {
+        Long idToUpdate = cycleDTO.getId();
+        if (idToUpdate == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
+        }
+
+        Cycle cycleDB = cycleRepository.findById(idToUpdate).orElseThrow();
+        cycleDB.setStatus(cycleDTO.getStatus());
+        cycleDB.setDateEnd(cycleDTO.getDateEnd());
+        cycleDB.setDateBeging(cycleDTO.getDateBeging());
+        cycleDB.setDaysOfBleeding(cycleDTO.getDaysOfBleeding());
+
+        Cycle cycle = cycleRepository.save(cycleDB);
+
+        return mapToDTO(cycle);
+    }
+
+    private CycleDTO mapToDTO (Cycle cycle){
+        if(cycle == null){
+            throw new EntityNotFoundException("Ciclo no encontrado");
+        }
+
+        CycleDTO dto = new CycleDTO();
+        dto.setId(cycle.getId());
+
+        if(cycle.getIdUser() != null){
+            dto.setIdUser(cycle.getIdUser());
+        }
+
+        dto.setStatus(cycle.getStatus());
+        dto.setDateEnd(cycle.getDateEnd());
+        dto.setDateBeging(cycle.getDateBeging());
+        dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
+        return dto;
     }
 
 

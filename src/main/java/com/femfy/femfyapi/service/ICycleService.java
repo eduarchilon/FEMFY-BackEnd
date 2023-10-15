@@ -15,5 +15,6 @@ public interface ICycleService {
     public List<CycleDTO> getCycleHistory(Long idUser) throws CustomException;
     public CycleDTO getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws IOException, CustomException;
     public String deleteCycle(Long id) throws CustomException;
+    public CycleDTO updateCycle (CycleDTO cycleDTO);
 
 }
