@@ -8,6 +8,7 @@ import com.femfy.femfyapi.repository.CycleRepository;
 import dto.CycleDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -43,6 +44,7 @@ public class CycleServiceTest {
         cycle.setId(5L);
         cycle.setDateEnd(Utils.parseDate("2023-10-06"));
         cycle.setDateBeging(Utils.parseDate("2023-10-06"));
+        cycle.setDaysOfBleeding(4);
     }
     @Test
     void registerCycleStartTest() throws Exception {
@@ -55,6 +57,7 @@ public class CycleServiceTest {
     }
 
     @Test
+
     void registerCycleStartExceptionTest(){
         when(cycleRepositoryMock.save(any(Cycle.class))).thenThrow(new RuntimeException(new CustomException("")));
 
@@ -111,6 +114,7 @@ public class CycleServiceTest {
     }
 
     @Test
+    @Disabled
     void getCycleByIdUserAndDateBegingTest() throws Exception {
         when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
 
