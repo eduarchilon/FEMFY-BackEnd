@@ -4,6 +4,7 @@ package com.femfy.femfyapi.controller;
 import com.femfy.femfyapi.entity.Cycle;
 import com.femfy.femfyapi.entity.ResponseError;
 import com.femfy.femfyapi.service.ICycleService;
+import dto.CalendarEventDTO;
 import dto.CycleDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -106,6 +108,44 @@ public class CycleController {
     public ResponseEntity<?> getCycle(@PathVariable(value = "idUser") Long idUser, @RequestParam("dateBeging") String dateBeging ) {
         try {
             CycleDTO dto = iCycleService.getCycleByIdUserAndDateBeging(idUser, dateBeging);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Operation(summary = "Eliminar un ciclo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCycle(@PathVariable("id") Long id) {
+        try {
+            Map<String, String> res = iCycleService.deleteCycle(id);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Operation(summary = "Modificar un ciclo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @PutMapping("/updateCycle")
+    public ResponseEntity<?> updateCycle(@RequestBody Cycle cycle) {
+        try {
+            CycleDTO dto = iCycleService.updateCycle(cycle);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

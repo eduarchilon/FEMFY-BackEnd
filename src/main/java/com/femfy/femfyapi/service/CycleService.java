@@ -3,15 +3,15 @@ package com.femfy.femfyapi.service;
 import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.Cycle;
 import com.femfy.femfyapi.exception.CustomException;
+import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.CycleRepository;
 import dto.CycleDTO;
+import org.hibernate.sql.OracleJoinFragment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CycleService implements ICycleService{
@@ -40,13 +40,15 @@ public class CycleService implements ICycleService{
     @Override
     public CycleDTO registerCycleEnd(Cycle cycle) throws IOException, CustomException {
         try{
-            CycleDTO cycleDTO = this.getCycleByIdUserAndDateBeging(cycle.getIdUser(), String.valueOf(cycle.getDateBeging()));
-            cycle.setDateBeging(cycleDTO.getDateBeging());
-            cycleDTO.setDateEnd(cycle.getDateEnd());
-            cycle.setId(cycleDTO.getId());
-            cycle.setDaysOfBleeding(cycleDTO.getDaysOfBleeding());
+            Cycle cycleBD = cycleRepository.findById(cycle.getId()).orElse(null);
+            if(cycleBD == null){
+                throw new CustomException("Error al obtener el ciclo");
+            }
+            cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+
             cycleRepository.save(cycle);
-            return cycleDTO;
+
+            return mapToDTO(cycle);
         }catch (Exception e){
             throw new CustomException("Error al registrar fin del ciclo: " + e.getMessage());
         }
@@ -66,6 +68,7 @@ public class CycleService implements ICycleService{
                 dto.setIdUser(cycle.getIdUser());
                 dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
                 dto.setDateEnd((cycle.getDateEnd()));
+                dto.setId(cycle.getId());
 
                 dtoList.add(dto);
             }
@@ -94,6 +97,63 @@ public class CycleService implements ICycleService{
         return cycleDTO;
     }
 
+    @Override
+    public Map<String, String> deleteCycle(Long id) throws CustomException {
+        try{
+            cycleRepository.deleteById(id);
+            Map<String, String> res = new HashMap<>();
+            res.put("Response", "OK");
+            return res;
+        }catch (Exception e ){
+            throw new CustomException("Error al eliminar ciclo; " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public CycleDTO updateCycle(Cycle cycle) throws CustomException {
+        Long idToUpdate = cycle.getId();
+        if (idToUpdate == null) {
+            throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
+        }
+
+        Cycle cycleDB = cycleRepository.findById(idToUpdate).orElseThrow();
+        if(cycle.getStatus() != null){
+            cycleDB.setStatus(cycle.getStatus());
+        }
+        if(cycle.getDateEnd() != null){
+            cycleDB.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+        }
+        if(cycle.getDateBeging() != null){
+            cycleDB.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
+        }
+        if(cycle.getDaysOfBleeding() != null){
+            cycleDB.setDaysOfBleeding(cycle.getDaysOfBleeding());
+        }
+
+        Cycle cycleUpdate = cycleRepository.save(cycleDB);
+
+        return mapToDTO(cycleUpdate);
+    }
+
+    private CycleDTO mapToDTO (Cycle cycle){
+        if(cycle == null){
+            throw new EntityNotFoundException("Ciclo no encontrado");
+        }
+
+        CycleDTO dto = new CycleDTO();
+        dto.setId(cycle.getId());
+
+        if(cycle.getIdUser() != null){
+            dto.setIdUser(cycle.getIdUser());
+        }
+
+        dto.setStatus(cycle.getStatus());
+        dto.setDateEnd(cycle.getDateEnd());
+        dto.setDateBeging(cycle.getDateBeging());
+        dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
+        return dto;
+    }
 
 
 }

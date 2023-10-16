@@ -40,6 +40,9 @@ public class User {
 	private String phone;
 	@Column(name="mailAddress",unique = true, nullable = false)
 	private String email;
+	private String emotion;
+	private String localidad;
+	private String avatar;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CalendarEvent> calendarEvents;
