@@ -111,9 +111,17 @@ public class CalendarEventService implements ICalendarEventService {
     }
 
     private void updateCalendarEventFields(CalendarEvent existingEvent, CalendarEventDTO calendarEventDTO) {
-        existingEvent.setTitle(calendarEventDTO.getTitle());
-        existingEvent.setDateEvent(calendarEventDTO.getDateEvent());
-        existingEvent.setHourAlert(calendarEventDTO.getHourAlert());
-        existingEvent.setDescription(calendarEventDTO.getDescription());
+        if(calendarEventDTO.getTitle() != null){
+            existingEvent.setTitle(calendarEventDTO.getTitle());
+        }
+        if(calendarEventDTO.getDateEvent() != null){
+            existingEvent.setDateEvent(calendarEventDTO.getDateEvent());
+        }
+        if(calendarEventDTO.getHourAlert() != null){
+            existingEvent.setHourAlert(calendarEventDTO.getHourAlert());
+        }
+        if(calendarEventDTO.getDescription() != null){
+            existingEvent.setDescription(calendarEventDTO.getDescription());
+        }
     }
 }
