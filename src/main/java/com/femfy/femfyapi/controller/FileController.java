@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,20 +48,28 @@ public class FileController {
 
 		})
 	@PostMapping("/uploadFile")
-	public ResponseEntity<FileDTO> uploadFile(  @RequestBody FileDTO fileDTO)
+	public ResponseEntity<FileDTO> uploadFile(@RequestBody FileDTO fileDTO)
 	{
-		String uploadResult =  iUploadFileService.uploadFile(fileDTO);
+		fileDTO	= iFileService.insertFile(fileDTO);
 		
-		if(uploadResult.equalsIgnoreCase("OK")) {
-			fileDTO	 = iFileService.insertFile(fileDTO);
-				return new ResponseEntity<>(fileDTO, HttpStatus.OK);
-		}else {
+		try {
+			if(fileDTO.getIdFile()!= null) {
+				fileDTO.setFileName(NameOfDocuement(fileDTO));
+				iUploadFileService.uploadFile(fileDTO);
+				
+					return new ResponseEntity<>(fileDTO, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(fileDTO,HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+		} catch (Exception e) {
 			return new ResponseEntity<>(fileDTO,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
 	}
 	
 
-	@Operation(summary = "Permite descargar un docuemento del repositorio de AZURE. Solo se requiere el nombre del archivo que se quiere DESCARGAR")
+	@Operation(summary = "Permite descargar un docuemento del repositorio de AZURE. se requiere IdUsuario + IdFile + nombreDelFile DESCARGAR")
 	@ApiResponses(value ={// - 
 		@ApiResponse(responseCode = "200", description = "Respuesta OK",
 				content = {@Content (mediaType = "application/json")}),
@@ -75,11 +84,12 @@ public class FileController {
 	@PostMapping("/downloadFile")
 	public ResponseEntity<FileDTO> downloadFile(@RequestBody FileDTO fileDTO)
 	{
+		fileDTO.setFileName(NameOfDocuement(fileDTO));
 		fileDTO =  iUploadFileService.downloadFile(fileDTO);
 		return new ResponseEntity<>(fileDTO, HttpStatus.OK);
 	}
 	
-	@Operation(summary = "Permite eliminar un docuemento del repositorio de AZURE. Solo se requiere el nombre del archivo que se quiere ELIMINAR")
+	@Operation(summary = "Permite eliminar un docuemento del repositorio de AZURE. Solo se requiere id del File para poder ELIMINAR el registro de la base + AZURE")
 	@ApiResponses(value ={// - 
 		@ApiResponse(responseCode = "200", description = "Respuesta OK",
 				content = {@Content (mediaType = "application/json")}),
@@ -92,12 +102,13 @@ public class FileController {
 
 		})
 	
-	@PostMapping("/deleteFile")
+	@DeleteMapping("/deleteFile")
 	public ResponseEntity<String> deleteFile(@RequestBody FileDTO fileDTO)
 	{
 		fileDTO = iFileService.getFileById(fileDTO.getIdFile());
 		
 		if(!fileDTO.getFileName().isEmpty() && fileDTO.getFileName()!=null) {
+			fileDTO.setFileName(NameOfDocuement(fileDTO));
 			String deleteResult = iUploadFileService.deleteFile(fileDTO);
 			
 			if(deleteResult.equalsIgnoreCase("OK")) {
@@ -143,4 +154,9 @@ public class FileController {
 		}
 		
 	}
+	
+	public String NameOfDocuement(FileDTO fileDTO) {
+		return fileDTO.getFileName()+"_idUser_"+fileDTO.getIdUser()+"_idFile_"+fileDTO.getIdFile();
+	}
+	
 }

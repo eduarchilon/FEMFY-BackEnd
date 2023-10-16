@@ -40,13 +40,15 @@ public class CycleService implements ICycleService{
     @Override
     public CycleDTO registerCycleEnd(Cycle cycle) throws IOException, CustomException {
         try{
-            CycleDTO cycleDTO = this.getCycleByIdUserAndDateBeging(cycle.getIdUser(), String.valueOf(cycle.getDateBeging()));
-            cycle.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
-            cycleDTO.setDateEnd(cycle.getDateEnd());
-            cycle.setId(cycleDTO.getId());
-            cycle.setDaysOfBleeding(cycleDTO.getDaysOfBleeding());
+            Cycle cycleBD = cycleRepository.findById(cycle.getId()).orElse(null);
+            if(cycleBD == null){
+                throw new CustomException("Error al obtener el ciclo");
+            }
+            cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+
             cycleRepository.save(cycle);
-            return cycleDTO;
+
+            return mapToDTO(cycle);
         }catch (Exception e){
             throw new CustomException("Error al registrar fin del ciclo: " + e.getMessage());
         }
@@ -116,10 +118,18 @@ public class CycleService implements ICycleService{
         }
 
         Cycle cycleDB = cycleRepository.findById(idToUpdate).orElseThrow();
-        cycleDB.setStatus(cycle.getStatus());
-        cycleDB.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
-        cycleDB.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
-        cycleDB.setDaysOfBleeding(cycle.getDaysOfBleeding());
+        if(cycle.getStatus() != null){
+            cycleDB.setStatus(cycle.getStatus());
+        }
+        if(cycle.getDateEnd() != null){
+            cycleDB.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+        }
+        if(cycle.getDateBeging() != null){
+            cycleDB.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
+        }
+        if(cycle.getDaysOfBleeding() != null){
+            cycleDB.setDaysOfBleeding(cycle.getDaysOfBleeding());
+        }
 
         Cycle cycleUpdate = cycleRepository.save(cycleDB);
 
