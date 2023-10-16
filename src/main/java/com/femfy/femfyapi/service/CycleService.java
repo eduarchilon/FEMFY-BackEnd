@@ -40,13 +40,15 @@ public class CycleService implements ICycleService{
     @Override
     public CycleDTO registerCycleEnd(Cycle cycle) throws IOException, CustomException {
         try{
-            CycleDTO cycleDTO = this.getCycleByIdUserAndDateBeging(cycle.getIdUser(), String.valueOf(cycle.getDateBeging()));
-            cycle.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
-            cycleDTO.setDateEnd(cycle.getDateEnd());
-            cycle.setId(cycleDTO.getId());
-            cycle.setDaysOfBleeding(cycleDTO.getDaysOfBleeding());
+            Cycle cycleBD = cycleRepository.findById(cycle.getId()).orElse(null);
+            if(cycleBD == null){
+                throw new CustomException("Error al obtener el ciclo");
+            }
+            cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+
             cycleRepository.save(cycle);
-            return cycleDTO;
+
+            return mapToDTO(cycle);
         }catch (Exception e){
             throw new CustomException("Error al registrar fin del ciclo: " + e.getMessage());
         }
