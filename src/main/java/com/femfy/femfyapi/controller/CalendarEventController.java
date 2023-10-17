@@ -102,7 +102,16 @@ public class CalendarEventController {
     })
     @PutMapping("/updateEvent")
     public ResponseEntity<CalendarEventDTO> updateEvent(@RequestBody CalendarEventDTO eventDTO) {
+        if (eventDTO == null || eventDTO.getId() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         CalendarEventDTO updatedEvent = calendarEventService.updateCalendarEvent(eventDTO);
+
+        if (updatedEvent == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(updatedEvent);
     }
 
