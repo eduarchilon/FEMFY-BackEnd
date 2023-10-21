@@ -2,6 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import java.util.List;
 
+import com.femfy.femfyapi.domain.interfaces.ITypeStudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.femfy.femfyapi.infraestructura.service.TypeStudyService;
-
 import com.femfy.femfyapi.delivery.dto.TypeStudyDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,10 +27,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping(path = "api/v1/typestudy", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TypeStudyController {
 	
-    private TypeStudyService typeStudyService;
+    private final ITypeStudyService typeStudyService;
     
     @Autowired
-    public TypeStudyController(TypeStudyService typeUserService) {
+    public TypeStudyController(ITypeStudyService typeUserService) {
         this.typeStudyService = typeUserService;
     }
 

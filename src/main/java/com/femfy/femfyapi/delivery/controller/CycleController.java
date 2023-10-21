@@ -1,7 +1,6 @@
 package com.femfy.femfyapi.delivery.controller;
 
 
-import com.femfy.femfyapi.domain.entity.Cycle;
 import com.femfy.femfyapi.domain.entity.ResponseError;
 import com.femfy.femfyapi.domain.interfaces.ICycleService;
 import com.femfy.femfyapi.delivery.dto.CycleDTO;
@@ -23,8 +22,13 @@ import java.util.Map;
 @RequestMapping(path = "api/v1/cycle", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CycleController {
 
+
+    private final ICycleService cycleService;
+
     @Autowired
-    ICycleService iCycleService;
+    public CycleController(ICycleService cycleService){
+        this.cycleService = cycleService;
+    }
 
     @Operation(summary = "Registra el inicio del nuevo ciclo")
     @ApiResponses(value ={// -
@@ -41,7 +45,7 @@ public class CycleController {
     @PostMapping("/registerCycleStart")
     public ResponseEntity<?> registerCycleStart(@RequestBody CycleDTO dto){
         try{
-            return new ResponseEntity<>(iCycleService.registerCycleStart(dto), HttpStatus.OK);
+            return new ResponseEntity<>(cycleService.registerCycleStart(dto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -62,7 +66,7 @@ public class CycleController {
     @PutMapping("/registerCycleEnd")
     public ResponseEntity<?> registerCycleEnd(@RequestBody CycleDTO cycleDto){
         try{
-            return new ResponseEntity<>(iCycleService.registerCycleEnd(cycleDto), HttpStatus.OK);
+            return new ResponseEntity<>(cycleService.registerCycleEnd(cycleDto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -83,7 +87,7 @@ public class CycleController {
     @GetMapping("/getCycleHistory/{idUser}")
     public ResponseEntity<?> getCycleHistory(@PathVariable(value = "idUser") Long idUser) {
         try {
-            List<CycleDTO> list = iCycleService.getCycleHistory(idUser);
+            List<CycleDTO> list = cycleService.getCycleHistory(idUser);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,7 +110,7 @@ public class CycleController {
     @GetMapping("/getCycle/{idUser}")
     public ResponseEntity<?> getCycle(@PathVariable(value = "idUser") Long idUser, @RequestParam("dateBeging") String dateBeging ) {
         try {
-            CycleDTO dto = iCycleService.getCycleByIdUserAndDateBeging(idUser, dateBeging);
+            CycleDTO dto = cycleService.getCycleByIdUserAndDateBeging(idUser, dateBeging);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -125,7 +129,7 @@ public class CycleController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteCycle(@PathVariable("id") Long id) {
         try {
-            Map<String, String> res = iCycleService.deleteCycle(id);
+            Map<String, String> res = cycleService.deleteCycle(id);
             return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -144,7 +148,7 @@ public class CycleController {
     @PutMapping("/updateCycle")
     public ResponseEntity<?> updateCycle(@RequestBody CycleDTO cycleDto) {
         try {
-            CycleDTO dto = iCycleService.updateCycle(cycleDto);
+            CycleDTO dto = cycleService.updateCycle(cycleDto);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

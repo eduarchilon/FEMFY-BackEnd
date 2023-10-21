@@ -16,8 +16,13 @@ import java.util.*;
 @Service
 public class CycleService implements ICycleService {
 
+
+    private final CycleRepository cycleRepository;
+
     @Autowired
-    CycleRepository cycleRepository;
+    public CycleService(CycleRepository cycleRepository){
+        this.cycleRepository = cycleRepository;
+    }
 
     @Override
     public CycleDTO registerCycleStart(CycleDTO cycleDto) throws Exception {

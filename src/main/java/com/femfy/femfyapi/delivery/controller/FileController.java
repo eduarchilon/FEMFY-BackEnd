@@ -29,11 +29,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/file", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileController {
+
+	private final IUploadFileService iUploadFileService;
+
+	private final IFileService iFileService;
+
 	@Autowired
-	IUploadFileService iUploadFileService;
-	
-	@Autowired
-	IFileService iFileService;
+	public FileController(IUploadFileService uploadFileService, IFileService fileService){
+		this.iUploadFileService = uploadFileService;
+		this.iFileService = fileService;
+	}
 	
 	@Operation(summary = "Permite subir un docuemento dentro del repositorio de AZURE. todos los datos son requeridos")
 	@ApiResponses(value ={// - 

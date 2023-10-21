@@ -2,6 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import java.util.List;
 
+import com.femfy.femfyapi.domain.interfaces.ITypeUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.femfy.femfyapi.infraestructura.service.TypeUserService;
-
 import com.femfy.femfyapi.delivery.dto.TypeUserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,9 +26,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/typeuser", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TypeUserController {
-    private TypeUserService typeUserService;
+    private final ITypeUserService typeUserService;
     @Autowired
-    public TypeUserController(TypeUserService typeUserService) {
+    public TypeUserController(ITypeUserService typeUserService) {
         this.typeUserService = typeUserService;
     }
 

@@ -2,7 +2,6 @@ package com.femfy.femfyapi.infraestructura.service;
 
 import java.util.ArrayList;
 import java.util.List;
-/*import java.util.Optional;*/
 
 import com.femfy.femfyapi.domain.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,13 @@ import com.femfy.femfyapi.delivery.dto.UserDTO;
 
 @Service
 public class UserService implements IUserService {
+
+	private final UserRepository userRepository;
+
 	@Autowired
-	UserRepository userRepository;
+	public UserService(UserRepository userRepository){
+		this.userRepository = userRepository;
+	}
 
 	@Override
 	public UserDTO saveUser(UserDTO userDTO) {

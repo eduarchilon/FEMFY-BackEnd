@@ -15,7 +15,7 @@ public class SwaggerConfig {
 	@Bean
 	Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.femfy.femfyapi.controller")).build();
+				.apis(RequestHandlerSelectors.basePackage("com.femfy.femfyapi.delivery.controller")).build();
 	}
 	
 

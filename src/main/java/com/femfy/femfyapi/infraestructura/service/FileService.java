@@ -20,8 +20,13 @@ import com.femfy.femfyapi.delivery.dto.TypeStudyDTO;
 @Service
 public class FileService implements IFileService {
 	
+
+	private final FileRepository fileRepository;
+
 	@Autowired
-	FileRepository fileRepository;
+	public FileService(FileRepository fileRepository){
+		this.fileRepository = fileRepository;
+	}
 
 	@Override
 	public FileDTO insertFile(FileDTO fileDTO) {
