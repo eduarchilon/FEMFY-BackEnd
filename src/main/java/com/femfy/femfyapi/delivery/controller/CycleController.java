@@ -95,7 +95,7 @@ public class CycleController {
     }
 
 
-    @Operation(summary = "Devuelve el ciclos de la usuario")
+    @Operation(summary = "Devuelve el ciclo de la usuario")
     @ApiResponses(value ={// -
             @ApiResponse(responseCode = "200", description = "Respuesta OK",
                     content = {@Content(mediaType = "application/json")}),

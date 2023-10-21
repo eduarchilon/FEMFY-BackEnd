@@ -47,7 +47,7 @@ public class CycleService implements ICycleService {
         try{
             Cycle cycleBD = cycleRepository.findById(cycleDto.getId()).orElseThrow(() -> new CustomException("No se encontró el ciclo")) ;
 
-            cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycleDto.getDateEnd())));
+            cycleBD.setDateEnd(cycleDto.getDateEnd());
 
             cycleRepository.save(cycleBD);
 
@@ -125,7 +125,7 @@ public class CycleService implements ICycleService {
     }
 
     @Override
-    public CycleDTO updateCycle(CycleDTO cycleDto) throws CustomException {
+    public CycleDTO updateCycle(CycleDTO cycleDto) throws IllegalArgumentException {
         Long idToUpdate = cycleDto.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
@@ -157,10 +157,10 @@ public class CycleService implements ICycleService {
         return dto;
     }
 
-    private void copyProperties(CycleDTO dto, Cycle cycle) throws CustomException {
+    private void copyProperties(CycleDTO dto, Cycle cycle){
         if(dto.getStatus() != null) cycle.setStatus(dto.getStatus());
-        if(dto.getDateBeging() != null) cycle.setDateBeging(Utils.parseDate(dto.getDateBeging().toString()));
-        if(dto.getDateEnd() != null) cycle.setDateEnd(Utils.parseDate(String.valueOf(dto.getDateEnd())));
+        if(dto.getDateBeging() != null) cycle.setDateBeging(dto.getDateBeging());
+        if(dto.getDateEnd() != null) cycle.setDateEnd(dto.getDateEnd());
         if(dto.getIdUser() != null) cycle.setIdUser(dto.getIdUser());
         if(dto.getDaysOfBleeding() != null) cycle.setDaysOfBleeding(dto.getDaysOfBleeding());
     }
