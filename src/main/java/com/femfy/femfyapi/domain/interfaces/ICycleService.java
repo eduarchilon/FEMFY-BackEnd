@@ -11,11 +11,11 @@ import java.util.Map;
 
 public interface ICycleService {
 
-    public CycleDTO registerCycleStart(Cycle cycle) throws Exception;
-    public CycleDTO registerCycleEnd(Cycle cycle) throws IOException, CustomException;
+    public CycleDTO registerCycleStart(CycleDTO cycleDto) throws Exception;
+    public CycleDTO registerCycleEnd(CycleDTO cycleDto) throws IOException, CustomException;
     public List<CycleDTO> getCycleHistory(Long idUser) throws CustomException;
     public CycleDTO getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws IOException, CustomException;
     public Map<String, String> deleteCycle(Long id) throws CustomException;
-    public CycleDTO updateCycle (Cycle cycle) throws CustomException;
+    public CycleDTO updateCycle (CycleDTO cycleDto) throws CustomException;
 
 }

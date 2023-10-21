@@ -39,9 +39,9 @@ public class CycleController {
 
     })
     @PostMapping("/registerCycleStart")
-    public ResponseEntity<?> registerCycleStart(@RequestBody Cycle cycle){
+    public ResponseEntity<?> registerCycleStart(@RequestBody CycleDTO dto){
         try{
-            return new ResponseEntity<>(iCycleService.registerCycleStart(cycle), HttpStatus.OK);
+            return new ResponseEntity<>(iCycleService.registerCycleStart(dto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,9 +60,9 @@ public class CycleController {
 
     })
     @PutMapping("/registerCycleEnd")
-    public ResponseEntity<?> registerCycleEnd(@RequestBody Cycle cycle){
+    public ResponseEntity<?> registerCycleEnd(@RequestBody CycleDTO cycleDto){
         try{
-            return new ResponseEntity<>(iCycleService.registerCycleEnd(cycle), HttpStatus.OK);
+            return new ResponseEntity<>(iCycleService.registerCycleEnd(cycleDto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -142,9 +142,9 @@ public class CycleController {
                     content = {@Content(mediaType = "application/json")})
     })
     @PutMapping("/updateCycle")
-    public ResponseEntity<?> updateCycle(@RequestBody Cycle cycle) {
+    public ResponseEntity<?> updateCycle(@RequestBody CycleDTO cycleDto) {
         try {
-            CycleDTO dto = iCycleService.updateCycle(cycle);
+            CycleDTO dto = iCycleService.updateCycle(cycleDto);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

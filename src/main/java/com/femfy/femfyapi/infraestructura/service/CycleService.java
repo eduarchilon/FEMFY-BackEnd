@@ -20,35 +20,33 @@ public class CycleService implements ICycleService {
     CycleRepository cycleRepository;
 
     @Override
-    public CycleDTO registerCycleStart(Cycle cycle) throws Exception {
+    public CycleDTO registerCycleStart(CycleDTO cycleDto) throws Exception {
         try{
-            CycleDTO dto = new CycleDTO();
-            dto.setStatus(cycle.getStatus());
-            dto.setIdUser(cycle.getIdUser());
-            dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
-            dto.setDateBeging(cycle.getDateBeging());
-            
+            Cycle cycle = new Cycle();
+            copyProperties(cycleDto, cycle);
             cycleRepository.save(cycle);
-            
-            dto.setId(cycle.getId());
-            return dto;
+
+            cycleDto.setId(cycle.getId());
+            return cycleDto;
         }catch (Exception e){
             throw new CustomException("Error al registrar inicio del ciclo: " + e.getMessage());
         }
     }
 
     @Override
-    public CycleDTO registerCycleEnd(Cycle cycle) throws IOException, CustomException {
+    public CycleDTO registerCycleEnd(CycleDTO cycleDto) throws IOException, CustomException {
+        if (cycleDto.getId() == null) {
+            throw new IllegalArgumentException("El ID es requerido para esta operacion");
+        }
+
         try{
-            Cycle cycleBD = cycleRepository.findById(cycle.getId()).orElse(null);
-            if(cycleBD == null){
-                throw new CustomException("Error al obtener el ciclo");
-            }
-            cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+            Cycle cycleBD = cycleRepository.findById(cycleDto.getId()).orElseThrow(() -> new CustomException("No se encontró el ciclo")) ;
 
-            cycleRepository.save(cycle);
+            cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycleDto.getDateEnd())));
 
-            return mapToDTO(cycle);
+            cycleRepository.save(cycleBD);
+
+            return mapToDTO(cycleBD);
         }catch (Exception e){
             throw new CustomException("Error al registrar fin del ciclo: " + e.getMessage());
         }
@@ -57,8 +55,13 @@ public class CycleService implements ICycleService {
     @Override
     public List<CycleDTO> getCycleHistory(Long idUser) throws CustomException {
         List<CycleDTO> dtoList = new ArrayList<>();
-        List<Cycle> cycleList = new ArrayList<>();
+        List<Cycle> cycleList;
+        if (idUser == null) {
+            throw new IllegalArgumentException("El ID de usuario es requerido para esta operacion");
+        }
+
         try {
+
             cycleList = cycleRepository.findAllByIdUser(idUser);
 
             for(Cycle cycle : cycleList){
@@ -81,6 +84,9 @@ public class CycleService implements ICycleService {
     @Override
     public CycleDTO getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws CustomException {
         CycleDTO cycleDTO = new CycleDTO();
+        if (idUser == null && dateBeging == null) {
+            throw new IllegalArgumentException("El ID de usuario y la fecha de inicio son requeridos para esta operacion");
+        }
 
         try{
             Date dateSql = Utils.parseDate(dateBeging);
@@ -99,6 +105,9 @@ public class CycleService implements ICycleService {
 
     @Override
     public Map<String, String> deleteCycle(Long id) throws CustomException {
+        if (id == null) {
+            throw new IllegalArgumentException("El ID es requerido para esta operacion");
+        }
         try{
             cycleRepository.deleteById(id);
             Map<String, String> res = new HashMap<>();
@@ -111,26 +120,14 @@ public class CycleService implements ICycleService {
     }
 
     @Override
-    public CycleDTO updateCycle(Cycle cycle) throws CustomException {
-        Long idToUpdate = cycle.getId();
+    public CycleDTO updateCycle(CycleDTO cycleDto) throws CustomException {
+        Long idToUpdate = cycleDto.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
         }
 
         Cycle cycleDB = cycleRepository.findById(idToUpdate).orElseThrow();
-        if(cycle.getStatus() != null){
-            cycleDB.setStatus(cycle.getStatus());
-        }
-        if(cycle.getDateEnd() != null){
-            cycleDB.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
-        }
-        if(cycle.getDateBeging() != null){
-            cycleDB.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
-        }
-        if(cycle.getDaysOfBleeding() != null){
-            cycleDB.setDaysOfBleeding(cycle.getDaysOfBleeding());
-        }
-
+        copyProperties(cycleDto, cycleDB);
         Cycle cycleUpdate = cycleRepository.save(cycleDB);
 
         return mapToDTO(cycleUpdate);
@@ -153,6 +150,14 @@ public class CycleService implements ICycleService {
         dto.setDateBeging(cycle.getDateBeging());
         dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
         return dto;
+    }
+
+    private void copyProperties(CycleDTO dto, Cycle cycle) throws CustomException {
+        if(dto.getStatus() != null) cycle.setStatus(dto.getStatus());
+        if(dto.getDateBeging() != null) cycle.setDateBeging(Utils.parseDate(dto.getDateBeging().toString()));
+        if(dto.getDateEnd() != null) cycle.setDateEnd(Utils.parseDate(String.valueOf(dto.getDateEnd())));
+        if(dto.getIdUser() != null) cycle.setIdUser(dto.getIdUser());
+        if(dto.getDaysOfBleeding() != null) cycle.setDaysOfBleeding(dto.getDaysOfBleeding());
     }
 
 

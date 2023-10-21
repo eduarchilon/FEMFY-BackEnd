@@ -26,6 +26,6 @@ public class CycleDTO {
     String status;
 
     @Schema(description = "Dias de sangrado", example = "Ej. 5")
-    int daysOfBleeding;
+    Integer daysOfBleeding;
 
 }
