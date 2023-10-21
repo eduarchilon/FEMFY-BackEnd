@@ -1,32 +1,17 @@
 package com.femfy.femfyapi.controller;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.femfy.femfyapi.entity.Cycle;
-import com.femfy.femfyapi.exception.CustomException;
-import com.femfy.femfyapi.service.CycleService;
-import com.femfy.femfyapi.service.ICycleService;
-import dto.CycleDTO;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import com.femfy.femfyapi.delivery.controller.CycleController;
+import com.femfy.femfyapi.domain.interfaces.ICycleService;
+import com.femfy.femfyapi.delivery.dto.CycleDTO;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @WebMvcTest(CycleController.class)
 @TestInstance(Lifecycle.PER_CLASS)

@@ -1,9 +1,10 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
-import com.femfy.femfyapi.entity.User;
-import com.femfy.femfyapi.repository.QuestionsUserFamilyHistoryRepository;
-import dto.QuestionsUserFamilyHistoryDTO;
+import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.infraestructura.service.QuestionsUserFamilyHistoryService;
+import com.femfy.femfyapi.domain.repository.QuestionsUserFamilyHistoryRepository;
+import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

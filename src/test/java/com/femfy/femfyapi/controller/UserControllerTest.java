@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dto.UserDTO;
+import com.femfy.femfyapi.delivery.dto.UserDTO;
 
 @SpringBootTest
 @WebAppConfiguration

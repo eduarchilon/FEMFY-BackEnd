@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.entity.TypeUser;
+import com.femfy.femfyapi.domain.entity.TypeUser;
+import com.femfy.femfyapi.domain.repository.TypeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,11 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.entity.User;
+import com.femfy.femfyapi.domain.entity.User;
 
-import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
-import com.femfy.femfyapi.repository.QuestionsUserMenstruationRepository;
-import dto.QuestionsUserMenstruationDTO;
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenstruation;
+import com.femfy.femfyapi.infraestructura.service.QuestionsUserMenstruationService;
+import com.femfy.femfyapi.domain.repository.QuestionsUserMenstruationRepository;
+import com.femfy.femfyapi.delivery.dto.QuestionsUserMenstruationDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

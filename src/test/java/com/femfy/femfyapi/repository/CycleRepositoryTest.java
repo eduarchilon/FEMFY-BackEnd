@@ -1,16 +1,15 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.Utils;
-import com.femfy.femfyapi.entity.Cycle;
-import com.femfy.femfyapi.exception.CustomException;
+import com.femfy.femfyapi.infraestructura.Utils;
+import com.femfy.femfyapi.domain.entity.Cycle;
+import com.femfy.femfyapi.domain.exception.CustomException;
+import com.femfy.femfyapi.domain.repository.CycleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

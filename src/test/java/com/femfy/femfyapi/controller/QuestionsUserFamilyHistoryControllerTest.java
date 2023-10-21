@@ -1,7 +1,8 @@
 package com.femfy.femfyapi.controller;
 
-import com.femfy.femfyapi.service.IQuestionsUserFamilyHistoryService;
-import dto.QuestionsUserFamilyHistoryDTO;
+import com.femfy.femfyapi.delivery.controller.QuestionsUserFamilyHistoryController;
+import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
+import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

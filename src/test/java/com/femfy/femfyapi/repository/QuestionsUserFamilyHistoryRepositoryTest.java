@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
+import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
+import com.femfy.femfyapi.domain.repository.QuestionsUserFamilyHistoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

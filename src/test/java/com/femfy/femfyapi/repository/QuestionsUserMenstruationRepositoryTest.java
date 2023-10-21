@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.entity.QuestionsUserMenstruation;
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenstruation;
+import com.femfy.femfyapi.domain.repository.QuestionsUserMenstruationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

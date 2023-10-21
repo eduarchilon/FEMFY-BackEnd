@@ -1,24 +1,22 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.Utils;
-import com.femfy.femfyapi.entity.Cycle;
-import com.femfy.femfyapi.exception.CustomException;
-import com.femfy.femfyapi.repository.CycleRepository;
+import com.femfy.femfyapi.infraestructura.Utils;
+import com.femfy.femfyapi.domain.entity.Cycle;
+import com.femfy.femfyapi.domain.exception.CustomException;
+import com.femfy.femfyapi.infraestructura.service.CycleService;
+import com.femfy.femfyapi.domain.repository.CycleRepository;
 
-import dto.CycleDTO;
-import org.junit.jupiter.api.BeforeAll;
+import com.femfy.femfyapi.delivery.dto.CycleDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;

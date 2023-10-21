@@ -1,10 +1,11 @@
 package com.femfy.femfyapi.service;
 
-import dto.QuestionsUserMenopauseDTO;
-import com.femfy.femfyapi.entity.QuestionsUserMenopause;
-import com.femfy.femfyapi.entity.User;
-import com.femfy.femfyapi.repository.QuestionsUserMenopauseRepository;
-import com.femfy.femfyapi.exception.EntityNotFoundException;
+import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.infraestructura.service.QuestionsUserMenopauseService;
+import com.femfy.femfyapi.domain.repository.QuestionsUserMenopauseRepository;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

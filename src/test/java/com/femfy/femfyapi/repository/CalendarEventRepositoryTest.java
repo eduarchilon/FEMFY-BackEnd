@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.entity.CalendarEvent;
+import com.femfy.femfyapi.domain.entity.CalendarEvent;
+import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

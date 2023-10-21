@@ -1,10 +1,11 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.entity.CalendarEvent;
-import com.femfy.femfyapi.entity.User;
-import com.femfy.femfyapi.exception.EntityNotFoundException;
-import com.femfy.femfyapi.repository.CalendarEventRepository;
-import dto.CalendarEventDTO;
+import com.femfy.femfyapi.domain.entity.CalendarEvent;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.infraestructura.service.CalendarEventService;
+import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
+import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

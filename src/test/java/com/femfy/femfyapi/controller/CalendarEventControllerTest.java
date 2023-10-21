@@ -1,7 +1,8 @@
 package com.femfy.femfyapi.controller;
 
-import com.femfy.femfyapi.service.ICalendarEventService;
-import dto.CalendarEventDTO;
+import com.femfy.femfyapi.delivery.controller.CalendarEventController;
+import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
+import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

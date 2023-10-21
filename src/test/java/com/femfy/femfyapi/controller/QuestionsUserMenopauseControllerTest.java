@@ -1,7 +1,8 @@
 package com.femfy.femfyapi.controller;
 
-import dto.QuestionsUserMenopauseDTO;
-import com.femfy.femfyapi.service.IQuestionsUserMenopauseService;
+import com.femfy.femfyapi.delivery.controller.QuestionsUserMenopauseController;
+import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
+import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

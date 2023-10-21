@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.femfy.femfyapi.infraestructura.service.TypeUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.femfy.femfyapi.entity.TypeUser;
-import com.femfy.femfyapi.repository.TypeUserRepository;
+import com.femfy.femfyapi.domain.entity.TypeUser;
+import com.femfy.femfyapi.domain.repository.TypeUserRepository;
 
-import dto.TypeUserDTO;
+import com.femfy.femfyapi.delivery.dto.TypeUserDTO;
 
 class TypeUserServiceTest {
 

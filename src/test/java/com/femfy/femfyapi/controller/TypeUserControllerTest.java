@@ -6,14 +6,15 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.femfy.femfyapi.delivery.controller.TypeUserController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.femfy.femfyapi.service.TypeUserService;
+import com.femfy.femfyapi.infraestructura.service.TypeUserService;
 
-import dto.TypeUserDTO;
+import com.femfy.femfyapi.delivery.dto.TypeUserDTO;
 
 class TypeUserControllerTest {
 
