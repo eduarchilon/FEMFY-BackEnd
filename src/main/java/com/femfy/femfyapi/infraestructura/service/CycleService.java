@@ -89,7 +89,7 @@ public class CycleService implements ICycleService {
     @Override
     public CycleDTO getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws CustomException {
         CycleDTO cycleDTO = new CycleDTO();
-        if (idUser == null && dateBeging == null) {
+        if (idUser == null || dateBeging == null) {
             throw new IllegalArgumentException("El ID de usuario y la fecha de inicio son requeridos para esta operacion");
         }
 

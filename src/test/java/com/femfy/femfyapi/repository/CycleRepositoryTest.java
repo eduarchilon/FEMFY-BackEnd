@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +31,8 @@ public class  CycleRepositoryTest {
         cycle.setStatus("Alegre");
         cycle.setIdUser(1L);
         cycle.setId(1L);
-        cycle.setDateEnd(Utils.parseDate("2023-10-06"));
-        cycle.setDateBeging(Utils.parseDate("2023-10-06"));
+        cycle.setDateEnd(Date.valueOf("2023-10-16"));
+        cycle.setDateBeging(Date.valueOf("2023-10-16"));
     }
 
     @Test
@@ -42,15 +43,14 @@ public class  CycleRepositoryTest {
         assertNotNull(resObtenida);
     }
 
-    @Disabled
     @Test
     void findAllByIdUserTest() throws CustomException {
         Cycle cycle2 = new Cycle();
         cycle2.setId(2L);
         cycle2.setIdUser(1L);
         cycle2.setStatus("Triste");
-        cycle2.setDateEnd(Utils.parseDate("2023-10-16"));
-        cycle2.setDateBeging(Utils.parseDate("2023-10-16"));
+        cycle2.setDateEnd(Date.valueOf("2023-10-16"));
+        cycle2.setDateBeging(Date.valueOf("2023-10-16"));
         cycleRepository.save(cycle);
         cycleRepository.save(cycle2);
 
@@ -77,15 +77,15 @@ public class  CycleRepositoryTest {
         assertThat(resObtenida).isEmpty();
     }
 
-    @Disabled
+
     @Test
     void updateCycleTest() throws CustomException {
         Cycle cycle2 = new Cycle();
-        cycle2.setId(1L);
-        cycle2.setIdUser(1L);
+        cycle2.setId(2L);
+        cycle2.setIdUser(2L);
         cycle2.setStatus("Triste");
-        cycle2.setDateEnd(Utils.parseDate("2023-10-16"));
-        cycle2.setDateBeging(Utils.parseDate("2023-10-16"));
+        cycle2.setDateEnd(Date.valueOf("2023-10-16"));
+        cycle2.setDateBeging(Date.valueOf("2023-10-16"));
         cycleRepository.save(cycle2);
         Cycle cicloGuardado = cycleRepository.findById(cycle2.getId())
                 .orElseThrow(() -> new CustomException("No se encontró el ciclo con ID " + cycle2.getId()));
