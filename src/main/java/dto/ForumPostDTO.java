@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ForumPostDTO {
@@ -21,4 +22,8 @@ public class ForumPostDTO {
 
     @Schema(description = "Fecha y hora de creación de la publicación", example = "2023-10-21 14:30:00")
     private Date createdDate;
+
+    @Schema(description = "Lista de respuestas a la publicación en el foro")
+    private List<ForumReplayDTO> replies;
+
 }
