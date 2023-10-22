@@ -6,7 +6,7 @@ name: Build and deploy JAR app to Azure Web App - femfy-api
 on:
   push:
     branches:
-      - master
+      - '*'
   workflow_dispatch:
 
 jobs:
