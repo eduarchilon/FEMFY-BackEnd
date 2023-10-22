@@ -4,26 +4,22 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "forum_post")
-public class ForumPost {
+@Table(name = "forum_replay")
+public class ForumReplay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "topic_id")
-    private ForumTopic topic;
+    @JoinColumn(name = "post_id")
+    private ForumPost post;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<ForumReplay> replies;
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
@@ -32,6 +28,6 @@ public class ForumPost {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    public ForumPost() {
+    public ForumReplay() {
     }
 }
