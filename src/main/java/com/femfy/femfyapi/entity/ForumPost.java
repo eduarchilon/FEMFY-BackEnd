@@ -4,29 +4,30 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "forum_topic")
-public class ForumTopic {
+@Table(name = "forum_post")
+public class ForumPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
-    private List<ForumPost> forumPosts;
+    @ManyToOne
+    @JoinColumn(name = "topic_id")
+    private ForumTopic topic;
 
-    @Column(name = "title")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    public ForumTopic() {
+    public ForumPost() {
     }
 }
