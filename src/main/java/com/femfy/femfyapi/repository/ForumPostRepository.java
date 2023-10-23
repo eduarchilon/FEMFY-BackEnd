@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ForumPostRepository extends JpaRepository<ForumPost, Long> {
     List<ForumPost> findByUserId(Long userId);
+
+    List<ForumPost> findByTopicId(Long topicId);
 }
