@@ -107,14 +107,25 @@ class CalendarEventControllerTest {
     @Test
     void testUpdateEventSuccess() {
         CalendarEventDTO eventDTO = new CalendarEventDTO();
-        when(service.updateCalendarEvent(eventDTO)).thenReturn(eventDTO);
+        eventDTO.setId(1L);
+        eventDTO.setUserId(2L);
+        eventDTO.setTitle("Título");
+        eventDTO.setDateEvent(new java.util.Date());
+        eventDTO.setHourAlert(new java.util.Date());
+        eventDTO.setDescription("Descripción");
+
+        CalendarEventDTO updatedEventDTO = new CalendarEventDTO();
+
+        when(service.updateCalendarEvent(eventDTO)).thenReturn(updatedEventDTO);
 
         ResponseEntity<CalendarEventDTO> response = controller.updateEvent(eventDTO);
 
         assertAll(
                 () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
-                () -> assertEquals(eventDTO, response.getBody())
+                () -> assertEquals(updatedEventDTO, response.getBody())
         );
+
+        assertNotNull(response.getBody());
     }
 
     @Test
