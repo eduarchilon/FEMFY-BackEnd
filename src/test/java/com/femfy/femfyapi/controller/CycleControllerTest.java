@@ -210,7 +210,7 @@ class CycleControllerTest {
     @Test()
     void updateCycleTest() throws Exception {
         when(cycleServiceMock.updateCycle(any(CycleDTO.class))).thenReturn(dto);
-
+            //test
         mockMvc.perform(put("/api/v1/cycle/updateCycle")
                         .content( this.mapper.writeValueAsBytes(dto))
                         .contentType(MediaType.APPLICATION_JSON)
