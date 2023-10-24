@@ -6,6 +6,7 @@ import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
 import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
+import com.femfy.femfyapi.infraestructura.mapper.CalendarEventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,45 +28,44 @@ public class CalendarEventService implements ICalendarEventService {
     public List<CalendarEventDTO> getCalendarEvents() {
         List<CalendarEvent> calendarEventList = calendarEventRepository.findAll();
         return calendarEventList.stream()
-                .map(this::mapToDTO)
+                .map(CalendarEventMapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<CalendarEventDTO> getCalendarEvent(Long id) {
         Optional<CalendarEvent> calendarEvent = calendarEventRepository.findById(id);
-        return calendarEvent.map(this::mapToDTO);
+        return calendarEvent.map(CalendarEventMapper::mapToDTO);
     }
 
     @Override
     public List<CalendarEventDTO> getCalendarEventByUser(Long userId) {
         List<CalendarEvent> calendarEvents = calendarEventRepository.findByUserId(userId);
         return calendarEvents.stream()
-                .map(this::mapToDTO)
+                .map(CalendarEventMapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public CalendarEventDTO saveCalendarEvent(CalendarEventDTO calendarEventDTO) {
-        CalendarEvent calendarEvent = mapToEntity(calendarEventDTO);
+    public CalendarEventDTO saveCalendarEvent(CalendarEvent calendarEvent) {
         calendarEvent = calendarEventRepository.save(calendarEvent);
-        return mapToDTO(calendarEvent);
+        return CalendarEventMapper.mapToDTO(calendarEvent);
     }
 
     @Override
-    public CalendarEventDTO updateCalendarEvent(CalendarEventDTO calendarEventDTO) {
-        Long idToUpdate = calendarEventDTO.getId();
+    public CalendarEventDTO updateCalendarEvent(CalendarEvent calendarEvent) {
+        Long idToUpdate = calendarEvent.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
         }
 
         CalendarEvent existingEvent = findCalendarEventById(idToUpdate);
 
-        updateCalendarEventFields(existingEvent, calendarEventDTO);
+        updateCalendarEventFields(existingEvent, calendarEvent);
 
         existingEvent = calendarEventRepository.save(existingEvent);
 
-        return mapToDTO(existingEvent);
+        return CalendarEventMapper.mapToDTO(existingEvent);
     }
 
     @Override
@@ -73,56 +73,24 @@ public class CalendarEventService implements ICalendarEventService {
         calendarEventRepository.deleteById(id);
     }
 
-    private CalendarEventDTO mapToDTO(CalendarEvent calendarEvent) {
-        if (calendarEvent == null) {
-            throw new EntityNotFoundException("Evento no encontrado");
-        }
-
-        CalendarEventDTO dto = new CalendarEventDTO();
-        dto.setId(calendarEvent.getId());
-
-        if (calendarEvent.getUser() != null) {
-            dto.setUserId(calendarEvent.getUser().getId());
-        }
-
-        dto.setTitle(calendarEvent.getTitle());
-        dto.setDateEvent(calendarEvent.getDateEvent());
-        dto.setHourAlert(calendarEvent.getHourAlert());
-        dto.setDescription(calendarEvent.getDescription());
-        return dto;
-    }
-
-    private CalendarEvent mapToEntity(CalendarEventDTO dto) {
-        User user = new User();
-        user.setId(dto.getUserId());
-
-        CalendarEvent calendarEvent = new CalendarEvent();
-        calendarEvent.setId(dto.getId());
-        calendarEvent.setUser(user);
-        calendarEvent.setTitle(dto.getTitle());
-        calendarEvent.setDateEvent(dto.getDateEvent());
-        calendarEvent.setHourAlert(dto.getHourAlert());
-        calendarEvent.setDescription(dto.getDescription());
-        return calendarEvent;
-    }
 
     private CalendarEvent findCalendarEventById(Long eventId) {
         return calendarEventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró un evento con el ID: " + eventId));
     }
 
-    private void updateCalendarEventFields(CalendarEvent existingEvent, CalendarEventDTO calendarEventDTO) {
-        if(calendarEventDTO.getTitle() != null){
-            existingEvent.setTitle(calendarEventDTO.getTitle());
+    private void updateCalendarEventFields(CalendarEvent existingEvent, CalendarEvent calendarEvent) {
+        if(calendarEvent.getTitle() != null){
+            existingEvent.setTitle(calendarEvent.getTitle());
         }
-        if(calendarEventDTO.getDateEvent() != null){
-            existingEvent.setDateEvent(calendarEventDTO.getDateEvent());
+        if(calendarEvent.getDateEvent() != null){
+            existingEvent.setDateEvent(calendarEvent.getDateEvent());
         }
-        if(calendarEventDTO.getHourAlert() != null){
-            existingEvent.setHourAlert(calendarEventDTO.getHourAlert());
+        if(calendarEvent.getHourAlert() != null){
+            existingEvent.setHourAlert(calendarEvent.getHourAlert());
         }
-        if(calendarEventDTO.getDescription() != null){
-            existingEvent.setDescription(calendarEventDTO.getDescription());
+        if(calendarEvent.getDescription() != null){
+            existingEvent.setDescription(calendarEvent.getDescription());
         }
     }
 }

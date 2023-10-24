@@ -2,6 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
+import com.femfy.femfyapi.infraestructura.mapper.CalendarEventMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -87,7 +88,7 @@ public class CalendarEventController {
     })
     @PostMapping("/createEvent")
     public ResponseEntity<CalendarEventDTO> createEvent(@RequestBody CalendarEventDTO eventDTO) {
-        CalendarEventDTO createdEvent = calendarEventService.saveCalendarEvent(eventDTO);
+        CalendarEventDTO createdEvent = calendarEventService.saveCalendarEvent(CalendarEventMapper.mapToEntity(eventDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
     }
 
@@ -106,7 +107,7 @@ public class CalendarEventController {
             return ResponseEntity.notFound().build();
         }
 
-        CalendarEventDTO updatedEvent = calendarEventService.updateCalendarEvent(eventDTO);
+        CalendarEventDTO updatedEvent = calendarEventService.updateCalendarEvent(CalendarEventMapper.mapToEntity(eventDTO));
 
         if (updatedEvent == null) {
             return ResponseEntity.notFound().build();

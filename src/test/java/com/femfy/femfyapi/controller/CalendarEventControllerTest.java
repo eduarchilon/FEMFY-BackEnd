@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.controller;
 
 import com.femfy.femfyapi.delivery.controller.CalendarEventController;
+import com.femfy.femfyapi.domain.entity.CalendarEvent;
 import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
 import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 
@@ -96,7 +97,7 @@ class CalendarEventControllerTest {
     @Test
     void testCreateEvent() {
         CalendarEventDTO eventDTO = new CalendarEventDTO();
-        when(service.saveCalendarEvent(any(CalendarEventDTO.class))).thenReturn(eventDTO);
+        when(service.saveCalendarEvent(any(CalendarEvent.class))).thenReturn(eventDTO);
 
         ResponseEntity<CalendarEventDTO> response = controller.createEvent(eventDTO);
 
@@ -109,8 +110,9 @@ class CalendarEventControllerTest {
     @Test
     @Disabled
     void testUpdateEventSuccess() {
+        CalendarEvent event = new CalendarEvent();
         CalendarEventDTO eventDTO = new CalendarEventDTO();
-        when(service.updateCalendarEvent(eventDTO)).thenReturn(eventDTO);
+        when(service.updateCalendarEvent(event)).thenReturn(eventDTO);
 
         ResponseEntity<CalendarEventDTO> response = controller.updateEvent(eventDTO);
 
@@ -123,7 +125,8 @@ class CalendarEventControllerTest {
     @Test
     void testUpdateEventNotFound() {
         CalendarEventDTO eventDTO = new CalendarEventDTO();
-        when(service.updateCalendarEvent(eventDTO)).thenReturn(null);
+        CalendarEvent event = new CalendarEvent();
+        when(service.updateCalendarEvent(event)).thenReturn(null);
 
         ResponseEntity<CalendarEventDTO> response = controller.updateEvent(eventDTO);
 
