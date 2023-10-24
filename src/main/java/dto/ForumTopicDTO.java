@@ -11,7 +11,7 @@ public class ForumTopicDTO {
     @Schema(description = "ID del tema del foro", example = "1")
     private Long id;
 
-    @Schema(description = "Título del tema del foro", example = "Discusión sobre tecnología")
+    @Schema(description = "Título del tema del foro", example = "Maternidad")
     private String title;
 
     @Schema(description = "URL de la imagen relacionada con el tema", example = "https://ejemplo.com/imagen.jpg")
