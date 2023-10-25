@@ -1,18 +1,14 @@
 package com.femfy.femfyapi.infraestructura.service;
 
 import com.femfy.femfyapi.domain.entity.CalendarEvent;
-import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
-import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
-import com.femfy.femfyapi.infraestructura.mapper.CalendarEventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CalendarEventService implements ICalendarEventService {
@@ -25,35 +21,28 @@ public class CalendarEventService implements ICalendarEventService {
     }
 
     @Override
-    public List<CalendarEventDTO> getCalendarEvents() {
-        List<CalendarEvent> calendarEventList = calendarEventRepository.findAll();
-        return calendarEventList.stream()
-                .map(CalendarEventMapper::mapToDTO)
-                .collect(Collectors.toList());
+    public List<CalendarEvent> getCalendarEvents() {
+        return calendarEventRepository.findAll();
     }
 
     @Override
-    public Optional<CalendarEventDTO> getCalendarEvent(Long id) {
+    public Optional<CalendarEvent> getCalendarEvent(Long id) {
         Optional<CalendarEvent> calendarEvent = calendarEventRepository.findById(id);
-        return calendarEvent.map(CalendarEventMapper::mapToDTO);
+        return calendarEvent;
     }
 
     @Override
-    public List<CalendarEventDTO> getCalendarEventByUser(Long userId) {
-        List<CalendarEvent> calendarEvents = calendarEventRepository.findByUserId(userId);
-        return calendarEvents.stream()
-                .map(CalendarEventMapper::mapToDTO)
-                .collect(Collectors.toList());
+    public List<CalendarEvent> getCalendarEventByUser(Long userId) {
+        return calendarEventRepository.findByUserId(userId);
     }
 
     @Override
-    public CalendarEventDTO saveCalendarEvent(CalendarEvent calendarEvent) {
-        calendarEvent = calendarEventRepository.save(calendarEvent);
-        return CalendarEventMapper.mapToDTO(calendarEvent);
+    public CalendarEvent saveCalendarEvent(CalendarEvent calendarEvent) {
+        return calendarEventRepository.save(calendarEvent);
     }
 
     @Override
-    public CalendarEventDTO updateCalendarEvent(CalendarEvent calendarEvent) {
+    public CalendarEvent updateCalendarEvent(CalendarEvent calendarEvent) {
         Long idToUpdate = calendarEvent.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
@@ -65,7 +54,7 @@ public class CalendarEventService implements ICalendarEventService {
 
         existingEvent = calendarEventRepository.save(existingEvent);
 
-        return CalendarEventMapper.mapToDTO(existingEvent);
+        return existingEvent;
     }
 
     @Override

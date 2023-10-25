@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -38,7 +39,9 @@ public class CalendarEventController {
     })
     @GetMapping("/getEventsByUser/{userId}")
     public ResponseEntity<List<CalendarEventDTO>> getEventsByUser(@PathVariable("userId") Long userId) {
-        List<CalendarEventDTO> events = calendarEventService.getCalendarEventByUser(userId);
+        List<CalendarEventDTO> events = calendarEventService.getCalendarEventByUser(userId).stream()
+                                                                .map(CalendarEventMapper::mapToDTO)
+                                                                .collect(Collectors.toList());
         if (!events.isEmpty()) {
             return ResponseEntity.ok(events);
         } else {
@@ -57,7 +60,7 @@ public class CalendarEventController {
     })
     @GetMapping("/{eventId}")
     public ResponseEntity<CalendarEventDTO> getEventById(@PathVariable("eventId") Long eventId) {
-        Optional<CalendarEventDTO> event = calendarEventService.getCalendarEvent(eventId);
+        Optional<CalendarEventDTO> event = calendarEventService.getCalendarEvent(eventId).map(CalendarEventMapper::mapToDTO);
         return event.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -73,7 +76,9 @@ public class CalendarEventController {
     })
     @GetMapping("/getAllEvents")
     public ResponseEntity<List<CalendarEventDTO>> getAllEvents() {
-        List<CalendarEventDTO> events = calendarEventService.getCalendarEvents();
+        List<CalendarEventDTO> events = calendarEventService.getCalendarEvents().stream()
+                                                                .map(CalendarEventMapper::mapToDTO)
+                                                                .collect(Collectors.toList());
         return ResponseEntity.ok(events);
     }
 
@@ -88,7 +93,7 @@ public class CalendarEventController {
     })
     @PostMapping("/createEvent")
     public ResponseEntity<CalendarEventDTO> createEvent(@RequestBody CalendarEventDTO eventDTO) {
-        CalendarEventDTO createdEvent = calendarEventService.saveCalendarEvent(CalendarEventMapper.mapToEntity(eventDTO));
+        CalendarEventDTO createdEvent = CalendarEventMapper.mapToDTO(calendarEventService.saveCalendarEvent(CalendarEventMapper.mapToEntity(eventDTO)));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
     }
 
@@ -107,7 +112,7 @@ public class CalendarEventController {
             return ResponseEntity.notFound().build();
         }
 
-        CalendarEventDTO updatedEvent = calendarEventService.updateCalendarEvent(CalendarEventMapper.mapToEntity(eventDTO));
+        CalendarEventDTO updatedEvent = CalendarEventMapper.mapToDTO(calendarEventService.updateCalendarEvent(CalendarEventMapper.mapToEntity(eventDTO)));
 
         if (updatedEvent == null) {
             return ResponseEntity.notFound().build();

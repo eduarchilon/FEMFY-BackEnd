@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public interface ICalendarEventService {
 
-    List<CalendarEventDTO> getCalendarEvents();
+    List<CalendarEvent> getCalendarEvents();
 
-    Optional<CalendarEventDTO> getCalendarEvent(Long id);
+    Optional<CalendarEvent> getCalendarEvent(Long id);
 
-    List<CalendarEventDTO> getCalendarEventByUser(Long userId);
+    List<CalendarEvent> getCalendarEventByUser(Long userId);
 
-    CalendarEventDTO saveCalendarEvent(CalendarEvent calendarEvent);
+    CalendarEvent saveCalendarEvent(CalendarEvent calendarEvent);
 
-    CalendarEventDTO updateCalendarEvent(CalendarEvent calendarEvent);
+    CalendarEvent updateCalendarEvent(CalendarEvent calendarEvent);
 
     void deleteCalendarEvent(Long id);
 }
