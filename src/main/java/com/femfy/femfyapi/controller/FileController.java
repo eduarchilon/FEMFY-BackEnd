@@ -31,132 +31,87 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public class FileController {
 	@Autowired
 	IUploadFileService iUploadFileService;
-	
+
 	@Autowired
 	IFileService iFileService;
-	
+
 	@Operation(summary = "Permite subir un docuemento dentro del repositorio de AZURE. todos los datos son requeridos")
-	@ApiResponses(value ={// - 
-		@ApiResponse(responseCode = "200", description = "Respuesta OK",
-				content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "500", description = "Unexpected system error",
-						content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
-		content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "404", description = "Usuario inexistente",
-		content = {@Content (mediaType = "application/json")})
+	@ApiResponses(value = { // -
+			@ApiResponse(responseCode = "200", description = "Respuesta OK", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "Unexpected system error", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", description = "Usuario inexistente", content = {
+					@Content(mediaType = "application/json") })
 
-		})
+	})
 	@PostMapping("/uploadFile")
-	public ResponseEntity<FileDTO> uploadFile(@RequestBody FileDTO fileDTO)
-	{
-		fileDTO	= iFileService.insertFile(fileDTO);
-		
+	public ResponseEntity<FileDTO> uploadFile(@RequestBody FileDTO fileDTO) {
+		fileDTO = iFileService.insertFile(fileDTO);
+
 		try {
-			if(fileDTO.getIdFile()!= null) {
-				fileDTO.setFileName(NameOfDocuement(fileDTO));
-				iUploadFileService.uploadFile(fileDTO);
-				
-					return new ResponseEntity<>(fileDTO, HttpStatus.OK);
-			}else {
-				return new ResponseEntity<>(fileDTO,HttpStatus.INTERNAL_SERVER_ERROR);
+			if (fileDTO.getIdFile() != null) {
+				return new ResponseEntity<>(fileDTO, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(fileDTO, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			
+
 		} catch (Exception e) {
-			return new ResponseEntity<>(fileDTO,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(fileDTO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-	}
-	
 
-	@Operation(summary = "Permite descargar un docuemento del repositorio de AZURE. se requiere IdUsuario + IdFile + nombreDelFile DESCARGAR")
-	@ApiResponses(value ={// - 
-		@ApiResponse(responseCode = "200", description = "Respuesta OK",
-				content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "500", description = "Unexpected system error",
-						content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
-		content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "404", description = "Usuario inexistente",
-		content = {@Content (mediaType = "application/json")})
-
-		})
-	@PostMapping("/downloadFile")
-	public ResponseEntity<FileDTO> downloadFile(@RequestBody FileDTO fileDTO)
-	{
-		fileDTO.setFileName(NameOfDocuement(fileDTO));
-		fileDTO =  iUploadFileService.downloadFile(fileDTO);
-		return new ResponseEntity<>(fileDTO, HttpStatus.OK);
 	}
-	
+
 	@Operation(summary = "Permite eliminar un docuemento del repositorio de AZURE. Solo se requiere id del File para poder ELIMINAR el registro de la base + AZURE")
-	@ApiResponses(value ={// - 
-		@ApiResponse(responseCode = "200", description = "Respuesta OK",
-				content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "500", description = "Unexpected system error",
-						content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
-		content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "404", description = "Usuario inexistente",
-		content = {@Content (mediaType = "application/json")})
+	@ApiResponses(value = { // -
+			@ApiResponse(responseCode = "200", description = "Respuesta OK", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "Unexpected system error", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", description = "Usuario inexistente", content = {
+					@Content(mediaType = "application/json") })
 
-		})
-	
+	})
+
 	@DeleteMapping("/deleteFile")
-	public ResponseEntity<String> deleteFile(@RequestBody FileDTO fileDTO)
-	{
-		fileDTO = iFileService.getFileById(fileDTO.getIdFile());
-		
-		if(!fileDTO.getFileName().isEmpty() && fileDTO.getFileName()!=null) {
-			fileDTO.setFileName(NameOfDocuement(fileDTO));
-			String deleteResult = iUploadFileService.deleteFile(fileDTO);
-			
-			if(deleteResult.equalsIgnoreCase("OK")) {
-				String result = iFileService.deleteFile(fileDTO);
-				
-				if(result.equalsIgnoreCase("OK")){
-					return new ResponseEntity<String>("Documento eliminado",HttpStatus.OK);
-				}else {
-					return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-				
-			}else {
-				return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}else {
-			return new ResponseEntity<String>("No existe el ID del docuemnto enviado",HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> deleteFile(@RequestBody FileDTO fileDTO) {
+
+		String result = iFileService.deleteFile(fileDTO);
+
+		if (result.equalsIgnoreCase("OK")) {
+			return new ResponseEntity<String>("Documento eliminado", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("No se pudo eliminar el Documento", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
-	
-	@Operation(summary = "Realizar la consulta de todos los documentos de un usuario. Solo es necesaro enviar el ID del usuario, para recuperar todos los documentos")
-	@ApiResponses(value ={// - 
-		@ApiResponse(responseCode = "200", description = "Respuesta OK",
-				content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "500", description = "Unexpected system error",
-						content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
-		content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "404", description = "Usuario inexistente",
-		content = {@Content (mediaType = "application/json")})
 
-		})
-	
+	@Operation(summary = "Realizar la consulta de todos los documentos de un usuario. Solo es necesaro enviar el ID del usuario, para recuperar todos los documentos")
+	@ApiResponses(value = { // -
+			@ApiResponse(responseCode = "200", description = "Respuesta OK", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "Unexpected system error", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", description = "Usuario inexistente", content = {
+					@Content(mediaType = "application/json") })
+
+	})
+
 	// ***** swagger - openapi *****
-	@GetMapping("/{userId}") 
+	@GetMapping("/{userId}")
 	public ResponseEntity<List<FileDTO>> getUserById(@PathVariable("userId") Long userId) {
 		List<FileDTO> documents = new ArrayList<>();
 		documents = iFileService.findDocumentsByIdUser(userId);
-		if(documents.size() >0){
+		if (documents.size() > 0) {
 			return new ResponseEntity<>(documents, HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<>(documents, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	public String NameOfDocuement(FileDTO fileDTO) {
-		return fileDTO.getFileName()+"_idUser_"+fileDTO.getIdUser()+"_idFile_"+fileDTO.getIdFile();
-	}
-	
 }
