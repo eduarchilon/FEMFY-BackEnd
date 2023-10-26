@@ -11,11 +11,11 @@ import java.util.Map;
 
 public interface ICycleService {
 
-    public CycleDTO registerCycleStart(CycleDTO cycleDto) throws Exception;
-    public CycleDTO registerCycleEnd(CycleDTO cycleDto) throws IOException, CustomException;
-    public List<CycleDTO> getCycleHistory(Long idUser) throws CustomException;
-    public CycleDTO getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws IOException, CustomException;
+    public Cycle registerCycleStart(Cycle cycle) throws Exception;
+    public Cycle registerCycleEnd(Cycle cycle) throws IOException, CustomException;
+    public List<Cycle> getCycleHistory(Long idUser) throws CustomException;
+    public Cycle getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws IOException, CustomException;
     public Map<String, String> deleteCycle(Long id) throws CustomException;
-    public CycleDTO updateCycle (CycleDTO cycleDto) throws IllegalArgumentException;
+    public Cycle updateCycle (Cycle cycle) throws IllegalArgumentException;
 
 }

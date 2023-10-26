@@ -2,7 +2,6 @@ package com.femfy.femfyapi.controller;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -10,23 +9,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.femfy.femfyapi.delivery.controller.CycleController;
+import com.femfy.femfyapi.domain.entity.Cycle;
 import com.femfy.femfyapi.domain.exception.CustomException;
 import com.femfy.femfyapi.delivery.dto.CycleDTO;
 import com.femfy.femfyapi.domain.interfaces.ICycleService;
-import com.femfy.femfyapi.infraestructura.service.CycleService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -41,8 +36,8 @@ class CycleControllerTest {
     final ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
+    private Cycle cycle;
     private CycleDTO dto;
-
     @MockBean
     ICycleService cycleServiceMock;
 
@@ -50,17 +45,18 @@ class CycleControllerTest {
     @BeforeAll
     public void init() {
         dto = new CycleDTO();
-        dto.setId(1L);
-        dto.setStatus("Alegre");
-        dto.setIdUser(1L);
-        dto.setDateEnd(Date.valueOf("2023-10-20"));
-        dto.setDateBeging(Date.valueOf("2023-10-29"));
+        cycle = new Cycle();
+        cycle.setId(1L);
+        cycle.setStatus("Alegre");
+        cycle.setIdUser(1L);
+        cycle.setDateEnd(Date.valueOf("2023-10-20"));
+        cycle.setDateBeging(Date.valueOf("2023-10-29"));
     }
 
 
     @Test
     void getCycleTest() throws Exception {
-        when(cycleServiceMock.getCycleByIdUserAndDateBeging(anyLong(), anyString())).thenReturn(dto);
+        when(cycleServiceMock.getCycleByIdUserAndDateBeging(anyLong(), anyString())).thenReturn(cycle);
 
         mockMvc.perform(get("/api/v1/cycle/getCycle/1")
                         .param("dateBeging", "2023-10-29")
@@ -90,9 +86,9 @@ class CycleControllerTest {
 
     @Test()
     void getCycleHistoryTest() throws Exception {
-        List<CycleDTO> list = new ArrayList<>();
-        list.add(dto);
-        list.add(dto);
+        List<Cycle> list = new ArrayList<>();
+        list.add(cycle);
+        list.add(cycle);
         when(cycleServiceMock.getCycleHistory(anyLong())).thenReturn(list);
 
         mockMvc.perform(get("/api/v1/cycle/getCycleHistory/1")
@@ -119,7 +115,7 @@ class CycleControllerTest {
     @Test()
     void registerCycleEndTest() throws Exception {
 
-        when(cycleServiceMock.registerCycleEnd(any(CycleDTO.class))).thenReturn(dto);
+        when(cycleServiceMock.registerCycleEnd(any(Cycle.class))).thenReturn(cycle);
 
         mockMvc.perform(put("/api/v1/cycle/registerCycleEnd")
                         .content( this.mapper.writeValueAsBytes(dto))
@@ -137,7 +133,7 @@ class CycleControllerTest {
     @Test()
     void registerCycleEndExceptionTest() throws Exception {
 
-        when(cycleServiceMock.registerCycleEnd(any(CycleDTO.class))).thenThrow(new CustomException("error"));
+        when(cycleServiceMock.registerCycleEnd(any(Cycle.class))).thenThrow(new CustomException("error"));
 
         mockMvc.perform(put("/api/v1/cycle/registerCycleEnd")
                         .content( this.mapper.writeValueAsBytes(dto))
@@ -151,7 +147,7 @@ class CycleControllerTest {
     @Test()
     void registerCycleStartTest() throws Exception {
 
-        when(cycleServiceMock.registerCycleStart(any(CycleDTO.class))).thenReturn(dto);
+        when(cycleServiceMock.registerCycleStart(any(Cycle.class))).thenReturn(cycle);
 
         mockMvc.perform(post("/api/v1/cycle/registerCycleStart")
                         .content( this.mapper.writeValueAsBytes(dto))
@@ -169,7 +165,7 @@ class CycleControllerTest {
     @Test()
     void registerCycleStarExceptionTest() throws Exception {
 
-        when(cycleServiceMock.registerCycleStart(any(CycleDTO.class))).thenThrow(new CustomException("error"));
+        when(cycleServiceMock.registerCycleStart(any(Cycle.class))).thenThrow(new CustomException("error"));
 
         mockMvc.perform(post("/api/v1/cycle/registerCycleStart")
                         .content( this.mapper.writeValueAsBytes(dto))
@@ -209,7 +205,7 @@ class CycleControllerTest {
 
     @Test()
     void updateCycleTest() throws Exception {
-        when(cycleServiceMock.updateCycle(any(CycleDTO.class))).thenReturn(dto);
+        when(cycleServiceMock.updateCycle(any(Cycle.class))).thenReturn(cycle);
 
         mockMvc.perform(put("/api/v1/cycle/updateCycle")
                         .content( this.mapper.writeValueAsBytes(dto))
@@ -227,7 +223,7 @@ class CycleControllerTest {
     @Test()
     void updateCycleExceptionTest() throws Exception {
 
-        when(cycleServiceMock.updateCycle(any(CycleDTO.class))).thenThrow(new IllegalArgumentException("error"));
+        when(cycleServiceMock.updateCycle(any(Cycle.class))).thenThrow(new IllegalArgumentException("error"));
 
         mockMvc.perform(put("/api/v1/cycle/updateCycle")
                         .content( this.mapper.writeValueAsBytes(dto))

@@ -4,6 +4,7 @@ package com.femfy.femfyapi.delivery.controller;
 import com.femfy.femfyapi.domain.entity.ResponseError;
 import com.femfy.femfyapi.domain.interfaces.ICycleService;
 import com.femfy.femfyapi.delivery.dto.CycleDTO;
+import com.femfy.femfyapi.infraestructura.mapper.CycleMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -43,9 +45,10 @@ public class CycleController {
 
     })
     @PostMapping("/registerCycleStart")
-    public ResponseEntity<?> registerCycleStart(@RequestBody CycleDTO dto){
+    public ResponseEntity<?> registerCycleStart(@RequestBody CycleDTO cycleDTO){
         try{
-            return new ResponseEntity<>(cycleService.registerCycleStart(dto), HttpStatus.OK);
+            CycleDTO dto = CycleMapper.mapToDTO(cycleService.registerCycleStart(CycleMapper.mapToEntity(cycleDTO)));
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -66,7 +69,8 @@ public class CycleController {
     @PutMapping("/registerCycleEnd")
     public ResponseEntity<?> registerCycleEnd(@RequestBody CycleDTO cycleDto){
         try{
-            return new ResponseEntity<>(cycleService.registerCycleEnd(cycleDto), HttpStatus.OK);
+            CycleDTO dto = CycleMapper.mapToDTO(cycleService.registerCycleEnd(CycleMapper.mapToEntity(cycleDto)));
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -87,7 +91,9 @@ public class CycleController {
     @GetMapping("/getCycleHistory/{idUser}")
     public ResponseEntity<?> getCycleHistory(@PathVariable(value = "idUser") Long idUser) {
         try {
-            List<CycleDTO> list = cycleService.getCycleHistory(idUser);
+            List<CycleDTO> list = cycleService.getCycleHistory(idUser).stream()
+                                                                .map(CycleMapper::mapToDTO)
+                                                                .collect(Collectors.toList());
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -110,7 +116,7 @@ public class CycleController {
     @GetMapping("/getCycle/{idUser}")
     public ResponseEntity<?> getCycle(@PathVariable(value = "idUser") Long idUser, @RequestParam("dateBeging") String dateBeging ) {
         try {
-            CycleDTO dto = cycleService.getCycleByIdUserAndDateBeging(idUser, dateBeging);
+            CycleDTO dto = CycleMapper.mapToDTO(cycleService.getCycleByIdUserAndDateBeging(idUser, dateBeging));
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -148,7 +154,7 @@ public class CycleController {
     @PutMapping("/updateCycle")
     public ResponseEntity<?> updateCycle(@RequestBody CycleDTO cycleDto) {
         try {
-            CycleDTO dto = cycleService.updateCycle(cycleDto);
+            CycleDTO dto = CycleMapper.mapToDTO(cycleService.updateCycle(CycleMapper.mapToEntity(cycleDto)));
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseError(500, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

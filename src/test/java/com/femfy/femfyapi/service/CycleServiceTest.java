@@ -43,7 +43,6 @@ public class CycleServiceTest {
     @BeforeEach
     void setUp() throws CustomException {
         cycle = new Cycle();
-        cycle = new Cycle();
         cycle.setStatus("Cansada");
         cycle.setIdUser(1L);
         cycle.setId(1L);
@@ -62,7 +61,7 @@ public class CycleServiceTest {
     void registerCycleStartTest() throws Exception {
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle);
 
-        CycleDTO resObtenida = cycleService.registerCycleStart(dto);
+        Cycle resObtenida = cycleService.registerCycleStart(cycle);
 
         assertNotNull(resObtenida);
 
@@ -73,17 +72,17 @@ public class CycleServiceTest {
         when(cycleRepositoryMock.save(any(Cycle.class))).thenThrow(new RuntimeException(new CustomException("")));
 
         assertThrows(CustomException.class, () -> {
-            cycleService.registerCycleStart(dto);
+            cycleService.registerCycleStart(cycle);
         });
 
     }
 
     @Test
     void registerCycleEndIDNullTest() throws Exception {
-        CycleDTO dtoIdNull = new CycleDTO();
+        Cycle cycleIdNull = new Cycle();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            cycleService.registerCycleEnd(dtoIdNull);
+            cycleService.registerCycleEnd(cycleIdNull);
         });
 
 
@@ -94,7 +93,7 @@ public class CycleServiceTest {
         when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle);
 
-        CycleDTO resObtenida = cycleService.registerCycleEnd(dto);
+        Cycle resObtenida = cycleService.registerCycleEnd(cycle);
 
         assertNotNull(resObtenida);
 
@@ -102,10 +101,10 @@ public class CycleServiceTest {
 
     @Test
     void registerCycleEndExceptionTest() throws Exception {
-        CycleDTO dtoIdInvalido = new CycleDTO();
-        dtoIdInvalido.setId(3L);
+        Cycle cycleIdInvalido = new Cycle();
+        cycleIdInvalido.setId(3L);
         assertThrows(CustomException.class, () -> {
-            cycleService.registerCycleEnd(dtoIdInvalido);
+            cycleService.registerCycleEnd(cycleIdInvalido);
         });
 
     }
@@ -128,7 +127,7 @@ public class CycleServiceTest {
         when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
 
 
-        List<CycleDTO> resObtenida = cycleService.getCycleHistory(1L);
+        List<Cycle> resObtenida = cycleService.getCycleHistory(1L);
 
         assertNotNull(resObtenida);
     }
@@ -179,7 +178,7 @@ public class CycleServiceTest {
     void getCycleByIdUserAndDateBegingTest() throws Exception {
         when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
 
-        CycleDTO resObtenida = cycleService.getCycleByIdUserAndDateBeging(cycle.getIdUser(), "2023-10-06");
+        Cycle resObtenida = cycleService.getCycleByIdUserAndDateBeging(cycle.getIdUser(), "2023-10-06");
 
         assertNotNull(resObtenida);
         assertEquals(Long.valueOf(1L), resObtenida.getId());
@@ -229,30 +228,12 @@ public class CycleServiceTest {
         when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle);
 
-        CycleDTO resObtenida = cycleService.updateCycle(dto);
+        Cycle resObtenida = cycleService.updateCycle(cycle);
 
         assertNotNull(resObtenida);
-        assertEquals("Alegre", resObtenida.getStatus());
+        assertEquals("Cansada", resObtenida.getStatus());
     }
 
-    @Test
-    void updateCycleIdNullTest(){
-        CycleDTO dto = new CycleDTO();
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            cycleService.updateCycle(dto);
-        });
-    }
-
-    @Test
-    void updateCycleMapToDtoIdNullTest(){
-        when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
-        when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(null);
-
-        assertThrows(EntityNotFoundException.class, () -> {
-            cycleService.updateCycle(dto);
-        });
-    }
 
     @Test
     void updateCycleMapToDtoIdUserNullTest(){
@@ -261,19 +242,17 @@ public class CycleServiceTest {
         when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle2);
 
-        CycleDTO resObtenida = cycleService.updateCycle(dto);
+        Cycle resObtenida = cycleService.updateCycle(cycle);
 
         assertNotNull(resObtenida);
     }
 
     @Test
     void updateCycleCopuPropertiesNullTest(){
-        CycleDTO dto2 = new CycleDTO();
-        dto2.setId(2L);
         when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle);
 
-        CycleDTO resObtenida = cycleService.updateCycle(dto2);
+        Cycle resObtenida = cycleService.updateCycle(cycle);
 
         assertNotNull(resObtenida);
     }

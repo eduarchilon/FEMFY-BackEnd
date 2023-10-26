@@ -7,6 +7,7 @@ import com.femfy.femfyapi.domain.exception.CustomException;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.repository.CycleRepository;
 import com.femfy.femfyapi.delivery.dto.CycleDTO;
+import com.femfy.femfyapi.infraestructura.mapper.CycleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class CycleService implements ICycleService {
     }
 
     @Override
-    public CycleDTO registerCycleStart(CycleDTO cycleDto) throws Exception {
+    public Cycle registerCycleStart(Cycle cycleDto) throws Exception {
         try{
             Cycle cycle = new Cycle();
             copyProperties(cycleDto, cycle);
@@ -39,7 +40,7 @@ public class CycleService implements ICycleService {
     }
 
     @Override
-    public CycleDTO registerCycleEnd(CycleDTO cycleDto) throws IOException, CustomException {
+    public Cycle registerCycleEnd(Cycle cycleDto) throws IOException, CustomException {
         if (cycleDto.getId() == null) {
             throw new IllegalArgumentException("El ID es requerido para esta operacion");
         }
@@ -51,61 +52,43 @@ public class CycleService implements ICycleService {
 
             cycleRepository.save(cycleBD);
 
-            return mapToDTO(cycleBD);
+            return cycleBD;
         }catch (Exception e){
             throw new CustomException("Error al registrar fin del ciclo: " + e.getMessage());
         }
     }
 
     @Override
-    public List<CycleDTO> getCycleHistory(Long idUser) throws CustomException {
-        List<CycleDTO> dtoList = new ArrayList<>();
-        List<Cycle> cycleList;
+    public List<Cycle> getCycleHistory(Long idUser) throws CustomException {
         if (idUser == null) {
             throw new IllegalArgumentException("El ID de usuario es requerido para esta operacion");
         }
 
         try {
 
-            cycleList = cycleRepository.findAllByIdUser(idUser);
+            return cycleRepository.findAllByIdUser(idUser);
 
-            for(Cycle cycle : cycleList){
-                CycleDTO dto = new CycleDTO();
-                dto.setStatus(cycle.getStatus());
-                dto.setDateBeging((cycle.getDateBeging()));
-                dto.setIdUser(cycle.getIdUser());
-                dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
-                dto.setDateEnd((cycle.getDateEnd()));
-                dto.setId(cycle.getId());
-
-                dtoList.add(dto);
-            }
         }catch (Exception e) {
             throw new CustomException("Error al obtener el historial de ciclos: " + e.getMessage());
         }
-        return dtoList;
     }
 
     @Override
-    public CycleDTO getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws CustomException {
-        CycleDTO cycleDTO = new CycleDTO();
+    public Cycle getCycleByIdUserAndDateBeging(Long idUser, String dateBeging) throws CustomException {
+        Cycle cycle;
         if (idUser == null || dateBeging == null) {
             throw new IllegalArgumentException("El ID de usuario y la fecha de inicio son requeridos para esta operacion");
         }
 
-        try{
+        try {
             Date dateSql = Utils.parseDate(dateBeging);
-            Cycle cycle =  cycleRepository.findByIdUserAndDateBeging(idUser, dateSql);
-            cycleDTO.setDateBeging((cycle.getDateBeging()));
-            cycleDTO.setStatus(cycle.getStatus());
-            cycleDTO.setIdUser(cycle.getIdUser());
-            cycleDTO.setDaysOfBleeding(cycle.getDaysOfBleeding());
-            cycleDTO.setId(cycle.getId());
+            cycle = cycleRepository.findByIdUserAndDateBeging(idUser, dateSql);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException("Error al obtener el ciclo del usuario: " + e.getMessage());
         }
-        return cycleDTO;
+
+        return cycle;
     }
 
     @Override
@@ -125,44 +108,26 @@ public class CycleService implements ICycleService {
     }
 
     @Override
-    public CycleDTO updateCycle(CycleDTO cycleDto) throws IllegalArgumentException {
-        Long idToUpdate = cycleDto.getId();
+    public Cycle updateCycle(Cycle cycle) throws IllegalArgumentException {
+        Long idToUpdate = cycle.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
         }
 
         Cycle cycleDB = cycleRepository.findById(idToUpdate).orElseThrow();
-        copyProperties(cycleDto, cycleDB);
-        Cycle cycleUpdate = cycleRepository.save(cycleDB);
+        copyProperties(cycle, cycleDB);
 
-        return mapToDTO(cycleUpdate);
+        return cycleRepository.save(cycleDB);
     }
 
-    private CycleDTO mapToDTO (Cycle cycle){
-        if(cycle == null){
-            throw new EntityNotFoundException("Ciclo no encontrado");
-        }
 
-        CycleDTO dto = new CycleDTO();
-        dto.setId(cycle.getId());
 
-        if(cycle.getIdUser() != null){
-            dto.setIdUser(cycle.getIdUser());
-        }
-
-        dto.setStatus(cycle.getStatus());
-        dto.setDateEnd(cycle.getDateEnd());
-        dto.setDateBeging(cycle.getDateBeging());
-        dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
-        return dto;
-    }
-
-    private void copyProperties(CycleDTO dto, Cycle cycle){
-        if(dto.getStatus() != null) cycle.setStatus(dto.getStatus());
-        if(dto.getDateBeging() != null) cycle.setDateBeging(dto.getDateBeging());
-        if(dto.getDateEnd() != null) cycle.setDateEnd(dto.getDateEnd());
-        if(dto.getIdUser() != null) cycle.setIdUser(dto.getIdUser());
-        if(dto.getDaysOfBleeding() != null) cycle.setDaysOfBleeding(dto.getDaysOfBleeding());
+    private void copyProperties(Cycle cycle, Cycle cycleDB){
+        if(cycle.getStatus() != null) cycleDB.setStatus(cycle.getStatus());
+        if(cycle.getDateBeging() != null) cycleDB.setDateBeging(cycle.getDateBeging());
+        if(cycle.getDateEnd() != null) cycleDB.setDateEnd(cycle.getDateEnd());
+        if(cycle.getIdUser() != null) cycleDB.setIdUser(cycle.getIdUser());
+        if(cycle.getDaysOfBleeding() != null) cycleDB.setDaysOfBleeding(cycle.getDaysOfBleeding());
     }
 
 
