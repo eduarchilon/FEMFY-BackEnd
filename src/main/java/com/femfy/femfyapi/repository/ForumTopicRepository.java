@@ -1,11 +1,10 @@
 package com.femfy.femfyapi.repository;
 
+import com.femfy.femfyapi.entity.ForumTopic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.femfy.femfyapi.entity.User;
-
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+public interface ForumTopicRepository extends JpaRepository<ForumTopic, Long> {
+
 }

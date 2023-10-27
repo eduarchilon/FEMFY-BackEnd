@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 
@@ -30,12 +32,18 @@ public class User {
     @JoinColumn(name = "type_user_id")
     private TypeUser typeUser;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<CalendarEvent> calendarEvents;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<ForumPost> forumPosts;
+
 	private String firstName;
 	private String lastName;
 	private String userName;
 	private String password;
 	private Boolean isSuscriptor;
-	@javax.persistence.Temporal(javax.persistence.TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	private Date birthdate;
 	private String phone;
 	@Column(name="mailAddress",unique = true, nullable = false)
@@ -43,9 +51,6 @@ public class User {
 	private String emotion;
 	private String localidad;
 	private String avatar;
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<CalendarEvent> calendarEvents;
 
 	public User() {
 		
