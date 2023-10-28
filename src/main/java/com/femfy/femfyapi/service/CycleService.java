@@ -26,7 +26,7 @@ public class CycleService implements ICycleService{
             dto.setStatus(cycle.getStatus());
             dto.setIdUser(cycle.getIdUser());
             dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
-            dto.setDatwerwerwerweBeging(cycle.getDateBeging());
+            dto.setDateBeging(cycle.getDateBeging());
             
             cycleRepository.save(cycle);
             
