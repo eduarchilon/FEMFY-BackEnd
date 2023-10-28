@@ -48,9 +48,7 @@ public class User {
 	private String phone;
 	@Column(name="mailAddress",unique = true, nullable = false)
 	private String email;
-	private String emotion;
 	private String localidad;
-	private String avatar;
 
 	public User() {
 		
