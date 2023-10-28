@@ -20,6 +20,9 @@ public class TypeStudy {
 
     @Column(nullable = false)
     private String description;
+    
+    @Column(nullable = false)
+    private int validityOfStudy;
 
     public TypeStudy() {
     }

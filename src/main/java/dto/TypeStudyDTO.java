@@ -10,4 +10,7 @@ public class TypeStudyDTO {
 
     @Schema(description = "Descripción del estudio", example = "Mamografia")
     String description;
+    
+    @Schema(description = "validez del estudio", example = "180 dias")
+    int validityOfStudy;
 }

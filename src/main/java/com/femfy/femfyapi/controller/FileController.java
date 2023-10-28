@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.femfy.femfyapi.service.IFileService;
-import com.femfy.femfyapi.service.IUploadFileService;
 
 import dto.FileDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,13 +28,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/file", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileController {
-	@Autowired
-	IUploadFileService iUploadFileService;
+
 
 	@Autowired
 	IFileService iFileService;
 
-	@Operation(summary = "Permite subir un docuemento dentro del repositorio de AZURE. todos los datos son requeridos")
+	@Operation(summary = "Permite guardar referencia los estudios realizados por la usuaria")
 	@ApiResponses(value = { // -
 			@ApiResponse(responseCode = "200", description = "Respuesta OK", content = {
 					@Content(mediaType = "application/json") }),
@@ -64,7 +62,7 @@ public class FileController {
 
 	}
 
-	@Operation(summary = "Permite eliminar un docuemento del repositorio de AZURE. Solo se requiere id del File para poder ELIMINAR el registro de la base + AZURE")
+	@Operation(summary = "Permite eliminar la referencaia un estidio de la usuaria. Solo se requiere id del File para poder ELIMINAR el registro de la base")
 	@ApiResponses(value = { // -
 			@ApiResponse(responseCode = "200", description = "Respuesta OK", content = {
 					@Content(mediaType = "application/json") }),

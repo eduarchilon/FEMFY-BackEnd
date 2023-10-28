@@ -68,6 +68,7 @@ public class TypeStudyService implements ITypeStudyService {
     	TypeStudyDTO dto = new TypeStudyDTO();
         dto.setIdTypeStudy(typeStudy.getId());
         dto.setDescription(typeStudy.getDescription());
+        dto.setValidityOfStudy(typeStudy.getValidityOfStudy());
         return dto;
     }
 
@@ -75,6 +76,7 @@ public class TypeStudyService implements ITypeStudyService {
     	TypeStudy typeStudy = new TypeStudy();
     	typeStudy.setId(typeStudyDTO.getIdTypeStudy());
     	typeStudy.setDescription(typeStudyDTO.getDescription());
+    	typeStudy.setValidityOfStudy(typeStudyDTO.getValidityOfStudy());
         return typeStudy;
     }
 }

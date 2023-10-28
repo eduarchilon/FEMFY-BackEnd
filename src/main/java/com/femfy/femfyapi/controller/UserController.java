@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.femfy.femfyapi.service.UserService;
+import com.femfy.femfyapi.service.IUserService;
 
 import dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public class UserController {
 	
 	@Autowired
-	private  UserService userService;
+	private  IUserService userService;
 	
 	@Operation(summary = "Realizar la consulta por un suario en particular")
 	@ApiResponses(value ={// - 

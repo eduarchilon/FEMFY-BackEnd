@@ -72,6 +72,7 @@ public class FileService implements IFileService{
 				TypeStudyDTO studyDTO = new TypeStudyDTO();
 				studyDTO.setDescription(fileUser.getTypeStudy().getDescription());
 				studyDTO.setIdTypeStudy(fileUser.getTypeStudy().getId());
+				studyDTO.setValidityOfStudy(fileUser.getTypeStudy().getValidityOfStudy());
 				
 				dto.setTypeStudy(studyDTO);
 				dto.setIdUser(fileUser.getIdUser());
@@ -99,6 +100,7 @@ public class FileService implements IFileService{
 			TypeStudyDTO studyDTO = new TypeStudyDTO();
 			studyDTO.setDescription(fileUser.getTypeStudy().getDescription());
 			studyDTO.setIdTypeStudy(fileUser.getTypeStudy().getId());
+			studyDTO.setValidityOfStudy(fileUser.getTypeStudy().getValidityOfStudy());
 			
 			dto.setTypeStudy(studyDTO);
 			dto.setIdUser(fileUser.getIdUser());
