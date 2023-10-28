@@ -30,6 +30,8 @@ class TypeUserControllerTest {
 
     @Test
     void getTypeUserById_ReturnsOk() {
+        TypeUserDTO dto = new TypeUserDTO();
+        dto.setIdTypeUser(1L);
         Long typeUserId = 1L;
         TypeUser typeUser = new TypeUser();
         typeUser.setId(typeUserId);
@@ -38,11 +40,12 @@ class TypeUserControllerTest {
         ResponseEntity<TypeUserDTO> response = controller.getTypeUserById(typeUserId);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(typeUser, response.getBody());
+        assertEquals(dto, response.getBody());
     }
 
     @Test
     void getTypeUserById_ReturnsNotFound() {
+        TypeUserDTO dto = new TypeUserDTO();
         Long typeUserId = 1L;
         TypeUser typeUser = new TypeUser();
         when(userService.getTypeUser(typeUserId)).thenReturn(typeUser);
@@ -50,11 +53,13 @@ class TypeUserControllerTest {
         ResponseEntity<TypeUserDTO> response = controller.getTypeUserById(typeUserId);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals(typeUser, response.getBody());
+        assertEquals(dto, response.getBody());
     }
 
     @Test
     void getTypeUsers_ReturnsOk() {
+        List<TypeUserDTO> typeUsersDTO = new ArrayList<>();
+        typeUsersDTO.add(new TypeUserDTO());
         List<TypeUser> typeUsers = new ArrayList<>();
         typeUsers.add(new TypeUser());
         when(userService.getTypeUsers()).thenReturn(typeUsers);
@@ -62,7 +67,7 @@ class TypeUserControllerTest {
         ResponseEntity<List<TypeUserDTO>> response = controller.getTypeUsers();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(typeUsers, response.getBody());
+        assertEquals(typeUsersDTO, response.getBody());
     }
 
     @Test

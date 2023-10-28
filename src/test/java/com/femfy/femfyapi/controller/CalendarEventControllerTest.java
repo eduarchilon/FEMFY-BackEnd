@@ -37,9 +37,11 @@ class CalendarEventControllerTest {
     @Test
     void testGetEventsByUserSuccess() {
         Long userId = 1L;
+        List<CalendarEvent> events = new ArrayList<>();
+        events.add(new CalendarEvent());
         List<CalendarEventDTO> mockEvents = new ArrayList<>();
         mockEvents.add(new CalendarEventDTO());
-        //when(service.getCalendarEventByUser(userId)).thenReturn(mockEvents);
+        when(service.getCalendarEventByUser(userId)).thenReturn(events);
 
         ResponseEntity<List<CalendarEventDTO>> response = controller.getEventsByUser(userId);
 
@@ -62,6 +64,7 @@ class CalendarEventControllerTest {
     @Test
     void testGetEventByIdSuccess() {
         Long eventId = 1L;
+        CalendarEventDTO dto = new CalendarEventDTO();
         CalendarEvent mockEvent = new CalendarEvent();
         when(service.getCalendarEvent(eventId)).thenReturn(Optional.of(mockEvent));
 
@@ -69,7 +72,7 @@ class CalendarEventControllerTest {
 
         assertAll(
                 () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
-                () -> assertEquals(mockEvent, response.getBody())
+                () -> assertEquals(dto, response.getBody())
         );
     }
 
@@ -98,6 +101,7 @@ class CalendarEventControllerTest {
 
     @Test
     void testCreateEvent() {
+        CalendarEventDTO dto = new CalendarEventDTO();
         CalendarEvent event = new CalendarEvent();
         when(service.saveCalendarEvent(any(CalendarEvent.class))).thenReturn(event);
 
@@ -105,16 +109,19 @@ class CalendarEventControllerTest {
 
        assertAll(
                 () -> assertEquals(HttpStatus.CREATED, response.getStatusCode()),
-                () -> assertEquals(event, response.getBody())
+                () -> assertEquals(dto, response.getBody())
        );
     }
 
     @Test
-    @Disabled
     void testUpdateEventSuccess() {
         CalendarEvent event = new CalendarEvent();
+        event.setId(1L);
+        event.setTitle("test");
         CalendarEventDTO eventDTO = new CalendarEventDTO();
-        when(service.updateCalendarEvent(event)).thenReturn(event);
+        eventDTO.setTitle("test");
+        eventDTO.setId(1L);
+        when(service.updateCalendarEvent(any(CalendarEvent.class))).thenReturn(event);
 
         ResponseEntity<CalendarEventDTO> response = controller.updateEvent(eventDTO);
 

@@ -116,9 +116,9 @@ class CalendarEventServiceTest {
     }
 
     @Test
-    @Disabled
     void testUpdateCalendarEvent() {
         CalendarEvent event = new CalendarEvent();
+        event.setId(1L);
         Long idToUpdate = 1L;
 
 

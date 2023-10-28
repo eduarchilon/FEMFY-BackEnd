@@ -3,6 +3,7 @@ package com.femfy.femfyapi.controller;
 import com.femfy.femfyapi.delivery.controller.QuestionsUserMenopauseController;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
+import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,16 +35,32 @@ class QuestionsUserMenopauseControllerTest {
 
     @Test
     void testGetQuestionById() {
+        User user = new User();
+        user.setId(1L);
         Long questionId = 1L;
+        QuestionsUserMenopauseDTO dto = new QuestionsUserMenopauseDTO();
+        dto.setId(1L);
+        dto.setUserId(1L);
         QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
         mockQuestion.setId(questionId);
+        mockQuestion.setUser(user);
+        mockQuestion.setSuffocation(false);
+        mockQuestion.setChangesInMenstrualCycle(false);
+        mockQuestion.setVaginalDryness(false);
+        mockQuestion.setChangesInSkinAndHair(false);
+        mockQuestion.setMoodChanges(false);
+        mockQuestion.setSleepingDifficulties(false);
+        mockQuestion.setAumentoDePeso(false);
+        mockQuestion.setLossOfBoneDensity(false);
+        mockQuestion.setChangesInLibido(false);
+
         when(service.getQuestionsUserMenopause(questionId)).thenReturn(Optional.of(mockQuestion));
 
         ResponseEntity<QuestionsUserMenopauseDTO> response = controller.getQuestionById(questionId);
 
         assertAll(
                 () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
-                () -> assertEquals(mockQuestion, response.getBody())
+                () -> assertEquals(dto, response.getBody())
         );
     }
 
@@ -72,9 +89,24 @@ class QuestionsUserMenopauseControllerTest {
 
     @Test
     void testCreateQuestion() {
+        User user = new User();
+        user.setId(1L);
         QuestionsUserMenopauseDTO questionDTO = new QuestionsUserMenopauseDTO();
-        QuestionsUserMenopause question = new QuestionsUserMenopause();
-        when(service.saveQuestionsUserMenopause(any(QuestionsUserMenopause.class))).thenReturn(question);
+        questionDTO.setId(1L);
+        questionDTO.setUserId(1L);
+        QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
+        mockQuestion.setId(1L);
+        mockQuestion.setUser(user);
+        mockQuestion.setSuffocation(false);
+        mockQuestion.setChangesInMenstrualCycle(false);
+        mockQuestion.setVaginalDryness(false);
+        mockQuestion.setChangesInSkinAndHair(false);
+        mockQuestion.setMoodChanges(false);
+        mockQuestion.setSleepingDifficulties(false);
+        mockQuestion.setAumentoDePeso(false);
+        mockQuestion.setLossOfBoneDensity(false);
+        mockQuestion.setChangesInLibido(false);
+        when(service.saveQuestionsUserMenopause(any(QuestionsUserMenopause.class))).thenReturn(mockQuestion);
 
         ResponseEntity<QuestionsUserMenopauseDTO> response = controller.createQuestion(questionDTO);
 
@@ -86,23 +118,46 @@ class QuestionsUserMenopauseControllerTest {
 
     @Test
     void testUpdateQuestion() {
+        User user = new User();
+        user.setId(1L);
         QuestionsUserMenopauseDTO questionDTO = new QuestionsUserMenopauseDTO();
-        QuestionsUserMenopause question = new QuestionsUserMenopause();
         questionDTO.setId(1L);
-        when(service.updateQuestionsUserMenopause(question)).thenReturn(question);
+        questionDTO.setUserId(1L);
+        questionDTO.setUserId(1L);
+        questionDTO.setSuffocation(false);
+        questionDTO.setChangesInMenstrualCycle(false);
+        questionDTO.setVaginalDryness(false);
+        questionDTO.setChangesInSkinAndHair(false);
+        questionDTO.setMoodChanges(false);
+        questionDTO.setSleepingDifficulties(false);
+        questionDTO.setAumentoDePeso(false);
+        questionDTO.setLossOfBoneDensity(false);
+        questionDTO.setChangesInLibido(false);
+        QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
+        mockQuestion.setId(1L);
+        mockQuestion.setUser(user);
+        mockQuestion.setSuffocation(false);
+        mockQuestion.setChangesInMenstrualCycle(false);
+        mockQuestion.setVaginalDryness(false);
+        mockQuestion.setChangesInSkinAndHair(false);
+        mockQuestion.setMoodChanges(false);
+        mockQuestion.setSleepingDifficulties(false);
+        mockQuestion.setAumentoDePeso(false);
+        mockQuestion.setLossOfBoneDensity(false);
+        mockQuestion.setChangesInLibido(false);
+
+        when(service.updateQuestionsUserMenopause(any(QuestionsUserMenopause.class))).thenReturn(mockQuestion);
 
         ResponseEntity<QuestionsUserMenopauseDTO> response = controller.updateQuestion(questionDTO);
 
-        verify(service, times(1)).updateQuestionsUserMenopause(question);
+        verify(service, times(1)).updateQuestionsUserMenopause(mockQuestion);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testUpdateQuestionNotFound() {
-        Long questionId = 1L;
         QuestionsUserMenopauseDTO questionDTO = new QuestionsUserMenopauseDTO();
         QuestionsUserMenopause question = new QuestionsUserMenopause();
-        questionDTO.setId(questionId);
 
         when(service.updateQuestionsUserMenopause(question)).thenReturn(null);
 
