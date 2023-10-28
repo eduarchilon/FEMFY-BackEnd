@@ -33,6 +33,7 @@ class CalendarEventServiceTest {
 
     @Test
     void testGetCalendarEventsWithData() {
+        //shouldReturnOneEventExistent
         CalendarEvent event = new CalendarEvent();
         event.setId(1L);
 
