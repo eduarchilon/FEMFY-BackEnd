@@ -1,8 +1,11 @@
 package com.femfy.femfyapi.delivery.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.femfy.femfyapi.domain.interfaces.ITypeUserService;
+import com.femfy.femfyapi.infraestructura.mapper.TypeStudyMapper;
+import com.femfy.femfyapi.infraestructura.mapper.TypeUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,7 +48,7 @@ public class TypeUserController {
     })
     @GetMapping("/{typeUserId}")
     public ResponseEntity<TypeUserDTO> getTypeUserById(@PathVariable("typeUserId") Long typeUserId) {
-        TypeUserDTO typeUser = this.typeUserService.getTypeUser(typeUserId);
+        TypeUserDTO typeUser = TypeUserMapper.mapToDTO(this.typeUserService.getTypeUser(typeUserId));
         if (typeUser.getIdTypeUser() != null) {
             return new ResponseEntity<>(typeUser, HttpStatus.OK);
         } else {
@@ -66,7 +69,7 @@ public class TypeUserController {
     })
     @GetMapping("/getTypeUsers")
     public ResponseEntity<List<TypeUserDTO>> getTypeUsers() {
-        List<TypeUserDTO> typeUsers = this.typeUserService.getTypeUsers();
+        List<TypeUserDTO> typeUsers = this.typeUserService.getTypeUsers().stream().map(TypeUserMapper::mapToDTO).collect(Collectors.toList());
         if (!typeUsers.isEmpty()) {
             return new ResponseEntity<>(typeUsers, HttpStatus.OK);
         } else {
@@ -85,7 +88,7 @@ public class TypeUserController {
     })
     @PostMapping("/createTypeUser")
     public ResponseEntity<TypeUserDTO> saveTypeUser(@RequestBody TypeUserDTO typeUserDTO) {
-        typeUserDTO = this.typeUserService.saveTypeUser(typeUserDTO);
+        typeUserDTO = TypeUserMapper.mapToDTO(this.typeUserService.saveTypeUser(TypeUserMapper.mapToEntity(typeUserDTO)));
         return new ResponseEntity<>(typeUserDTO, HttpStatus.CREATED);
     }
 
@@ -102,7 +105,7 @@ public class TypeUserController {
     })
     @PostMapping("/updateTypeUser")
     public ResponseEntity<TypeUserDTO> updateTypeUser(@RequestBody TypeUserDTO typeUserDTO) {
-        typeUserDTO = this.typeUserService.updateTypeUser(typeUserDTO);
+        typeUserDTO = TypeUserMapper.mapToDTO(this.typeUserService.updateTypeUser(TypeUserMapper.mapToEntity(typeUserDTO)));
         return new ResponseEntity<>(typeUserDTO, HttpStatus.OK);
     }
 

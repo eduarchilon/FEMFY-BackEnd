@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.controller;
 
 import com.femfy.femfyapi.delivery.controller.QuestionsUserFamilyHistoryController;
+import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,7 @@ class QuestionsUserFamilyHistoryControllerTest {
     @Test
     void testGetQuestionById() {
         Long questionId = 1L;
-        QuestionsUserFamilyHistoryDTO mockQuestion = new QuestionsUserFamilyHistoryDTO();
+        QuestionsUserFamilyHistory mockQuestion = new QuestionsUserFamilyHistory();
         mockQuestion.setId(questionId);
         when(service.getQuestionsUserFamilyHistory(questionId)).thenReturn(Optional.of(mockQuestion));
 
@@ -58,7 +59,7 @@ class QuestionsUserFamilyHistoryControllerTest {
 
     @Test
     void testGetAllQuestions() {
-        List<QuestionsUserFamilyHistoryDTO> mockQuestions = new ArrayList<>();
+        List<QuestionsUserFamilyHistory> mockQuestions = new ArrayList<>();
         when(service.getQuestionsUserFamilyHistories()).thenReturn(mockQuestions);
 
         ResponseEntity<List<QuestionsUserFamilyHistoryDTO>> response = controller.getAllQuestions();
@@ -72,7 +73,8 @@ class QuestionsUserFamilyHistoryControllerTest {
     @Test
     void testCreateQuestion() {
         QuestionsUserFamilyHistoryDTO questionDTO = new QuestionsUserFamilyHistoryDTO();
-        when(service.saveQuestionsUserFamilyHistory(any(QuestionsUserFamilyHistoryDTO.class))).thenReturn(questionDTO);
+        QuestionsUserFamilyHistory question = new QuestionsUserFamilyHistory();
+        when(service.saveQuestionsUserFamilyHistory(any(QuestionsUserFamilyHistory.class))).thenReturn(question);
 
         ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.createQuestion(questionDTO);
 
@@ -85,12 +87,13 @@ class QuestionsUserFamilyHistoryControllerTest {
     @Test
     void testUpdateQuestion() {
         QuestionsUserFamilyHistoryDTO questionDTO = new QuestionsUserFamilyHistoryDTO();
+        QuestionsUserFamilyHistory question = new QuestionsUserFamilyHistory();
         questionDTO.setId(1L);
-        when(service.updateQuestionsUserFamilyHistory(questionDTO)).thenReturn(questionDTO);
+        when(service.updateQuestionsUserFamilyHistory(question)).thenReturn(question);
 
         ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.updateQuestion(questionDTO);
 
-        verify(service, times(1)).updateQuestionsUserFamilyHistory(questionDTO);
+        verify(service, times(1)).updateQuestionsUserFamilyHistory(question);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -98,9 +101,10 @@ class QuestionsUserFamilyHistoryControllerTest {
     void testUpdateQuestionNotFound() {
         Long questionId = 1L;
         QuestionsUserFamilyHistoryDTO questionDTO = new QuestionsUserFamilyHistoryDTO();
+        QuestionsUserFamilyHistory question = new QuestionsUserFamilyHistory();
         questionDTO.setId(questionId);
 
-        when(service.updateQuestionsUserFamilyHistory(questionDTO)).thenReturn(null);
+        when(service.updateQuestionsUserFamilyHistory(question)).thenReturn(null);
 
         ResponseEntity<QuestionsUserFamilyHistoryDTO> response = controller.updateQuestion(questionDTO);
 

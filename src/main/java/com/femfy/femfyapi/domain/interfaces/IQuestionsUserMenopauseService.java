@@ -1,19 +1,19 @@
 package com.femfy.femfyapi.domain.interfaces;
 
-import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IQuestionsUserMenopauseService {
 
-    List<QuestionsUserMenopauseDTO> getQuestionsUserMenopause();
+    List<QuestionsUserMenopause> getQuestionsUserMenopause();
 
-    Optional<QuestionsUserMenopauseDTO> getQuestionsUserMenopause(Long id);
+    Optional<QuestionsUserMenopause> getQuestionsUserMenopause(Long id);
 
-    QuestionsUserMenopauseDTO updateQuestionsUserMenopause(QuestionsUserMenopauseDTO updatedDTO);
+    QuestionsUserMenopause updateQuestionsUserMenopause(QuestionsUserMenopause updated);
 
-    QuestionsUserMenopauseDTO saveQuestionsUserMenopause(QuestionsUserMenopauseDTO questionsUserMenopauseDTO);
+    QuestionsUserMenopause saveQuestionsUserMenopause(QuestionsUserMenopause questionsUserMenopause);
 
     void deleteQuestionsUserMenopause(Long id);
 }

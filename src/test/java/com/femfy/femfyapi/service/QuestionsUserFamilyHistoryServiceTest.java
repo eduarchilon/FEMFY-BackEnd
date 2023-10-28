@@ -2,6 +2,8 @@ package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
 import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserFamilyHistoryMapper;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenopauseMapper;
 import com.femfy.femfyapi.infraestructura.service.QuestionsUserFamilyHistoryService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserFamilyHistoryRepository;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
@@ -14,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -43,7 +46,7 @@ class QuestionsUserFamilyHistoryServiceTest {
         List<QuestionsUserFamilyHistory> familyHistoryList = Collections.singletonList(familyHistory);
         when(repository.findAll()).thenReturn(familyHistoryList);
 
-        List<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistories();
+        List<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistories().stream().map(QuestionsUserFamilyHistoryMapper::mapToDTO).collect(Collectors.toList());
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -57,7 +60,7 @@ class QuestionsUserFamilyHistoryServiceTest {
     void testGetQuestionsUserFamilyHistoriesWithNoData() {
         when(repository.findAll()).thenReturn(Collections.emptyList());
 
-        List<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistories();
+        List<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistories().stream().map(QuestionsUserFamilyHistoryMapper::mapToDTO).collect(Collectors.toList());;
 
         assertTrue(result.isEmpty());
     }
@@ -75,7 +78,7 @@ class QuestionsUserFamilyHistoryServiceTest {
 
         when(repository.findById(id)).thenReturn(Optional.of(familyHistory));
 
-        Optional<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistory(id);
+        Optional<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistory(id).map(QuestionsUserFamilyHistoryMapper::mapToDTO);
 
         assertTrue(result.isPresent());
         assertEquals(id, result.get().getId());
@@ -86,7 +89,7 @@ class QuestionsUserFamilyHistoryServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        Optional<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistory(id);
+        Optional<QuestionsUserFamilyHistoryDTO> result = service.getQuestionsUserFamilyHistory(id).map(QuestionsUserFamilyHistoryMapper::mapToDTO);
 
         assertFalse(result.isPresent());
     }
@@ -107,7 +110,7 @@ class QuestionsUserFamilyHistoryServiceTest {
 
         when(repository.save(any(QuestionsUserFamilyHistory.class))).thenReturn(savedEntity);
 
-        QuestionsUserFamilyHistoryDTO result = service.saveQuestionsUserFamilyHistory(dtoToSave);
+        QuestionsUserFamilyHistoryDTO result = QuestionsUserFamilyHistoryMapper.mapToDTO(service.saveQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryMapper.mapToEntity(dtoToSave)));
 
         assertNotNull(result.getId());
         assertEquals(user.getId(), result.getUserId());
@@ -134,7 +137,7 @@ class QuestionsUserFamilyHistoryServiceTest {
         when(repository.findById(idToUpdate)).thenReturn(Optional.of(existingEntity));
         when(repository.save(any(QuestionsUserFamilyHistory.class))).thenReturn(existingEntity);
 
-        QuestionsUserFamilyHistoryDTO result = service.updateQuestionsUserFamilyHistory(updatedDTO);
+        QuestionsUserFamilyHistoryDTO result = QuestionsUserFamilyHistoryMapper.mapToDTO(service.updateQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryMapper.mapToEntity(updatedDTO)));
 
         assertEquals(idToUpdate, result.getId());
         assertEquals(user.getId(), result.getUserId());
@@ -148,7 +151,7 @@ class QuestionsUserFamilyHistoryServiceTest {
 
         when(repository.findById(idToUpdate)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> service.updateQuestionsUserFamilyHistory(updatedDTO));
+        assertThrows(RuntimeException.class, () -> service.updateQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryMapper.mapToEntity(updatedDTO)));
     }
 
     @Test

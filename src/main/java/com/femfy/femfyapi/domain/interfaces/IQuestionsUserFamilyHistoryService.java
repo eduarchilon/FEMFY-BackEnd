@@ -1,19 +1,18 @@
 package com.femfy.femfyapi.domain.interfaces;
 
-import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
-
+import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
 import java.util.List;
 import java.util.Optional;
 
 public interface IQuestionsUserFamilyHistoryService {
 
-    List<QuestionsUserFamilyHistoryDTO> getQuestionsUserFamilyHistories();
+    List<QuestionsUserFamilyHistory> getQuestionsUserFamilyHistories();
 
-    Optional<QuestionsUserFamilyHistoryDTO> getQuestionsUserFamilyHistory(Long id);
+    Optional<QuestionsUserFamilyHistory> getQuestionsUserFamilyHistory(Long id);
 
-    QuestionsUserFamilyHistoryDTO updateQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryDTO updatedDTO);
+    QuestionsUserFamilyHistory updateQuestionsUserFamilyHistory(QuestionsUserFamilyHistory updated);
 
-    QuestionsUserFamilyHistoryDTO saveQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryDTO questionsUserFamilyHistoryDTO);
+    QuestionsUserFamilyHistory saveQuestionsUserFamilyHistory(QuestionsUserFamilyHistory questionsUserFamilyHistory);
 
     void deleteQuestionsUserFamilyHistory(Long id);
 }

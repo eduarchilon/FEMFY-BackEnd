@@ -2,6 +2,7 @@ package com.femfy.femfyapi.controller;
 
 import com.femfy.femfyapi.delivery.controller.QuestionsUserMenopauseController;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class QuestionsUserMenopauseControllerTest {
     @Test
     void testGetQuestionById() {
         Long questionId = 1L;
-        QuestionsUserMenopauseDTO mockQuestion = new QuestionsUserMenopauseDTO();
+        QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
         mockQuestion.setId(questionId);
         when(service.getQuestionsUserMenopause(questionId)).thenReturn(Optional.of(mockQuestion));
 
@@ -58,7 +59,7 @@ class QuestionsUserMenopauseControllerTest {
 
     @Test
     void testGetAllQuestions() {
-        List<QuestionsUserMenopauseDTO> mockQuestions = new ArrayList<>();
+        List<QuestionsUserMenopause> mockQuestions = new ArrayList<>();
         when(service.getQuestionsUserMenopause()).thenReturn(mockQuestions);
 
         ResponseEntity<List<QuestionsUserMenopauseDTO>> response = controller.getAllQuestions();
@@ -72,7 +73,8 @@ class QuestionsUserMenopauseControllerTest {
     @Test
     void testCreateQuestion() {
         QuestionsUserMenopauseDTO questionDTO = new QuestionsUserMenopauseDTO();
-        when(service.saveQuestionsUserMenopause(any(QuestionsUserMenopauseDTO.class))).thenReturn(questionDTO);
+        QuestionsUserMenopause question = new QuestionsUserMenopause();
+        when(service.saveQuestionsUserMenopause(any(QuestionsUserMenopause.class))).thenReturn(question);
 
         ResponseEntity<QuestionsUserMenopauseDTO> response = controller.createQuestion(questionDTO);
 
@@ -85,12 +87,13 @@ class QuestionsUserMenopauseControllerTest {
     @Test
     void testUpdateQuestion() {
         QuestionsUserMenopauseDTO questionDTO = new QuestionsUserMenopauseDTO();
+        QuestionsUserMenopause question = new QuestionsUserMenopause();
         questionDTO.setId(1L);
-        when(service.updateQuestionsUserMenopause(questionDTO)).thenReturn(questionDTO);
+        when(service.updateQuestionsUserMenopause(question)).thenReturn(question);
 
         ResponseEntity<QuestionsUserMenopauseDTO> response = controller.updateQuestion(questionDTO);
 
-        verify(service, times(1)).updateQuestionsUserMenopause(questionDTO);
+        verify(service, times(1)).updateQuestionsUserMenopause(question);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -98,9 +101,10 @@ class QuestionsUserMenopauseControllerTest {
     void testUpdateQuestionNotFound() {
         Long questionId = 1L;
         QuestionsUserMenopauseDTO questionDTO = new QuestionsUserMenopauseDTO();
+        QuestionsUserMenopause question = new QuestionsUserMenopause();
         questionDTO.setId(questionId);
 
-        when(service.updateQuestionsUserMenopause(questionDTO)).thenReturn(null);
+        when(service.updateQuestionsUserMenopause(question)).thenReturn(null);
 
         ResponseEntity<QuestionsUserMenopauseDTO> response = controller.updateQuestion(questionDTO);
 

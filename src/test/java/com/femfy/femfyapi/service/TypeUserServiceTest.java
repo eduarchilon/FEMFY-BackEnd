@@ -6,7 +6,9 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.femfy.femfyapi.infraestructura.mapper.TypeUserMapper;
 import com.femfy.femfyapi.infraestructura.service.TypeUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +36,7 @@ class TypeUserServiceTest {
         TypeUser savedTypeUser = createTypeUser(1L, "Menstruante");
         when(typeUserRepository.save(any(TypeUser.class))).thenReturn(savedTypeUser);
 
-        TypeUserDTO resultDTO = typeUserService.saveTypeUser(inputDTO);
+        TypeUserDTO resultDTO = TypeUserMapper.mapToDTO(typeUserService.saveTypeUser(TypeUserMapper.mapToEntity(inputDTO)));
 
         assertTypeUserDTOEquals(savedTypeUser, resultDTO);
     }
@@ -45,7 +47,7 @@ class TypeUserServiceTest {
         TypeUser updatedTypeUser = createTypeUser(1L, "Menopausica");
         when(typeUserRepository.save(any(TypeUser.class))).thenReturn(updatedTypeUser);
 
-        TypeUserDTO resultDTO = typeUserService.updateTypeUser(inputDTO);
+        TypeUserDTO resultDTO = TypeUserMapper.mapToDTO(typeUserService.updateTypeUser(TypeUserMapper.mapToEntity(inputDTO)));
 
         assertTypeUserDTOEquals(updatedTypeUser, resultDTO);
     }
@@ -76,7 +78,7 @@ class TypeUserServiceTest {
         TypeUser retrievedTypeUser = createTypeUser(idToRetrieve, "No menstrua - Hormonal");
         when(typeUserRepository.findById(idToRetrieve)).thenReturn(Optional.of(retrievedTypeUser));
 
-        TypeUserDTO resultDTO = typeUserService.getTypeUser(idToRetrieve);
+        TypeUserDTO resultDTO = TypeUserMapper.mapToDTO(typeUserService.getTypeUser(idToRetrieve));
 
         assertTypeUserDTOEquals(retrievedTypeUser, resultDTO);
     }
@@ -86,7 +88,7 @@ class TypeUserServiceTest {
         Long idToRetrieve = 1L;
         when(typeUserRepository.findById(idToRetrieve)).thenReturn(Optional.empty());
 
-        TypeUserDTO resultDTO = typeUserService.getTypeUser(idToRetrieve);
+        TypeUserDTO resultDTO = TypeUserMapper.mapToDTO(typeUserService.getTypeUser(idToRetrieve));
 
         assertNullTypeUserDTO(resultDTO);
     }
@@ -101,7 +103,7 @@ class TypeUserServiceTest {
 
         when(typeUserRepository.findAll()).thenReturn(typeUserList);
 
-        List<TypeUserDTO> resultDTOList = typeUserService.getTypeUsers();
+        List<TypeUserDTO> resultDTOList = typeUserService.getTypeUsers().stream().map(TypeUserMapper::mapToDTO).collect(Collectors.toList());
 
         assertEquals(2, resultDTOList.size());
         assertTypeUserDTOEquals(typeUser1, resultDTOList.get(0));
@@ -113,7 +115,7 @@ class TypeUserServiceTest {
         List<TypeUser> emptyTypeUserList = new ArrayList<>();
         when(typeUserRepository.findAll()).thenReturn(emptyTypeUserList);
 
-        List<TypeUserDTO> resultDTOList = typeUserService.getTypeUsers();
+        List<TypeUserDTO> resultDTOList = typeUserService.getTypeUsers().stream().map(TypeUserMapper::mapToDTO).collect(Collectors.toList());
 
         assertTrue(resultDTOList.isEmpty());
     }

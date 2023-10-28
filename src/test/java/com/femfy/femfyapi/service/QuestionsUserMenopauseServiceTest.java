@@ -3,6 +3,7 @@ package com.femfy.femfyapi.service;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
 import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenopauseMapper;
 import com.femfy.femfyapi.infraestructura.service.QuestionsUserMenopauseService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserMenopauseRepository;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
@@ -15,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -38,7 +40,7 @@ class QuestionsUserMenopauseServiceTest {
         List<QuestionsUserMenopause> menopauseList = Collections.singletonList(menopause);
         when(repository.findAll()).thenReturn(menopauseList);
 
-        List<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause();
+        List<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause().stream().map(QuestionsUserMenopauseMapper::mapToDTO).collect(Collectors.toList());
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -52,7 +54,7 @@ class QuestionsUserMenopauseServiceTest {
     void testGetQuestionsUserMenopauseWithNoData() {
         when(repository.findAll()).thenReturn(Collections.emptyList());
 
-        List<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause();
+        List<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause().stream().map(QuestionsUserMenopauseMapper::mapToDTO).collect(Collectors.toList());
 
         assertTrue(result.isEmpty());
     }
@@ -63,7 +65,7 @@ class QuestionsUserMenopauseServiceTest {
         QuestionsUserMenopause menopause = createQuestionsUserMenopause(id, 1L);
         when(repository.findById(id)).thenReturn(Optional.of(menopause));
 
-        Optional<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause(id);
+        Optional<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause(id).map(QuestionsUserMenopauseMapper::mapToDTO);
 
         assertTrue(result.isPresent());
         assertEquals(id, result.get().getId());
@@ -74,7 +76,7 @@ class QuestionsUserMenopauseServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        Optional<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause(id);
+        Optional<QuestionsUserMenopauseDTO> result = service.getQuestionsUserMenopause(id).map(QuestionsUserMenopauseMapper::mapToDTO);
 
         assertFalse(result.isPresent());
     }
@@ -88,7 +90,7 @@ class QuestionsUserMenopauseServiceTest {
 
         when(repository.save(any(QuestionsUserMenopause.class))).thenReturn(savedEntity);
 
-        QuestionsUserMenopauseDTO result = service.saveQuestionsUserMenopause(dtoToSave);
+        QuestionsUserMenopauseDTO result = QuestionsUserMenopauseMapper.mapToDTO(service.saveQuestionsUserMenopause(QuestionsUserMenopauseMapper.mapToEntity(dtoToSave)));
 
         assertNotNull(result.getId());
         assertEquals(user.getId(), result.getUserId());
@@ -107,7 +109,7 @@ class QuestionsUserMenopauseServiceTest {
         when(repository.findById(idToUpdate)).thenReturn(Optional.of(existingEntity));
         when(repository.save(any(QuestionsUserMenopause.class))).thenReturn(existingEntity);
 
-        QuestionsUserMenopauseDTO result = service.updateQuestionsUserMenopause(updatedDTO);
+        QuestionsUserMenopauseDTO result = QuestionsUserMenopauseMapper.mapToDTO(service.updateQuestionsUserMenopause(QuestionsUserMenopauseMapper.mapToEntity(updatedDTO)));
 
         assertEquals(idToUpdate, result.getId());
         assertEquals(user.getId(), result.getUserId());
@@ -121,7 +123,7 @@ class QuestionsUserMenopauseServiceTest {
 
         when(repository.findById(idToUpdate)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> service.updateQuestionsUserMenopause(updatedDTO));
+        assertThrows(EntityNotFoundException.class, () -> service.updateQuestionsUserMenopause(QuestionsUserMenopauseMapper.mapToEntity(updatedDTO)));
     }
 
     @Test

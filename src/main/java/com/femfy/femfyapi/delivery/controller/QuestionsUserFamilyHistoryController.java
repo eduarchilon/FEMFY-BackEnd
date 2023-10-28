@@ -2,6 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserFamilyHistoryMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,7 +39,7 @@ public class QuestionsUserFamilyHistoryController {
     })
     @GetMapping("/{questionId}")
     public ResponseEntity<QuestionsUserFamilyHistoryDTO> getQuestionById(@PathVariable("questionId") Long questionId) {
-        Optional<QuestionsUserFamilyHistoryDTO> question = questionsUserFamilyHistoryService.getQuestionsUserFamilyHistory(questionId);
+        Optional<QuestionsUserFamilyHistoryDTO> question = questionsUserFamilyHistoryService.getQuestionsUserFamilyHistory(questionId).map(QuestionsUserFamilyHistoryMapper::mapToDTO);
         return question.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -51,7 +53,7 @@ public class QuestionsUserFamilyHistoryController {
     })
     @GetMapping("/getAllQuestions")
     public ResponseEntity<List<QuestionsUserFamilyHistoryDTO>> getAllQuestions() {
-        List<QuestionsUserFamilyHistoryDTO> questions = questionsUserFamilyHistoryService.getQuestionsUserFamilyHistories();
+        List<QuestionsUserFamilyHistoryDTO> questions = questionsUserFamilyHistoryService.getQuestionsUserFamilyHistories().stream().map(QuestionsUserFamilyHistoryMapper::mapToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(questions);
     }
 
@@ -64,7 +66,7 @@ public class QuestionsUserFamilyHistoryController {
     })
     @PostMapping("/createQuestion")
     public ResponseEntity<QuestionsUserFamilyHistoryDTO> createQuestion(@RequestBody QuestionsUserFamilyHistoryDTO questionDTO) {
-        QuestionsUserFamilyHistoryDTO savedQuestion = questionsUserFamilyHistoryService.saveQuestionsUserFamilyHistory(questionDTO);
+        QuestionsUserFamilyHistoryDTO savedQuestion = QuestionsUserFamilyHistoryMapper.mapToDTO(questionsUserFamilyHistoryService.saveQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryMapper.mapToEntity((questionDTO))));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestion);
     }
 
@@ -83,7 +85,7 @@ public class QuestionsUserFamilyHistoryController {
             return ResponseEntity.notFound().build();
         }
 
-        QuestionsUserFamilyHistoryDTO updatedQuestion = questionsUserFamilyHistoryService.updateQuestionsUserFamilyHistory(questionDTO);
+        QuestionsUserFamilyHistoryDTO updatedQuestion = QuestionsUserFamilyHistoryMapper.mapToDTO(questionsUserFamilyHistoryService.updateQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryMapper.mapToEntity(questionDTO)));
         if (updatedQuestion == null) {
             return ResponseEntity.notFound().build();
         }

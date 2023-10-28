@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.controller;
 
 import com.femfy.femfyapi.delivery.controller.QuestionsUserMenstruationController;
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenstruation;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenstruationService;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenstruationDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +41,7 @@ public class QuestionsUserMenstruationControllerTest {
     @Test
     public void testGetQuestionById() {
         Long questionId = 1L;
-        QuestionsUserMenstruationDTO mockQuestion = new QuestionsUserMenstruationDTO();
+        QuestionsUserMenstruation mockQuestion = new QuestionsUserMenstruation();
         mockQuestion.setId(questionId);
         when(service.getQuestionsUserMenstruation(questionId)).thenReturn(Optional.of(mockQuestion));
 
@@ -64,7 +65,7 @@ public class QuestionsUserMenstruationControllerTest {
 
     @Test
     public void testGetAllQuestions() {
-        List<QuestionsUserMenstruationDTO> mockQuestions = new ArrayList<>();
+        List<QuestionsUserMenstruation> mockQuestions = new ArrayList<>();
         when(service.getQuestionsUserMenstruations()).thenReturn(mockQuestions);
 
         ResponseEntity<List<QuestionsUserMenstruationDTO>> response = controller.getAllQuestions();
@@ -78,7 +79,8 @@ public class QuestionsUserMenstruationControllerTest {
     @Test
     public void testCreateQuestion() {
         QuestionsUserMenstruationDTO questionDTO = new QuestionsUserMenstruationDTO();
-        when(service.saveQuestionsUserMenstruation(questionDTO)).thenReturn(questionDTO);
+        QuestionsUserMenstruation question = new QuestionsUserMenstruation();
+        when(service.saveQuestionsUserMenstruation(question)).thenReturn(question);
 
         ResponseEntity<QuestionsUserMenstruationDTO> response = controller.createQuestion(questionDTO);
 
@@ -91,28 +93,30 @@ public class QuestionsUserMenstruationControllerTest {
     @Test
     public void testUpdateQuestion() {
         QuestionsUserMenstruationDTO questionDTO = new QuestionsUserMenstruationDTO();
+        QuestionsUserMenstruation question = new QuestionsUserMenstruation();
         questionDTO.setId(1L);
-        when(service.updateQuestionsUserMenstruation(questionDTO)).thenReturn(questionDTO);
+        when(service.updateQuestionsUserMenstruation(question)).thenReturn(question);
 
         ResponseEntity<QuestionsUserMenstruationDTO> response = controller.updateQuestion(questionDTO);
 
-        verify(service, times(1)).updateQuestionsUserMenstruation(questionDTO);
+        verify(service, times(1)).updateQuestionsUserMenstruation(question);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void testUpdateQuestionNotFound() {
         QuestionsUserMenstruationDTO questionDTO = new QuestionsUserMenstruationDTO();
+        QuestionsUserMenstruation question = new QuestionsUserMenstruation();
         questionDTO.setId(1L);
 
         QuestionsUserMenstruationDTO updatedQuestion = new QuestionsUserMenstruationDTO();
         updatedQuestion.setId(1L);
 
-        when(service.updateQuestionsUserMenstruation(questionDTO)).thenReturn(updatedQuestion);
+        when(service.updateQuestionsUserMenstruation(question)).thenReturn(question);
 
         ResponseEntity<QuestionsUserMenstruationDTO> response = controller.updateQuestion(questionDTO);
 
-        verify(service, times(1)).updateQuestionsUserMenstruation(questionDTO);
+        verify(service, times(1)).updateQuestionsUserMenstruation(question);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }

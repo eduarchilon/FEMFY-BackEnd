@@ -2,6 +2,8 @@ package com.femfy.femfyapi.delivery.controller;
 
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserFamilyHistoryMapper;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenopauseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,7 +40,7 @@ public class QuestionsUserMenopauseController {
     })
     @GetMapping("/{questionId}")
     public ResponseEntity<QuestionsUserMenopauseDTO> getQuestionById(@PathVariable("questionId") Long questionId) {
-        Optional<QuestionsUserMenopauseDTO> question = questionsUserMenopauseService.getQuestionsUserMenopause(questionId);
+        Optional<QuestionsUserMenopauseDTO> question = questionsUserMenopauseService.getQuestionsUserMenopause(questionId).map(QuestionsUserMenopauseMapper::mapToDTO);
         return question.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -51,7 +54,7 @@ public class QuestionsUserMenopauseController {
     })
     @GetMapping("/getAllQuestions")
     public ResponseEntity<List<QuestionsUserMenopauseDTO>> getAllQuestions() {
-        List<QuestionsUserMenopauseDTO> questions = questionsUserMenopauseService.getQuestionsUserMenopause();
+        List<QuestionsUserMenopauseDTO> questions = questionsUserMenopauseService.getQuestionsUserMenopause().stream().map(QuestionsUserMenopauseMapper::mapToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(questions);
     }
 
@@ -64,7 +67,7 @@ public class QuestionsUserMenopauseController {
     })
     @PostMapping("/createQuestion")
     public ResponseEntity<QuestionsUserMenopauseDTO> createQuestion(@RequestBody QuestionsUserMenopauseDTO questionDTO) {
-        QuestionsUserMenopauseDTO savedQuestion = questionsUserMenopauseService.saveQuestionsUserMenopause(questionDTO);
+        QuestionsUserMenopauseDTO savedQuestion = QuestionsUserMenopauseMapper.mapToDTO(questionsUserMenopauseService.saveQuestionsUserMenopause(QuestionsUserMenopauseMapper.mapToEntity(questionDTO)));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestion);
     }
 
@@ -83,7 +86,7 @@ public class QuestionsUserMenopauseController {
             return ResponseEntity.notFound().build();
         }
 
-        QuestionsUserMenopauseDTO updatedQuestion = questionsUserMenopauseService.updateQuestionsUserMenopause(questionDTO);
+        QuestionsUserMenopauseDTO updatedQuestion = QuestionsUserMenopauseMapper.mapToDTO(questionsUserMenopauseService.updateQuestionsUserMenopause(QuestionsUserMenopauseMapper.mapToEntity(questionDTO)));
         if (updatedQuestion == null) {
             return ResponseEntity.notFound().build();
         }

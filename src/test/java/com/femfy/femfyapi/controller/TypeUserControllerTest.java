@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.femfy.femfyapi.delivery.controller.TypeUserController;
+import com.femfy.femfyapi.domain.entity.TypeUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,8 @@ class TypeUserControllerTest {
     @Test
     void getTypeUserById_ReturnsOk() {
         Long typeUserId = 1L;
-        TypeUserDTO typeUser = new TypeUserDTO();
-        typeUser.setIdTypeUser(typeUserId);
+        TypeUser typeUser = new TypeUser();
+        typeUser.setId(typeUserId);
         when(userService.getTypeUser(typeUserId)).thenReturn(typeUser);
 
         ResponseEntity<TypeUserDTO> response = controller.getTypeUserById(typeUserId);
@@ -43,7 +44,7 @@ class TypeUserControllerTest {
     @Test
     void getTypeUserById_ReturnsNotFound() {
         Long typeUserId = 1L;
-        TypeUserDTO typeUser = new TypeUserDTO();
+        TypeUser typeUser = new TypeUser();
         when(userService.getTypeUser(typeUserId)).thenReturn(typeUser);
 
         ResponseEntity<TypeUserDTO> response = controller.getTypeUserById(typeUserId);
@@ -54,8 +55,8 @@ class TypeUserControllerTest {
 
     @Test
     void getTypeUsers_ReturnsOk() {
-        List<TypeUserDTO> typeUsers = new ArrayList<>();
-        typeUsers.add(new TypeUserDTO());
+        List<TypeUser> typeUsers = new ArrayList<>();
+        typeUsers.add(new TypeUser());
         when(userService.getTypeUsers()).thenReturn(typeUsers);
 
         ResponseEntity<List<TypeUserDTO>> response = controller.getTypeUsers();
@@ -66,7 +67,7 @@ class TypeUserControllerTest {
 
     @Test
     void getTypeUsers_ReturnsNotFound() {
-        List<TypeUserDTO> typeUsers = new ArrayList<>();
+        List<TypeUser> typeUsers = new ArrayList<>();
         when(userService.getTypeUsers()).thenReturn(typeUsers);
 
         ResponseEntity<List<TypeUserDTO>> response = controller.getTypeUsers();
@@ -78,7 +79,8 @@ class TypeUserControllerTest {
     @Test
     void saveTypeUser_ReturnsCreated() {
         TypeUserDTO typeUserDTO = new TypeUserDTO();
-        when(userService.saveTypeUser(typeUserDTO)).thenReturn(typeUserDTO);
+        TypeUser typeUser = new TypeUser();
+        when(userService.saveTypeUser(typeUser)).thenReturn(typeUser);
 
         ResponseEntity<TypeUserDTO> response = controller.saveTypeUser(typeUserDTO);
 
@@ -89,7 +91,8 @@ class TypeUserControllerTest {
     @Test
     void updateTypeUser_ReturnsOk() {
         TypeUserDTO typeUserDTO = new TypeUserDTO();
-        when(userService.updateTypeUser(typeUserDTO)).thenReturn(typeUserDTO);
+        TypeUser typeUser = new TypeUser();
+        when(userService.updateTypeUser(typeUser)).thenReturn(typeUser);
 
         ResponseEntity<TypeUserDTO> response = controller.updateTypeUser(typeUserDTO);
 

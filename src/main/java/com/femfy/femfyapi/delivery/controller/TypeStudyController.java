@@ -1,8 +1,10 @@
 package com.femfy.femfyapi.delivery.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.femfy.femfyapi.domain.interfaces.ITypeStudyService;
+import com.femfy.femfyapi.infraestructura.mapper.TypeStudyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,7 +49,7 @@ public class TypeStudyController {
     })
     @GetMapping("/{typeStudyId}")
     public ResponseEntity<TypeStudyDTO> getTypeUserById(@PathVariable("typeStudyId") Long typeStudyId) {
-    	TypeStudyDTO typeStudy = this.typeStudyService.getTypeStudy(typeStudyId);
+    	TypeStudyDTO typeStudy = TypeStudyMapper.mapToDTO(this.typeStudyService.getTypeStudy(typeStudyId));
         if (typeStudy.getIdTypeStudy() != null) {
             return new ResponseEntity<>(typeStudy, HttpStatus.OK);
         } else {
@@ -68,7 +70,7 @@ public class TypeStudyController {
     })
     @GetMapping("/getTypeStudys")
     public ResponseEntity<List<TypeStudyDTO>> getTypeStudy() {
-        List<TypeStudyDTO> typeUsers = this.typeStudyService.getTypeStudies();
+        List<TypeStudyDTO> typeUsers = this.typeStudyService.getTypeStudies().stream().map(TypeStudyMapper::mapToDTO).collect(Collectors.toList());
         if (!typeUsers.isEmpty()) {
             return new ResponseEntity<>(typeUsers, HttpStatus.OK);
         } else {
@@ -87,7 +89,7 @@ public class TypeStudyController {
     })
     @PostMapping("/createTypeStudy")
     public ResponseEntity<TypeStudyDTO> saveTypeStudy(@RequestBody TypeStudyDTO typeStudyDTO) {
-    	typeStudyDTO = this.typeStudyService.saveTypeStudy(typeStudyDTO);
+    	typeStudyDTO = TypeStudyMapper.mapToDTO(this.typeStudyService.saveTypeStudy(TypeStudyMapper.mapToEntity(typeStudyDTO)));
         return new ResponseEntity<>(typeStudyDTO, HttpStatus.CREATED);
     }
 
@@ -104,7 +106,7 @@ public class TypeStudyController {
     })
     @PostMapping("/updateTypeStudy")
     public ResponseEntity<TypeStudyDTO> updateTypeUser(@RequestBody TypeStudyDTO typeStudyDTO) {
-    	typeStudyDTO = this.typeStudyService.updateTypeStudy(typeStudyDTO);
+    	typeStudyDTO = TypeStudyMapper.mapToDTO(this.typeStudyService.updateTypeStudy(TypeStudyMapper.mapToEntity(typeStudyDTO)));
         return new ResponseEntity<>(typeStudyDTO, HttpStatus.OK);
     }
 

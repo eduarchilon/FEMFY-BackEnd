@@ -2,17 +2,17 @@ package com.femfy.femfyapi.domain.interfaces;
 
 import java.util.List;
 
-import com.femfy.femfyapi.delivery.dto.TypeStudyDTO;
+import com.femfy.femfyapi.domain.entity.TypeStudy;
 
 public interface ITypeStudyService {
 	
-    public TypeStudyDTO saveTypeStudy(TypeStudyDTO typeStudyDTO);
+    public TypeStudy saveTypeStudy(TypeStudy typeStudy);
 
-    public TypeStudyDTO updateTypeStudy(TypeStudyDTO typeStudyDTO);
+    public TypeStudy updateTypeStudy(TypeStudy typeStudy);
 
     public String deleteTypeStudy(Long idTypeStudy);
 
-    public TypeStudyDTO getTypeStudy(Long idTypeStudy);
+    public TypeStudy getTypeStudy(Long idTypeStudy);
 
-    public List<TypeStudyDTO> getTypeStudies();
+    public List<TypeStudy> getTypeStudies();
 }

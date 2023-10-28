@@ -24,29 +24,23 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
     }
 
     @Override
-    public List<QuestionsUserMenstruationDTO> getQuestionsUserMenstruations() {
-        List<QuestionsUserMenstruation> menstruationList = questionsUserMenstruationRepository.findAll();
-        return menstruationList.stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public List<QuestionsUserMenstruation> getQuestionsUserMenstruations() {
+        return questionsUserMenstruationRepository.findAll();
     }
 
     @Override
-    public Optional<QuestionsUserMenstruationDTO> getQuestionsUserMenstruation(Long id) {
-        Optional<QuestionsUserMenstruation> menstruation = questionsUserMenstruationRepository.findById(id);
-        return menstruation.map(this::mapToDTO);
+    public Optional<QuestionsUserMenstruation> getQuestionsUserMenstruation(Long id) {
+        return questionsUserMenstruationRepository.findById(id);
     }
 
     @Override
-    public QuestionsUserMenstruationDTO saveQuestionsUserMenstruation(QuestionsUserMenstruationDTO questionsUserMenstruationDTO) {
-        QuestionsUserMenstruation menstruation = mapToEntity(questionsUserMenstruationDTO);
-        menstruation = questionsUserMenstruationRepository.save(menstruation);
-        return mapToDTO(menstruation);
+    public QuestionsUserMenstruation saveQuestionsUserMenstruation(QuestionsUserMenstruation questionsUserMenstruation) {
+        return questionsUserMenstruationRepository.save(questionsUserMenstruation);
     }
 
     @Override
-    public QuestionsUserMenstruationDTO updateQuestionsUserMenstruation(QuestionsUserMenstruationDTO updatedDTO) {
-        Long idToUpdate = updatedDTO.getId();
+    public QuestionsUserMenstruation updateQuestionsUserMenstruation(QuestionsUserMenstruation updated) {
+        Long idToUpdate = updated.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
         }
@@ -54,14 +48,12 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
         QuestionsUserMenstruation existingMenstruation = questionsUserMenstruationRepository.findById(idToUpdate)
                 .orElseThrow(() -> new RuntimeException("No se encontró el objeto para actualizar"));
 
-        copyProperties(updatedDTO, existingMenstruation);
+        copyProperties(updated, existingMenstruation);
 
-        existingMenstruation = questionsUserMenstruationRepository.save(existingMenstruation);
-
-        return mapToDTO(existingMenstruation);
+        return questionsUserMenstruationRepository.save(existingMenstruation);
     }
 
-    private void copyProperties(QuestionsUserMenstruationDTO source, QuestionsUserMenstruation target) {
+    private void copyProperties(QuestionsUserMenstruation source, QuestionsUserMenstruation target) {
         if (source.getLastTime() != null) {
             target.setLastTime(source.getLastTime());
         }
@@ -88,35 +80,5 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
         questionsUserMenstruationRepository.deleteById(id);
     }
 
-    private QuestionsUserMenstruationDTO mapToDTO(QuestionsUserMenstruation menstruation) {
-        if (menstruation == null) {
-            throw new EntityNotFoundException("Menstruation not found");
-        }
 
-        QuestionsUserMenstruationDTO dto = new QuestionsUserMenstruationDTO();
-        dto.setId(menstruation.getId());
-        dto.setUserId(menstruation.getUser().getId());
-        dto.setLastTime(menstruation.getLastTime());
-        dto.setLastCycleDuration(menstruation.getLastCycleDuration());
-        dto.setRegular(menstruation.getRegular());
-        dto.setRegularCycleDuration(menstruation.getRegularCycleDuration());
-        dto.setBleedingDuration(menstruation.getBleedingDuration());
-
-        return dto;
-    }
-
-    private QuestionsUserMenstruation mapToEntity(QuestionsUserMenstruationDTO dto) {
-        User user = new User();
-        user.setId(dto.getUserId());
-
-        QuestionsUserMenstruation menstruation = new QuestionsUserMenstruation();
-        menstruation.setId(dto.getId());
-        menstruation.setUser(user);
-        menstruation.setLastTime(dto.getLastTime());
-        menstruation.setLastCycleDuration(dto.getLastCycleDuration());
-        menstruation.setRegular(dto.getRegular());
-        menstruation.setRegularCycleDuration(dto.getRegularCycleDuration());
-        menstruation.setBleedingDuration(dto.getBleedingDuration());
-        return menstruation;
-    }
 }

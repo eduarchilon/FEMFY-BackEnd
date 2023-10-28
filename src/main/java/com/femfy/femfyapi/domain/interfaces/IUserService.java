@@ -2,13 +2,12 @@ package com.femfy.femfyapi.domain.interfaces;
 
 import java.util.List;
 
-/*import dto.FileDTO;*/
-import com.femfy.femfyapi.delivery.dto.UserDTO;
+import com.femfy.femfyapi.domain.entity.User;
 
 public interface IUserService {
-	public UserDTO saveUser(UserDTO userDTO);
-	public UserDTO updateUser(UserDTO userDTO);
+	public User saveUser(User user);
+	public User updateUser(User user);
 	public String deleteUser(Long idUser);
-	public UserDTO getUser(Long idUser);
-	public List<UserDTO>getUsers();
+	public User getUser(Long idUser);
+	public List<User>getUsers();
 }

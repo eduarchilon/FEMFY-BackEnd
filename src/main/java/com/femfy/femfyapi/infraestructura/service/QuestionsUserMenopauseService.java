@@ -1,8 +1,6 @@
 package com.femfy.femfyapi.infraestructura.service;
 
-import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
-import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserMenopauseRepository;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
@@ -24,29 +22,23 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
     }
 
     @Override
-    public List<QuestionsUserMenopauseDTO> getQuestionsUserMenopause() {
-        List<QuestionsUserMenopause> menopauseList = questionsUserMenopauseRepository.findAll();
-        return menopauseList.stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public List<QuestionsUserMenopause> getQuestionsUserMenopause() {
+        return questionsUserMenopauseRepository.findAll();
     }
 
     @Override
-    public Optional<QuestionsUserMenopauseDTO> getQuestionsUserMenopause(Long id) {
-        Optional<QuestionsUserMenopause> menopause = questionsUserMenopauseRepository.findById(id);
-        return menopause.map(this::mapToDTO);
+    public Optional<QuestionsUserMenopause> getQuestionsUserMenopause(Long id) {
+        return questionsUserMenopauseRepository.findById(id);
     }
 
     @Override
-    public QuestionsUserMenopauseDTO saveQuestionsUserMenopause(QuestionsUserMenopauseDTO questionsUserMenopauseDTO) {
-        QuestionsUserMenopause menopause = mapToEntity(questionsUserMenopauseDTO);
-        menopause = questionsUserMenopauseRepository.save(menopause);
-        return mapToDTO(menopause);
+    public QuestionsUserMenopause saveQuestionsUserMenopause(QuestionsUserMenopause questionsUserMenopause) {
+        return questionsUserMenopauseRepository.save(questionsUserMenopause);
     }
 
     @Override
-    public QuestionsUserMenopauseDTO updateQuestionsUserMenopause(QuestionsUserMenopauseDTO updatedDTO) {
-        Long idToUpdate = updatedDTO.getId();
+    public QuestionsUserMenopause updateQuestionsUserMenopause(QuestionsUserMenopause updated) {
+        Long idToUpdate = updated.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
         }
@@ -54,11 +46,9 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
         QuestionsUserMenopause existingMenopause = questionsUserMenopauseRepository.findById(idToUpdate)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró el objeto para actualizar"));
 
-        copyProperties(updatedDTO, existingMenopause);
+        copyProperties(updated, existingMenopause);
 
-        existingMenopause = questionsUserMenopauseRepository.save(existingMenopause);
-
-        return mapToDTO(existingMenopause);
+        return questionsUserMenopauseRepository.save(existingMenopause);
     }
 
     @Override
@@ -66,74 +56,38 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
         questionsUserMenopauseRepository.deleteById(id);
     }
 
-    private void copyProperties(QuestionsUserMenopauseDTO source, QuestionsUserMenopause target) {
-        if (source.isSuffocation()) {
-            target.setSuffocation(source.isSuffocation());
+    private void copyProperties(QuestionsUserMenopause source, QuestionsUserMenopause target) {
+        if (source.getSuffocation() != null) {
+            target.setSuffocation(source.getSuffocation());
         }
-        if (source.isChangesInMenstrualCycle()) {
-            target.setChangesInMenstrualCycle(source.isChangesInMenstrualCycle());
+        if (source.getChangesInMenstrualCycle() != null) {
+            target.setChangesInMenstrualCycle(source.getChangesInMenstrualCycle());
         }
-        if (source.isVaginalDryness()) {
-            target.setVaginalDryness(source.isVaginalDryness());
+        if (source.getVaginalDryness() != null) {
+            target.setVaginalDryness(source.getVaginalDryness());
         }
-        if (source.isChangesInSkinAndHair()) {
-            target.setChangesInSkinAndHair(source.isChangesInSkinAndHair());
+        if (source.getChangesInSkinAndHair() != null) {
+            target.setChangesInSkinAndHair(source.getChangesInSkinAndHair());
         }
-        if (source.isMoodChanges()) {
-            target.setMoodChanges(source.isMoodChanges());
+        if (source.getMoodChanges() != null) {
+            target.setMoodChanges(source.getMoodChanges());
         }
-        if (source.isSleepingDifficulties()) {
-            target.setSleepingDifficulties(source.isSleepingDifficulties());
+        if (source.getSleepingDifficulties() != null) {
+            target.setSleepingDifficulties(source.getSleepingDifficulties());
         }
-        if(source.isAumentoDePeso()){
-            target.setAumentoDePeso(source.isAumentoDePeso());
+        if(source.getAumentoDePeso() != null){
+            target.setAumentoDePeso(source.getAumentoDePeso());
         }
-        if (source.isLossOfBoneDensity()) {
-            target.setLossOfBoneDensity(source.isLossOfBoneDensity());
+        if (source.getLossOfBoneDensity() != null) {
+            target.setLossOfBoneDensity(source.getLossOfBoneDensity());
         }
-        if (source.isChangesInLibido()) {
-            target.setChangesInLibido(source.isChangesInLibido());
+        if (source.getChangesInLibido() != null) {
+            target.setChangesInLibido(source.getChangesInLibido());
         }
 
     }
 
-    private QuestionsUserMenopauseDTO mapToDTO(QuestionsUserMenopause menopause) {
-        if (menopause == null) {
-            throw new EntityNotFoundException("Menopause not found");
-        }
 
-        QuestionsUserMenopauseDTO dto = new QuestionsUserMenopauseDTO();
-        dto.setId(menopause.getId());
-        dto.setUserId(menopause.getUser().getId());
-        dto.setSuffocation(menopause.getSuffocation());
-        dto.setChangesInMenstrualCycle(menopause.getChangesInMenstrualCycle());
-        dto.setVaginalDryness(menopause.getVaginalDryness());
-        dto.setChangesInSkinAndHair(menopause.getChangesInSkinAndHair());
-        dto.setMoodChanges(menopause.getMoodChanges());
-        dto.setSleepingDifficulties(menopause.getSleepingDifficulties());
-        dto.setAumentoDePeso(menopause.getAumentoDePeso());
-        dto.setLossOfBoneDensity(menopause.getLossOfBoneDensity());
-        dto.setChangesInLibido(menopause.getChangesInLibido());
 
-        return dto;
-    }
 
-    private QuestionsUserMenopause mapToEntity(QuestionsUserMenopauseDTO dto) {
-        User user = new User();
-        user.setId(dto.getUserId());
-
-        QuestionsUserMenopause menopause = new QuestionsUserMenopause();
-        menopause.setId(dto.getId());
-        menopause.setUser(user);
-        menopause.setSuffocation(dto.isSuffocation());
-        menopause.setChangesInMenstrualCycle(dto.isChangesInMenstrualCycle());
-        menopause.setVaginalDryness(dto.isVaginalDryness());
-        menopause.setChangesInSkinAndHair(dto.isChangesInSkinAndHair());
-        menopause.setMoodChanges(dto.isMoodChanges());
-        menopause.setSleepingDifficulties(dto.isSleepingDifficulties());
-        menopause.setAumentoDePeso(dto.isAumentoDePeso());
-        menopause.setLossOfBoneDensity(dto.isLossOfBoneDensity());
-        menopause.setChangesInLibido(dto.isChangesInLibido());
-        return menopause;
-    }
 }

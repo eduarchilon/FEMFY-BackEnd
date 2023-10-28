@@ -25,17 +25,13 @@ public class TypeUserService implements ITypeUserService {
     }
 
     @Override
-    public TypeUserDTO saveTypeUser(TypeUserDTO typeUserDTO) {
-        TypeUser typeUser = mapToTypeUser(typeUserDTO);
-        typeUser = this.typeUserRepository.save(typeUser);
-        return mapToTypeUserDTO(typeUser);
+    public TypeUser saveTypeUser(TypeUser typeUser) {
+        return this.typeUserRepository.save(typeUser);
     }
 
     @Override
-    public TypeUserDTO updateTypeUser(TypeUserDTO typeUserDTO) {
-        TypeUser typeUser = mapToTypeUser(typeUserDTO);
-        typeUser = this.typeUserRepository.save(typeUser);
-        return mapToTypeUserDTO(typeUser);
+    public TypeUser updateTypeUser(TypeUser typeUser) {
+        return this.typeUserRepository.save(typeUser);
     }
 
     @Override
@@ -53,28 +49,13 @@ public class TypeUserService implements ITypeUserService {
     }
 
     @Override
-    public TypeUserDTO getTypeUser(Long idTypeUser) {
-        TypeUser typeUser = this.typeUserRepository.findById(idTypeUser).orElseGet(TypeUser::new);
-        return mapToTypeUserDTO(typeUser);
+    public TypeUser getTypeUser(Long idTypeUser) {
+        return this.typeUserRepository.findById(idTypeUser).orElseGet(TypeUser::new);
     }
 
     @Override
-    public List<TypeUserDTO> getTypeUsers() {
-        List<TypeUser> typeUserListdb = this.typeUserRepository.findAll();
-        return typeUserListdb.stream().map(this::mapToTypeUserDTO).collect(Collectors.toList());
+    public List<TypeUser> getTypeUsers() {
+        return this.typeUserRepository.findAll();
     }
 
-    private TypeUserDTO mapToTypeUserDTO(TypeUser typeUser) {
-        TypeUserDTO dto = new TypeUserDTO();
-        dto.setIdTypeUser(typeUser.getId());
-        dto.setDescription(typeUser.getDescription());
-        return dto;
-    }
-
-    private TypeUser mapToTypeUser(TypeUserDTO typeUserDTO) {
-        TypeUser typeUser = new TypeUser();
-        typeUser.setId(typeUserDTO.getIdTypeUser());
-        typeUser.setDescription(typeUserDTO.getDescription());
-        return typeUser;
-    }
 }

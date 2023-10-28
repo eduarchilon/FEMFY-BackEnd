@@ -3,6 +3,8 @@ package com.femfy.femfyapi.service;
 import com.femfy.femfyapi.domain.entity.User;
 
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenstruation;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenopauseMapper;
+import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenstruationMapper;
 import com.femfy.femfyapi.infraestructura.service.QuestionsUserMenstruationService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserMenstruationRepository;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenstruationDTO;
@@ -16,6 +18,7 @@ import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -45,7 +48,7 @@ class QuestionsUserMenstruationServiceTest {
         List<QuestionsUserMenstruation> menstruationList = Collections.singletonList(menstruation);
         when(repository.findAll()).thenReturn(menstruationList);
 
-        List<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruations();
+        List<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruations().stream().map(QuestionsUserMenstruationMapper::mapToDTO).collect(Collectors.toList());
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -59,7 +62,7 @@ class QuestionsUserMenstruationServiceTest {
     void testGetQuestionsUserMenstruationsWithNoData() {
         when(repository.findAll()).thenReturn(Collections.emptyList());
 
-        List<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruations();
+        List<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruations().stream().map(QuestionsUserMenstruationMapper::mapToDTO).collect(Collectors.toList());
 
         assertTrue(result.isEmpty());
     }
@@ -77,7 +80,7 @@ class QuestionsUserMenstruationServiceTest {
 
         when(repository.findById(id)).thenReturn(Optional.of(menstruation));
 
-        Optional<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruation(id);
+        Optional<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruation(id).map(QuestionsUserMenstruationMapper::mapToDTO);
 
         assertTrue(result.isPresent());
         assertEquals(id, result.get().getId());
@@ -88,7 +91,7 @@ class QuestionsUserMenstruationServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        Optional<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruation(id);
+        Optional<QuestionsUserMenstruationDTO> result = service.getQuestionsUserMenstruation(id).map(QuestionsUserMenstruationMapper::mapToDTO);
 
         assertFalse(result.isPresent());
     }
@@ -111,7 +114,7 @@ class QuestionsUserMenstruationServiceTest {
 
         when(repository.save(any(QuestionsUserMenstruation.class))).thenReturn(savedEntity);
 
-        QuestionsUserMenstruationDTO result = service.saveQuestionsUserMenstruation(dtoToSave);
+        QuestionsUserMenstruationDTO result = QuestionsUserMenstruationMapper.mapToDTO(service.saveQuestionsUserMenstruation(QuestionsUserMenstruationMapper.mapToEntity(dtoToSave)));
 
         assertNotNull(result.getId());
         assertEquals(dtoToSave.getLastTime(), result.getLastTime());
@@ -140,7 +143,7 @@ class QuestionsUserMenstruationServiceTest {
         when(repository.findById(idToUpdate)).thenReturn(Optional.of(existingEntity));
         when(repository.save(any(QuestionsUserMenstruation.class))).thenReturn(existingEntity);
 
-        QuestionsUserMenstruationDTO result = service.updateQuestionsUserMenstruation(updatedDTO);
+        QuestionsUserMenstruationDTO result = QuestionsUserMenstruationMapper.mapToDTO(service.updateQuestionsUserMenstruation(QuestionsUserMenstruationMapper.mapToEntity(updatedDTO)));
 
         assertEquals(idToUpdate, result.getId());
         assertEquals(updatedDTO.getLastTime(), result.getLastTime());
@@ -155,6 +158,6 @@ class QuestionsUserMenstruationServiceTest {
 
         when(repository.findById(idToUpdate)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> service.updateQuestionsUserMenstruation(updatedDTO));
+        assertThrows(RuntimeException.class, () -> service.updateQuestionsUserMenstruation(QuestionsUserMenstruationMapper.mapToEntity(updatedDTO)));
     }
 }

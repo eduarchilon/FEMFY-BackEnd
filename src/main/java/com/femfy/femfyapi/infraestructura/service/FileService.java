@@ -29,33 +29,31 @@ public class FileService implements IFileService {
 	}
 
 	@Override
-	public FileDTO insertFile(FileDTO fileDTO) {
+	public FileUser insertFile(FileUser file) {
 		try {
 			User user = new User();
 			TypeStudy typeStudy = new TypeStudy();
-			typeStudy.setId(fileDTO.getTypeStudy().getIdTypeStudy());
-			user.setId(fileDTO.getIdUser());
+			typeStudy.setId(file.getTypeStudy().getId());
+			user.setId(file.getIdUser());
 			FileUser fileUser = new FileUser();
-			fileUser.setIdUser(fileDTO.getIdUser());
-			fileUser.setFileExt(fileDTO.getFileExt());
-			fileUser.setFileName(fileDTO.getFileName());
-			fileUser.setStudyDate(fileDTO.getStudyDate());
-			fileUser.setDescription(fileDTO.getDescription());
+			fileUser.setIdUser(file.getIdUser());
+			fileUser.setFileExt(file.getFileExt());
+			fileUser.setFileName(file.getFileName());
+			fileUser.setStudyDate(file.getStudyDate());
+			fileUser.setDescription(file.getDescription());
 			fileUser.setTypeStudy(typeStudy);
-			fileRepository.save(fileUser);
-			
-			fileDTO.setIdFile(fileUser.getId());
-			return fileDTO;
+
+			return fileRepository.save(fileUser);
 		} catch (Exception e) {
-			return fileDTO;
+			return file;
 		}
 		
 	}
 	
 	@Override
-	public String deleteFile(FileDTO fileDTO) {
+	public String deleteFile(FileUser file) {
 		try {
-			fileRepository.deleteById(fileDTO.getIdFile());
+			fileRepository.deleteById(file.getId());
 			return"OK";
 		}  catch (EmptyResultDataAccessException e) {
             return "Error: El ID enviado es invalido";
@@ -67,56 +65,24 @@ public class FileService implements IFileService {
 	}
 
 	@Override
-	public List<FileDTO> findDocumentsByIdUser(Long idUser) {
-		List<FileDTO> documents = new ArrayList<>();
+	public List<FileUser> findDocumentsByIdUser(Long idUser) {
 		List<FileUser> fileUsers = new ArrayList<>();
 		try {
-			fileUsers = fileRepository.findByIdUser(idUser);
-			
-			for (FileUser fileUser : fileUsers) {
-				FileDTO dto = new FileDTO();
-				TypeStudyDTO studyDTO = new TypeStudyDTO();
-				studyDTO.setDescription(fileUser.getTypeStudy().getDescription());
-				studyDTO.setIdTypeStudy(fileUser.getTypeStudy().getId());
-				
-				dto.setTypeStudy(studyDTO);
-				dto.setIdUser(fileUser.getIdUser());
-				dto.setFileName(fileUser.getFileName());
-				dto.setFileExt(fileUser.getFileExt());
-				dto.setIdFile(fileUser.getId());
-				dto.setDescription(fileUser.getDescription());
-				dto.setStudyDate(fileUser.getStudyDate());
-				
-				
-				documents.add(dto);
-			}
+			fileUsers =  fileRepository.findByIdUser(idUser);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return documents;
+		return fileUsers;
 	}
 
 	@Override
-	public FileDTO getFileById(Long idFile) {
+	public FileUser getFileById(Long idFile) {
 		FileUser fileUser = new FileUser();
-		FileDTO dto = new FileDTO();
 		try {
-			fileUser = fileRepository.findById(idFile).get();
-			TypeStudyDTO studyDTO = new TypeStudyDTO();
-			studyDTO.setDescription(fileUser.getTypeStudy().getDescription());
-			studyDTO.setIdTypeStudy(fileUser.getTypeStudy().getId());
-			
-			dto.setTypeStudy(studyDTO);
-			dto.setIdUser(fileUser.getIdUser());
-			dto.setFileName(fileUser.getFileName());
-			dto.setFileExt(fileUser.getFileExt());
-			dto.setIdFile(fileUser.getId());
-			dto.setDescription(fileUser.getDescription());
-			dto.setStudyDate(fileUser.getStudyDate());
-			
+			fileUser = fileRepository.findById(idFile).orElse(null);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return dto;
+		return fileUser;
 	}
 }

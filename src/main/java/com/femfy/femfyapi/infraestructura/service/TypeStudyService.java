@@ -25,18 +25,14 @@ public class TypeStudyService implements ITypeStudyService {
     }
 
     @Override
-    public TypeStudyDTO saveTypeStudy(TypeStudyDTO typeStudyDTO) {
-        TypeStudy typeStudy = mapToTypeStudy(typeStudyDTO);
-        typeStudy = this.typeStudyRepository.save(typeStudy);
-        return mapToTypeStudyDTO(typeStudy);
+    public TypeStudy saveTypeStudy(TypeStudy typeStudy) {
+        return this.typeStudyRepository.save(typeStudy);
     }
     
     
     @Override
-    public TypeStudyDTO updateTypeStudy(TypeStudyDTO typeStudyDTO){
-        TypeStudy typeStudy = mapToTypeStudy(typeStudyDTO);
-        typeStudy = this.typeStudyRepository.save(typeStudy);
-        return mapToTypeStudyDTO(typeStudy);
+    public TypeStudy updateTypeStudy(TypeStudy typeStudy){
+        return this.typeStudyRepository.save(typeStudy);
     }
 
     @Override
@@ -54,28 +50,14 @@ public class TypeStudyService implements ITypeStudyService {
     }
 
     @Override
-    public TypeStudyDTO getTypeStudy(Long idTypeStudy) {
-        TypeStudy typeUser = this.typeStudyRepository.findById(idTypeStudy).orElseGet(TypeStudy::new);
-        return mapToTypeStudyDTO(typeUser);
+    public TypeStudy getTypeStudy(Long idTypeStudy) {
+        return this.typeStudyRepository.findById(idTypeStudy).orElseGet(TypeStudy::new);
     }
 
     @Override
-    public List<TypeStudyDTO> getTypeStudies() {
-        List<TypeStudy> typeStuides = this.typeStudyRepository.findAll();
-        return typeStuides.stream().map(this::mapToTypeStudyDTO).collect(Collectors.toList());
+    public List<TypeStudy> getTypeStudies() {
+        return this.typeStudyRepository.findAll();
     }
 
-    private TypeStudyDTO mapToTypeStudyDTO (TypeStudy typeStudy) {
-    	TypeStudyDTO dto = new TypeStudyDTO();
-        dto.setIdTypeStudy(typeStudy.getId());
-        dto.setDescription(typeStudy.getDescription());
-        return dto;
-    }
 
-    private TypeStudy mapToTypeStudy(TypeStudyDTO typeStudyDTO) {
-    	TypeStudy typeStudy = new TypeStudy();
-    	typeStudy.setId(typeStudyDTO.getIdTypeStudy());
-    	typeStudy.setDescription(typeStudyDTO.getDescription());
-        return typeStudy;
-    }
 }

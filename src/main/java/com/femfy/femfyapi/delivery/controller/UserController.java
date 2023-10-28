@@ -2,9 +2,11 @@ package com.femfy.femfyapi.delivery.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 import com.femfy.femfyapi.domain.interfaces.IUserService;
+import com.femfy.femfyapi.infraestructura.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -53,8 +55,7 @@ public class UserController {
 	// ***** swagger - openapi *****
 	@GetMapping("/{userId}") 
 	public ResponseEntity<UserDTO> getUserById(@PathVariable("userId") Long userId) {
-		UserDTO user = new UserDTO();
-		user = userService.getUser(userId);
+		UserDTO user = UserMapper.mapToDTO(userService.getUser(userId));
 		if(!user.getEmail().isEmpty()){
 			return new ResponseEntity<>(user, HttpStatus.OK);	
 		}else {
@@ -78,8 +79,7 @@ public class UserController {
 	// ***** swagger - openapi ****
 	@GetMapping("/getUsers")
 	public ResponseEntity<List<UserDTO>> getUsers(){
-		List<UserDTO> users = new ArrayList<>();
-		users = userService.getUsers();
+		List<UserDTO> users = userService.getUsers().stream().map(UserMapper::mapToDTO).collect(Collectors.toList());
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	
@@ -100,7 +100,7 @@ public class UserController {
 	
 	@PostMapping("/createUser") 
 	public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
-		userDTO = userService.saveUser(userDTO);
+		userDTO = UserMapper.mapToDTO(userService.saveUser(UserMapper.mapToEntity(userDTO)));
 		return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
 	}
 	
@@ -121,7 +121,7 @@ public class UserController {
 	// ***** swagger - openapi ****
 	@PostMapping("/updateUser") 
 	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-		userDTO = userService.updateUser(userDTO);
+		userDTO = UserMapper.mapToDTO(userService.updateUser(UserMapper.mapToEntity(userDTO)));
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 

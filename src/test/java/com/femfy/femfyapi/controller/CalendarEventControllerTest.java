@@ -7,6 +7,8 @@ import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
+import com.femfy.femfyapi.infraestructura.mapper.CalendarEventMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -60,8 +62,8 @@ class CalendarEventControllerTest {
     @Test
     void testGetEventByIdSuccess() {
         Long eventId = 1L;
-        CalendarEventDTO mockEvent = new CalendarEventDTO();
-        //when(service.getCalendarEvent(eventId)).thenReturn(Optional.of(mockEvent));
+        CalendarEvent mockEvent = new CalendarEvent();
+        when(service.getCalendarEvent(eventId)).thenReturn(Optional.of(mockEvent));
 
         ResponseEntity<CalendarEventDTO> response = controller.getEventById(eventId);
 
@@ -99,12 +101,12 @@ class CalendarEventControllerTest {
         CalendarEvent event = new CalendarEvent();
         when(service.saveCalendarEvent(any(CalendarEvent.class))).thenReturn(event);
 
-        //ResponseEntity<CalendarEventDTO> response = controller.createEvent(event);
+        ResponseEntity<CalendarEventDTO> response = controller.createEvent(CalendarEventMapper.mapToDTO(event));
 
-       // assertAll(
-       //         () -> assertEquals(HttpStatus.CREATED, response.getStatusCode()),
-      //          () -> assertEquals(event, response.getBody())
-      //  );
+       assertAll(
+                () -> assertEquals(HttpStatus.CREATED, response.getStatusCode()),
+                () -> assertEquals(event, response.getBody())
+       );
     }
 
     @Test

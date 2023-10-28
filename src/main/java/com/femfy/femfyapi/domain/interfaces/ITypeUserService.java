@@ -2,16 +2,17 @@ package com.femfy.femfyapi.domain.interfaces;
 
 import java.util.List;
 
-import com.femfy.femfyapi.delivery.dto.TypeUserDTO;
+import com.femfy.femfyapi.domain.entity.TypeUser;
+
 
 public interface ITypeUserService {
-    public TypeUserDTO saveTypeUser(TypeUserDTO typeUserDTO);
+    public TypeUser saveTypeUser(TypeUser typeUser);
 
-    public TypeUserDTO updateTypeUser(TypeUserDTO typeUserDTO);
+    public TypeUser updateTypeUser(TypeUser typeUser);
 
     public String deleteTypeUser(Long idTypeUser);
 
-    public TypeUserDTO getTypeUser(Long idTypeUser);
+    public TypeUser getTypeUser(Long idTypeUser);
 
-    public List<TypeUserDTO> getTypeUsers();
+    public List<TypeUser> getTypeUsers();
 }

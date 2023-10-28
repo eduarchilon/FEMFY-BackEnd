@@ -2,7 +2,9 @@ package com.femfy.femfyapi.delivery.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.femfy.femfyapi.infraestructura.mapper.FileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -55,7 +57,7 @@ public class FileController {
 	@PostMapping("/uploadFile")
 	public ResponseEntity<FileDTO> uploadFile(@RequestBody FileDTO fileDTO)
 	{
-		fileDTO	= iFileService.insertFile(fileDTO);
+		fileDTO	= FileMapper.mapToDTO(iFileService.insertFile(FileMapper.mapToEntity(fileDTO)));
 		
 		try {
 			if(fileDTO.getIdFile()!= null) {
@@ -110,14 +112,14 @@ public class FileController {
 	@DeleteMapping("/deleteFile")
 	public ResponseEntity<String> deleteFile(@RequestBody FileDTO fileDTO)
 	{
-		fileDTO = iFileService.getFileById(fileDTO.getIdFile());
+		fileDTO = FileMapper.mapToDTO(iFileService.getFileById(fileDTO.getIdFile()));
 		
 		if(!fileDTO.getFileName().isEmpty() && fileDTO.getFileName()!=null) {
 			fileDTO.setFileName(NameOfDocuement(fileDTO));
 			String deleteResult = iUploadFileService.deleteFile(fileDTO);
 			
 			if(deleteResult.equalsIgnoreCase("OK")) {
-				String result = iFileService.deleteFile(fileDTO);
+				String result = iFileService.deleteFile(FileMapper.mapToEntity(fileDTO));
 				
 				if(result.equalsIgnoreCase("OK")){
 					return new ResponseEntity<String>("Documento eliminado",HttpStatus.OK);
@@ -150,9 +152,8 @@ public class FileController {
 	// ***** swagger - openapi *****
 	@GetMapping("/{userId}") 
 	public ResponseEntity<List<FileDTO>> getUserById(@PathVariable("userId") Long userId) {
-		List<FileDTO> documents = new ArrayList<>();
-		documents = iFileService.findDocumentsByIdUser(userId);
-		if(documents.size() >0){
+		List<FileDTO> documents = iFileService.findDocumentsByIdUser(userId).stream().map(FileMapper::mapToDTO).collect(Collectors.toList());
+		if(!documents.isEmpty()){
 			return new ResponseEntity<>(documents, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(documents, HttpStatus.INTERNAL_SERVER_ERROR);
