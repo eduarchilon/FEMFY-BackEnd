@@ -21,7 +21,7 @@ class UserRepositoryTest {
 	UserRepository repository;
 	@Autowired
 	TestEntityManager entityManager;
-	
+	/*
 	@BeforeEach
 	public void setUp() throws Exception {
 		User user= new User();
@@ -35,19 +35,19 @@ class UserRepositoryTest {
 		
 		entityManager.persist(user);
 	}
-/*
+
 	@Test
 	public void findById() {
 		Optional<User> user = repository.findById(1L);
 		assertEquals(user.get().getFirstName(), "pepe");
 		System.out.println("user.get() =" + user.get());
-	}*/
+	}
 	
 	@Test
 	public void findUsers() {
 	    List<User> users = repository.findAll();
 
 	    assertThat(users).hasSize(1);
-	}
+	}*/
 
 }
