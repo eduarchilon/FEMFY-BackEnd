@@ -1,29 +1,28 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.Utils;
-import com.femfy.femfyapi.entity.Cycle;
-import com.femfy.femfyapi.exception.CustomException;
-import com.femfy.femfyapi.repository.CycleRepository;
-
-import dto.CycleDTO;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.femfy.femfyapi.Utils;
+import com.femfy.femfyapi.entity.Cycle;
+import com.femfy.femfyapi.exception.CustomException;
+import com.femfy.femfyapi.repository.CycleRepository;
+
+import dto.CycleDTO;
 
 @SpringBootTest
 public class CycleServiceTest {
@@ -66,17 +65,17 @@ public class CycleServiceTest {
         });
 
     }
-/*
+
     @Test
     void registerCycleEndTest() throws Exception {
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle);
-        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
+        when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
 
         CycleDTO resObtenida = cycleService.registerCycleEnd(cycle);
 
         assertNotNull(resObtenida);
 
-    }*/
+    }
 
     @Test
     void registerCycleEndExceptionTest() throws Exception {
@@ -87,11 +86,12 @@ public class CycleServiceTest {
         });
 
     }
-/*
+
     @Test
     void getCycleHistoryTest() throws Exception {
         List<Cycle> list = new ArrayList<>();
         list.add(cycle);
+        when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle);
         when(cycleRepositoryMock.findAllByIdUser(anyLong())).thenReturn(list);
         when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
@@ -101,7 +101,7 @@ public class CycleServiceTest {
 
         assertNotNull(resObtenida);
 
-    }*/
+    }
 
     @Test
     void getCycleHistoryExceptionTest() throws Exception {
@@ -114,7 +114,6 @@ public class CycleServiceTest {
     }
 
     @Test
-    @Disabled
     void getCycleByIdUserAndDateBegingTest() throws Exception {
         when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
 
