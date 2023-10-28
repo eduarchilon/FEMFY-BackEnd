@@ -36,9 +36,7 @@ public class UserService implements IUserService{
 			user.setBirthdate(userDTO.getBirthdate());
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
-			user.setEmotion(userDTO.getEmotion());
 			user.setLocalidad(userDTO.getLocalidad());
-			user.setAvatar(userDTO.getAvatar());
 			userRepository.save(user);
 			
 			userDTO.setIdUser(user.getId());
@@ -67,9 +65,7 @@ public class UserService implements IUserService{
 			user.setBirthdate(userDTO.getBirthdate());
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
-			user.setEmotion(userDTO.getEmotion());
 			user.setLocalidad(userDTO.getLocalidad());
-			user.setAvatar(userDTO.getAvatar());
 			userRepository.save(user);
 		} catch (Exception e) {
 			System.out.print("NO SE LOGRA HACER EL MAPEO PARA ACTUALIZAR ");
@@ -111,9 +107,7 @@ public class UserService implements IUserService{
 				userDTO.setBirthdate(user.getBirthdate());
 				userDTO.setPhone(user.getPhone());
 				userDTO.setEmail(user.getEmail());
-				userDTO.setEmotion(user.getEmotion());
 				userDTO.setLocalidad(user.getLocalidad());
-				userDTO.setAvatar(user.getAvatar());
 				return userDTO;
 			}		
 		} catch (Exception e) {
@@ -141,9 +135,7 @@ public class UserService implements IUserService{
 			dto.setBirthdate(user.getBirthdate());
 			dto.setPhone(user.getPhone());
 			dto.setEmail(user.getEmail());
-			dto.setEmotion(user.getEmotion());
 			dto.setLocalidad(user.getLocalidad());
-			dto.setAvatar(user.getAvatar());
 			userList.add(dto);
 		}
 		return userList;
