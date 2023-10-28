@@ -47,7 +47,7 @@ public class ForumPostRepositoryTest {
 
         forumPostRepository.save(post);
     }
-/*
+
     @Test
     public void testFindById() {
         // Inserta
@@ -77,7 +77,7 @@ public class ForumPostRepositoryTest {
         // Verifica
         assertThat(foundPost1).isPresent();
         assertThat(foundPost1.get().getId()).isEqualTo(post1.getId());
-    }*/
+    }
 /*
     @Test
     public void testFindAll() {
