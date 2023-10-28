@@ -17,10 +17,10 @@ public class CalendarEventDTO {
     private String title;
 
     @Schema(description = "Fecha del evento", example = "2023-10-08")
-    private Date dateEvent;
+    private String dateEvent;
 
     @Schema(description = "Hora de alerta del evento", example = "09:00:00")
-    private Date hourAlert;
+    private String hourAlert;
 
     @Schema(description = "Descripción del evento", example = "Reunión con el equipo de trabajo")
     private String description;

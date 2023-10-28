@@ -2,7 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
-import com.femfy.femfyapi.infraestructura.mapper.CalendarEventMapper;
+import com.femfy.femfyapi.delivery.mapper.CalendarEventMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

@@ -1,4 +1,4 @@
-package com.femfy.femfyapi.infraestructura.mapper;
+package com.femfy.femfyapi.delivery.mapper;
 
 import com.femfy.femfyapi.delivery.dto.TypeUserDTO;
 import com.femfy.femfyapi.domain.entity.TypeUser;

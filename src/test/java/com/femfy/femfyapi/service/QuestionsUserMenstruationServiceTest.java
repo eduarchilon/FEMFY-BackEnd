@@ -3,9 +3,8 @@ package com.femfy.femfyapi.service;
 import com.femfy.femfyapi.domain.entity.User;
 
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenstruation;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenopauseMapper;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenstruationMapper;
-import com.femfy.femfyapi.infraestructura.service.QuestionsUserMenstruationService;
+import com.femfy.femfyapi.delivery.mapper.QuestionsUserMenstruationMapper;
+import com.femfy.femfyapi.domain.service.QuestionsUserMenstruationService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserMenstruationRepository;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenstruationDTO;
 import org.junit.jupiter.api.BeforeEach;

@@ -4,7 +4,7 @@ package com.femfy.femfyapi.delivery.controller;
 import com.femfy.femfyapi.domain.entity.ResponseError;
 import com.femfy.femfyapi.domain.interfaces.ICycleService;
 import com.femfy.femfyapi.delivery.dto.CycleDTO;
-import com.femfy.femfyapi.infraestructura.mapper.CycleMapper;
+import com.femfy.femfyapi.delivery.mapper.CycleMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

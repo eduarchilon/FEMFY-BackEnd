@@ -3,11 +3,11 @@ package com.femfy.femfyapi.service;
 import com.femfy.femfyapi.domain.entity.CalendarEvent;
 import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
-import com.femfy.femfyapi.infraestructura.service.CalendarEventService;
+import com.femfy.femfyapi.domain.service.CalendarEventService;
 import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
 import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
+import com.femfy.femfyapi.infraestructura.Utils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -146,7 +146,6 @@ class CalendarEventServiceTest {
     }
 
     @Test
-    @Disabled
     void testUpdateCalendarEventNotFound() {
         CalendarEvent event = new CalendarEvent();
         Long idToUpdate = 1L;
@@ -174,10 +173,10 @@ class CalendarEventServiceTest {
             target.setTitle(source.getTitle());
         }
         if (source.getDateEvent() != null) {
-            target.setDateEvent(source.getDateEvent());
+            target.setDateEvent(Utils.parseDate(source.getDateEvent()));
         }
         if (source.getHourAlert() != null) {
-            target.setHourAlert(source.getHourAlert());
+            target.setHourAlert(Utils.parseDate(source.getHourAlert()));
         }
         if (source.getDescription() != null) {
             target.setDescription(source.getDescription());

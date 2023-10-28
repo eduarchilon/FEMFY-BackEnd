@@ -1,13 +1,10 @@
-package com.femfy.femfyapi.infraestructura.service;
+package com.femfy.femfyapi.domain.service;
 
 import com.femfy.femfyapi.infraestructura.Utils;
 import com.femfy.femfyapi.domain.entity.Cycle;
 import com.femfy.femfyapi.domain.interfaces.ICycleService;
 import com.femfy.femfyapi.domain.exception.CustomException;
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.repository.CycleRepository;
-import com.femfy.femfyapi.delivery.dto.CycleDTO;
-import com.femfy.femfyapi.infraestructura.mapper.CycleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

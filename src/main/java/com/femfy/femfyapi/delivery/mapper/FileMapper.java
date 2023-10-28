@@ -1,8 +1,11 @@
-package com.femfy.femfyapi.infraestructura.mapper;
+package com.femfy.femfyapi.delivery.mapper;
 
 import com.femfy.femfyapi.delivery.dto.FileDTO;
 import com.femfy.femfyapi.domain.entity.FileUser;
+import com.femfy.femfyapi.domain.exception.CustomException;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.exception.ParseDateException;
+import com.femfy.femfyapi.infraestructura.Utils;
 
 public class FileMapper {
 
@@ -20,7 +23,7 @@ public class FileMapper {
 
         dto.setFileExt(file.getFileExt());
         dto.setDescription(file.getDescription());
-        dto.setStudyDate(file.getStudyDate());
+        dto.setStudyDate(file.getStudyDate() != null ? file.getStudyDate().toString() : null);
         dto.setFileName(file.getFileName());
         dto.setTypeStudy(TypeStudyMapper.mapToDTO(file.getTypeStudy()));
         return dto;
@@ -30,7 +33,7 @@ public class FileMapper {
         FileUser file = new FileUser();
         file.setFileExt(dto.getFileExt());
         file.setDescription(dto.getDescription());
-        file.setStudyDate(dto.getStudyDate());
+        file.setStudyDate(Utils.parseDate(dto.getStudyDate()));
         file.setFileName(dto.getFileName());
         file.setTypeStudy(TypeStudyMapper.mapToEntity(dto.getTypeStudy()));
 

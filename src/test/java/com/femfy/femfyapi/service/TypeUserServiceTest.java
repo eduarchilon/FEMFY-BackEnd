@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.femfy.femfyapi.infraestructura.mapper.TypeUserMapper;
-import com.femfy.femfyapi.infraestructura.service.TypeUserService;
+import com.femfy.femfyapi.delivery.mapper.TypeUserMapper;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.service.TypeUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -65,7 +66,7 @@ class TypeUserServiceTest {
     @Test
     void deleteTypeUser_InvalidId_ReturnsError() {
         Long idToDelete = 1L;
-        doThrow(EmptyResultDataAccessException.class).when(typeUserRepository).deleteById(idToDelete);
+        doThrow(EntityNotFoundException.class).when(typeUserRepository).deleteById(idToDelete);
 
         String result = typeUserService.deleteTypeUser(idToDelete);
 

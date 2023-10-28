@@ -1,10 +1,11 @@
-package com.femfy.femfyapi.infraestructura.mapper;
+package com.femfy.femfyapi.delivery.mapper;
 
 
 import com.femfy.femfyapi.delivery.dto.UserDTO;
 import com.femfy.femfyapi.domain.entity.TypeUser;
 import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.infraestructura.Utils;
 
 public class UserMapper {
 
@@ -18,11 +19,11 @@ public class UserMapper {
         dto.setTypeUserID(user.getTypeUser().getId());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
-        dto.setBirthdate(user.getBirthdate());
+        dto.setBirthdate(user.getBirthdate() != null ? user.getBirthdate().toString() : null);
         dto.setUserName(user.getUserName());
         dto.setPassword(user.getPassword());
         dto.setIsSuscriptor(user.getIsSuscriptor());
-        dto.setBirthdate(user.getBirthdate());
+        dto.setBirthdate(user.getBirthdate() != null ? user.getBirthdate().toString() : null);
         dto.setPhone(user.getPhone());
         dto.setEmail(user.getEmail());
         dto.setEmotion(user.getEmotion());
@@ -43,11 +44,11 @@ public class UserMapper {
         user.setTypeUser(typeUser);
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-        user.setBirthdate(dto.getBirthdate());
+        user.setBirthdate(Utils.parseDate(dto.getBirthdate()));
         user.setUserName(dto.getUserName());
         user.setPassword(dto.getPassword());
         user.setIsSuscriptor(dto.getIsSuscriptor());
-        user.setBirthdate(dto.getBirthdate());
+        user.setBirthdate(Utils.parseDate(dto.getBirthdate()));
         user.setPhone(dto.getPhone());
         user.setEmail(dto.getEmail());
         user.setEmotion(dto.getEmotion());

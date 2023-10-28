@@ -1,10 +1,9 @@
 package com.femfy.femfyapi.delivery.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.femfy.femfyapi.infraestructura.mapper.FileMapper;
+import com.femfy.femfyapi.delivery.mapper.FileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.femfy.femfyapi.domain.interfaces.IFileService;
-import com.femfy.femfyapi.domain.interfaces.IUploadFileService;
 
 import com.femfy.femfyapi.delivery.dto.FileDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,13 +30,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping(path = "api/v1/file", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileController {
 
-	private final IUploadFileService iUploadFileService;
-
 	private final IFileService iFileService;
 
 	@Autowired
-	public FileController(IUploadFileService uploadFileService, IFileService fileService){
-		this.iUploadFileService = uploadFileService;
+	public FileController( IFileService fileService){
 		this.iFileService = fileService;
 	}
 	
@@ -55,46 +50,18 @@ public class FileController {
 
 		})
 	@PostMapping("/uploadFile")
-	public ResponseEntity<FileDTO> uploadFile(@RequestBody FileDTO fileDTO)
-	{
+	public ResponseEntity<FileDTO> uploadFile(@RequestBody FileDTO fileDTO) {
 		fileDTO	= FileMapper.mapToDTO(iFileService.insertFile(FileMapper.mapToEntity(fileDTO)));
-		
-		try {
+
 			if(fileDTO.getIdFile()!= null) {
-				fileDTO.setFileName(NameOfDocuement(fileDTO));
-				iUploadFileService.uploadFile(fileDTO);
-				
-					return new ResponseEntity<>(fileDTO, HttpStatus.OK);
+				return new ResponseEntity<>(fileDTO, HttpStatus.OK);
 			}else {
 				return new ResponseEntity<>(fileDTO,HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			
-		} catch (Exception e) {
-			return new ResponseEntity<>(fileDTO,HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+
 		
 	}
-	
 
-	@Operation(summary = "Permite descargar un docuemento del repositorio de AZURE. se requiere IdUsuario + IdFile + nombreDelFile DESCARGAR")
-	@ApiResponses(value ={// - 
-		@ApiResponse(responseCode = "200", description = "Respuesta OK",
-				content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "500", description = "Unexpected system error",
-						content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "400", description = "Bad Request. Parametros invalidos",
-		content = {@Content (mediaType = "application/json")}),
-		@ApiResponse(responseCode = "404", description = "Usuario inexistente",
-		content = {@Content (mediaType = "application/json")})
-
-		})
-	@PostMapping("/downloadFile")
-	public ResponseEntity<FileDTO> downloadFile(@RequestBody FileDTO fileDTO)
-	{
-		fileDTO.setFileName(NameOfDocuement(fileDTO));
-		fileDTO =  iUploadFileService.downloadFile(fileDTO);
-		return new ResponseEntity<>(fileDTO, HttpStatus.OK);
-	}
 	
 	@Operation(summary = "Permite eliminar un docuemento del repositorio de AZURE. Solo se requiere id del File para poder ELIMINAR el registro de la base + AZURE")
 	@ApiResponses(value ={// - 
@@ -116,9 +83,6 @@ public class FileController {
 		
 		if(!fileDTO.getFileName().isEmpty() && fileDTO.getFileName()!=null) {
 			fileDTO.setFileName(NameOfDocuement(fileDTO));
-			String deleteResult = iUploadFileService.deleteFile(fileDTO);
-			
-			if(deleteResult.equalsIgnoreCase("OK")) {
 				String result = iFileService.deleteFile(FileMapper.mapToEntity(fileDTO));
 				
 				if(result.equalsIgnoreCase("OK")){
@@ -127,11 +91,8 @@ public class FileController {
 					return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 				
-			}else {
-				return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
-			}
 		}else {
-			return new ResponseEntity<String>("No existe el ID del docuemnto enviado",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

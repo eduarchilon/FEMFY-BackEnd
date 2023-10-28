@@ -1,15 +1,12 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
-import com.femfy.femfyapi.infraestructura.Utils;
 import com.femfy.femfyapi.domain.entity.Cycle;
 import com.femfy.femfyapi.domain.exception.CustomException;
-import com.femfy.femfyapi.infraestructura.service.CycleService;
+import com.femfy.femfyapi.domain.service.CycleService;
 import com.femfy.femfyapi.domain.repository.CycleRepository;
 
 import com.femfy.femfyapi.delivery.dto.CycleDTO;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -53,8 +50,8 @@ public class CycleServiceTest {
         dto.setStatus("Alegre");
         dto.setIdUser(7L);
         dto.setId(5L);
-        dto.setDateEnd(Date.valueOf("2023-10-16"));
-        dto.setDateBeging(Date.valueOf("2023-10-16"));
+        dto.setDateEnd("2023-10-16");
+        dto.setDateBeging("2023-10-16");
         dto.setDaysOfBleeding(4);
     }
     @Test

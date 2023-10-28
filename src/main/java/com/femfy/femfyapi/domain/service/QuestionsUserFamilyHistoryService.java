@@ -1,17 +1,16 @@
-package com.femfy.femfyapi.infraestructura.service;
+package com.femfy.femfyapi.domain.service;
 
-import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
+
 import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
-import com.femfy.femfyapi.domain.entity.User;
+
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserFamilyHistoryRepository;
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class QuestionsUserFamilyHistoryService implements IQuestionsUserFamilyHistoryService {

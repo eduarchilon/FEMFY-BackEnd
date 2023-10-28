@@ -2,7 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserFamilyHistoryMapper;
+import com.femfy.femfyapi.delivery.mapper.QuestionsUserFamilyHistoryMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

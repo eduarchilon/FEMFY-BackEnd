@@ -1,9 +1,10 @@
-package com.femfy.femfyapi.infraestructura.mapper;
+package com.femfy.femfyapi.delivery.mapper;
 
 import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 import com.femfy.femfyapi.domain.entity.CalendarEvent;
 import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.infraestructura.Utils;
 
 public class CalendarEventMapper {
 
@@ -20,8 +21,8 @@ public class CalendarEventMapper {
         }
 
         dto.setTitle(calendarEvent.getTitle());
-        dto.setDateEvent(calendarEvent.getDateEvent());
-        dto.setHourAlert(calendarEvent.getHourAlert());
+        dto.setDateEvent(calendarEvent.getDateEvent() != null? calendarEvent.getDateEvent().toString() : null);
+        dto.setHourAlert(calendarEvent.getHourAlert() != null? calendarEvent.getHourAlert().toString() : null);
         dto.setDescription(calendarEvent.getDescription());
         return dto;
     }
@@ -34,8 +35,8 @@ public class CalendarEventMapper {
         calendarEvent.setId(dto.getId());
         calendarEvent.setUser(user);
         calendarEvent.setTitle(dto.getTitle());
-        calendarEvent.setDateEvent(dto.getDateEvent());
-        calendarEvent.setHourAlert(dto.getHourAlert());
+        calendarEvent.setDateEvent(Utils.parseDate(dto.getDateEvent()));
+        calendarEvent.setHourAlert(Utils.parseDate(dto.getHourAlert()));
         calendarEvent.setDescription(dto.getDescription());
         return calendarEvent;
     }

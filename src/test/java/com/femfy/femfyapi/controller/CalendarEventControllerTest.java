@@ -8,9 +8,8 @@ import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.femfy.femfyapi.infraestructura.mapper.CalendarEventMapper;
+import com.femfy.femfyapi.delivery.mapper.CalendarEventMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -39,6 +38,7 @@ class CalendarEventControllerTest {
         Long userId = 1L;
         List<CalendarEvent> events = new ArrayList<>();
         events.add(new CalendarEvent());
+
         List<CalendarEventDTO> mockEvents = new ArrayList<>();
         mockEvents.add(new CalendarEventDTO());
         when(service.getCalendarEventByUser(userId)).thenReturn(events);

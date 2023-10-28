@@ -27,7 +27,7 @@ public class FileDTO {
 	TypeStudyDTO typeStudy;
 	
 	@Schema(description = "fecha del estudio", example = "2023-10-12")
-	Date studyDate;
+	String studyDate;
 	
 	@Schema(description = "descripcion del profesional", example = "Preguntarle al profesional, si los valores son aceptables")
 	String description;

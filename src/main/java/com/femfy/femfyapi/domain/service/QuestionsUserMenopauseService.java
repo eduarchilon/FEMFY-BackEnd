@@ -1,4 +1,4 @@
-package com.femfy.femfyapi.infraestructura.service;
+package com.femfy.femfyapi.domain.service;
 
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseService {

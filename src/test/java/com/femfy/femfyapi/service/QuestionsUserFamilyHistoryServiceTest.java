@@ -2,9 +2,8 @@ package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
 import com.femfy.femfyapi.domain.entity.User;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserFamilyHistoryMapper;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenopauseMapper;
-import com.femfy.femfyapi.infraestructura.service.QuestionsUserFamilyHistoryService;
+import com.femfy.femfyapi.delivery.mapper.QuestionsUserFamilyHistoryMapper;
+import com.femfy.femfyapi.domain.service.QuestionsUserFamilyHistoryService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserFamilyHistoryRepository;
 import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
 import org.junit.jupiter.api.BeforeEach;

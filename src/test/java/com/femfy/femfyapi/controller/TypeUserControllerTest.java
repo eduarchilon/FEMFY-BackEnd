@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.femfy.femfyapi.infraestructura.service.TypeUserService;
+import com.femfy.femfyapi.domain.service.TypeUserService;
 
 import com.femfy.femfyapi.delivery.dto.TypeUserDTO;
 

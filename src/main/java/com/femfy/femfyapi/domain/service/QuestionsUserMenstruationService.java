@@ -1,17 +1,15 @@
-package com.femfy.femfyapi.infraestructura.service;
+package com.femfy.femfyapi.domain.service;
 
-import com.femfy.femfyapi.delivery.dto.QuestionsUserMenstruationDTO;
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenstruation;
-import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenstruationService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserMenstruationRepository;
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class QuestionsUserMenstruationService implements IQuestionsUserMenstruationService {

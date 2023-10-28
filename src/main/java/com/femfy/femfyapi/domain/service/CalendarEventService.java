@@ -1,8 +1,8 @@
-package com.femfy.femfyapi.infraestructura.service;
+package com.femfy.femfyapi.domain.service;
 
 import com.femfy.femfyapi.domain.entity.CalendarEvent;
-import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
 import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class CalendarEventService implements ICalendarEventService {
     public CalendarEvent updateCalendarEvent(CalendarEvent calendarEvent) {
         Long idToUpdate = calendarEvent.getId();
         if (idToUpdate == null) {
-            throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
+            throw new EntityNotFoundException("El ID no puede ser nulo para la actualización");
         }
 
         CalendarEvent existingEvent = findCalendarEventById(idToUpdate);

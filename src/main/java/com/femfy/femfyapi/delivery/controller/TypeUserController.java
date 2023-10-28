@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.femfy.femfyapi.domain.interfaces.ITypeUserService;
-import com.femfy.femfyapi.infraestructura.mapper.TypeStudyMapper;
-import com.femfy.femfyapi.infraestructura.mapper.TypeUserMapper;
+import com.femfy.femfyapi.delivery.mapper.TypeUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

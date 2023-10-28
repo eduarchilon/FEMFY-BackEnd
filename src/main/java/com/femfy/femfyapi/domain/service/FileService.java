@@ -1,21 +1,18 @@
-package com.femfy.femfyapi.infraestructura.service;
+package com.femfy.femfyapi.domain.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.interfaces.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
+
 import org.springframework.stereotype.Service;
 
 import com.femfy.femfyapi.domain.entity.FileUser;
 import com.femfy.femfyapi.domain.entity.TypeStudy;
 import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.repository.FileRepository;
-
-import com.femfy.femfyapi.delivery.dto.FileDTO;
-import com.femfy.femfyapi.delivery.dto.TypeStudyDTO;
 
 @Service
 public class FileService implements IFileService {
@@ -55,12 +52,8 @@ public class FileService implements IFileService {
 		try {
 			fileRepository.deleteById(file.getId());
 			return"OK";
-		}  catch (EmptyResultDataAccessException e) {
+		} catch (EntityNotFoundException e) {
             return "Error: El ID enviado es invalido";
-        } catch (DataIntegrityViolationException e) {
-            return "Error: No se puede eliminar este registro debido a restricciones de integridad de datos.";
-        } catch (Exception e) {
-            return "Error: " + e.getMessage();
         }
 	}
 
@@ -69,8 +62,8 @@ public class FileService implements IFileService {
 		List<FileUser> fileUsers = new ArrayList<>();
 		try {
 			fileUsers =  fileRepository.findByIdUser(idUser);
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (EntityNotFoundException e) {
+			return fileUsers;
 		}
 		return fileUsers;
 	}

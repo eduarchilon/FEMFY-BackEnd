@@ -16,11 +16,11 @@ public class CycleDTO {
 
     @Schema(description = "Fecha inicio del ciclo", example = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date dateBeging;
+    String dateBeging;
 
     @Schema(description = "Fecha fin del ciclo", example = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date dateEnd;
+    String dateEnd;
 
     @Schema(description = "Estado de animo", example = "Enojada - Alegre - Pensativa - Triste")
     String status;

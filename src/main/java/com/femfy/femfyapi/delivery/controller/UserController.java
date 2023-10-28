@@ -1,12 +1,11 @@
 package com.femfy.femfyapi.delivery.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 import com.femfy.femfyapi.domain.interfaces.IUserService;
-import com.femfy.femfyapi.infraestructura.mapper.UserMapper;
+import com.femfy.femfyapi.delivery.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

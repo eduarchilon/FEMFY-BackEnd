@@ -2,7 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenstruationDTO;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenstruationService;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenstruationMapper;
+import com.femfy.femfyapi.delivery.mapper.QuestionsUserMenstruationMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

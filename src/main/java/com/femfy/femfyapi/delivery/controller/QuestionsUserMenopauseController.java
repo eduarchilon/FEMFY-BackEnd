@@ -2,8 +2,7 @@ package com.femfy.femfyapi.delivery.controller;
 
 import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserFamilyHistoryMapper;
-import com.femfy.femfyapi.infraestructura.mapper.QuestionsUserMenopauseMapper;
+import com.femfy.femfyapi.delivery.mapper.QuestionsUserMenopauseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

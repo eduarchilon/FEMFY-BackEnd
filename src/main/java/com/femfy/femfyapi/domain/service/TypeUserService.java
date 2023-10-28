@@ -1,18 +1,15 @@
-package com.femfy.femfyapi.infraestructura.service;
+package com.femfy.femfyapi.domain.service;
 
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.exception.IntegreteDataViolationException;
 import com.femfy.femfyapi.domain.interfaces.ITypeUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import com.femfy.femfyapi.domain.entity.TypeUser;
 import com.femfy.femfyapi.domain.repository.TypeUserRepository;
 
-import com.femfy.femfyapi.delivery.dto.TypeUserDTO;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class TypeUserService implements ITypeUserService {
@@ -39,9 +36,9 @@ public class TypeUserService implements ITypeUserService {
         try {
             this.typeUserRepository.deleteById(idTypeUser);
             return "OK";
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EntityNotFoundException e) {
             return "Error: No se encontró ningún registro con el ID proporcionado.";
-        } catch (DataIntegrityViolationException e) {
+        } catch (IntegreteDataViolationException e) {
             return "Error: No se puede eliminar este registro debido a restricciones de integridad de datos.";
         } catch (Exception e) {
             return "Error: " + e.getMessage();
