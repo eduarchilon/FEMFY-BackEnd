@@ -108,7 +108,7 @@ class UserControllerTest {
 		userDTO.setIsSuscriptor(true);
 		userDTO.setPassword("pass1234");
 		userDTO.setUserName("MariaArgento2023");
-		userDTO.setEmotion("Triste");
+		//userDTO.setEmotion("Triste");
 		userDTO.setLocalidad("La Matanza");
 
 		return userDTO;

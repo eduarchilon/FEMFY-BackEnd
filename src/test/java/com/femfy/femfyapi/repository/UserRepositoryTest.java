@@ -21,7 +21,7 @@ class UserRepositoryTest {
 	UserRepository repository;
 	@Autowired
 	TestEntityManager entityManager;
-	
+
 	@BeforeEach
 	public void setUp() throws Exception {
 		User user= new User();
@@ -30,18 +30,18 @@ class UserRepositoryTest {
 		user.setLastName("lopez");
 		user.setPhone("123456789");
 		user.setIsSuscriptor(true);
-		user.setEmotion("Cansada");
+		//user.setEmotion("Cansada");
 		user.setLocalidad("La Matanza");
 		
 		entityManager.persist(user);
 	}
-/*
+
 	@Test
 	public void findById() {
 		Optional<User> user = repository.findById(1L);
 		assertEquals(user.get().getFirstName(), "pepe");
 		System.out.println("user.get() =" + user.get());
-	}*/
+	}
 	
 	@Test
 	public void findUsers() {
