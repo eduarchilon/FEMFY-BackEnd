@@ -37,18 +37,13 @@ class UserControllerTest {
 	}
 
 	@Test
-	void testFiled(){
-		assertEquals(1,2);
-	}
-
-	@Test
 	void saveUser() {
 		try {
 			UserDTO user = builduser();
 			
 			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL+"/createUser")
 					.accept(MediaType.APPLICATION_JSON)
-					//.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(MapToJson(user))).andReturn();
 			
 			assertEquals(201, mockMvcResult.getResponse().getStatus());

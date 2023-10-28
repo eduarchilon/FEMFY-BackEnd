@@ -36,7 +36,7 @@ public class UserService implements IUserService{
 			user.setBirthdate(userDTO.getBirthdate());
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
-			user.setEmotion(userDTO.getEmotion());
+			//user.setEmotion(userDTO.getEmotion());
 			user.setLocalidad(userDTO.getLocalidad());
 			user.setAvatar(userDTO.getAvatar());
 			userRepository.save(user);
@@ -67,7 +67,7 @@ public class UserService implements IUserService{
 			user.setBirthdate(userDTO.getBirthdate());
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
-			user.setEmotion(userDTO.getEmotion());
+			//user.setEmotion(userDTO.getEmotion());
 			user.setLocalidad(userDTO.getLocalidad());
 			user.setAvatar(userDTO.getAvatar());
 			userRepository.save(user);
@@ -111,7 +111,7 @@ public class UserService implements IUserService{
 				userDTO.setBirthdate(user.getBirthdate());
 				userDTO.setPhone(user.getPhone());
 				userDTO.setEmail(user.getEmail());
-				userDTO.setEmotion(user.getEmotion());
+				//userDTO.setEmotion(user.getEmotion());
 				userDTO.setLocalidad(user.getLocalidad());
 				userDTO.setAvatar(user.getAvatar());
 				return userDTO;
@@ -141,7 +141,7 @@ public class UserService implements IUserService{
 			dto.setBirthdate(user.getBirthdate());
 			dto.setPhone(user.getPhone());
 			dto.setEmail(user.getEmail());
-			dto.setEmotion(user.getEmotion());
+			//dto.setEmotion(user.getEmotion());
 			dto.setLocalidad(user.getLocalidad());
 			dto.setAvatar(user.getAvatar());
 			userList.add(dto);
