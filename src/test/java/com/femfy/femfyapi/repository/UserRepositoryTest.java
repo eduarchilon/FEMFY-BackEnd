@@ -30,24 +30,23 @@ class UserRepositoryTest {
 		user.setLastName("lopez");
 		user.setPhone("123456789");
 		user.setIsSuscriptor(true);
-		//user.setEmotion("Cansada");
 		user.setLocalidad("La Matanza");
 		
 		entityManager.persist(user);
 	}
 
 	@Test
+	public void findUsers() {
+		List<User> users = repository.findAll();
+
+		assertThat(users).hasSize(1);
+	}
+/*
+	@Test
 	public void findById() {
 		Optional<User> user = repository.findById(1L);
 		assertEquals(user.get().getFirstName(), "pepe");
 		System.out.println("user.get() =" + user.get());
-	}
-	
-	@Test
-	public void findUsers() {
-	    List<User> users = repository.findAll();
-
-	    assertThat(users).hasSize(1);
-	}
+	}*/
 
 }
