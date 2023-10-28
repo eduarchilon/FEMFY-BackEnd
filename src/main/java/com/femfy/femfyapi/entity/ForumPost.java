@@ -25,6 +25,9 @@ public class ForumPost {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<ForumReplay> replies;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 

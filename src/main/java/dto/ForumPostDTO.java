@@ -17,6 +17,9 @@ public class ForumPostDTO {
     @Schema(description = "ID del usuario que creó la publicación", example = "1")
     private Long userId;
 
+    @Schema(description = "Título de la publicación en el foro", example = "Hola, soy nueva.")
+    private String title;
+
     @Schema(description = "Contenido de la publicación en el foro", example = "Este es un mensaje en el foro.")
     private String content;
 

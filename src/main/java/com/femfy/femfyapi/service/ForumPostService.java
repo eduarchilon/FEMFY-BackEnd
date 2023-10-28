@@ -97,6 +97,7 @@ public class ForumPostService implements IForumPostService {
             dto.setUserId(forumPost.getUser().getId());
         }
 
+        dto.setTitle(forumPost.getTitle());
         dto.setContent(forumPost.getContent());
         dto.setCreatedDate(forumPost.getCreatedDate());
         return dto;
@@ -113,6 +114,7 @@ public class ForumPostService implements IForumPostService {
         forumPost.setId(dto.getId());
         forumPost.setTopic(forumTopic);
         forumPost.setUser(user);
+        forumPost.setTitle(dto.getTitle());
         forumPost.setContent(dto.getContent());
         forumPost.setCreatedDate(dto.getCreatedDate());
         return forumPost;
@@ -124,6 +126,10 @@ public class ForumPostService implements IForumPostService {
     }
 
     private void updateForumPostFields(ForumPost existingForumPost, ForumPostDTO forumPostDTO) {
+        if (forumPostDTO.getTitle() != null) {
+            existingForumPost.setTitle(forumPostDTO.getTitle());
+        }
+
         if (forumPostDTO.getContent() != null) {
             existingForumPost.setContent(forumPostDTO.getContent());
         }
