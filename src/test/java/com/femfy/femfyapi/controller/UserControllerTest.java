@@ -37,6 +37,11 @@ class UserControllerTest {
 	}
 
 	@Test
+	void testFiled(){
+		assertEquals(1,2);
+	}
+
+	@Test
 	void saveUser() {
 		try {
 			UserDTO user = builduser();
