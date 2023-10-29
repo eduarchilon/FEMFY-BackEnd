@@ -16,4 +16,6 @@ public interface IQuestionsUserFamilyHistoryService {
     QuestionsUserFamilyHistoryDTO saveQuestionsUserFamilyHistory(QuestionsUserFamilyHistoryDTO questionsUserFamilyHistoryDTO);
 
     void deleteQuestionsUserFamilyHistory(Long id);
+
+	List<QuestionsUserFamilyHistoryDTO> getQuestionsUserFamilyHistoriesByUserId(Long id);
 }

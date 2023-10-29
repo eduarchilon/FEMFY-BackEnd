@@ -59,6 +59,15 @@ public class QuestionsUserFamilyHistoryService implements IQuestionsUserFamilyHi
 
         return mapToDTO(existingFamilyHistory);
     }
+    
+    
+    @Override
+    public List<QuestionsUserFamilyHistoryDTO> getQuestionsUserFamilyHistoriesByUserId(Long id) {
+        List<QuestionsUserFamilyHistory> familyHistoryListByUserId = questionsUserFamilyHistoryRepository.findByUserId(id) ;
+        return familyHistoryListByUserId.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
 
     private void copyProperties(QuestionsUserFamilyHistoryDTO source, QuestionsUserFamilyHistory target) {
         if(source.isBreastCancer()){
