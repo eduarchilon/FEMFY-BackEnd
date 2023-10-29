@@ -63,7 +63,7 @@ class UserControllerTest {
 			user.setIdUser(1L);
 			user.setUserName("MariaArg");
 			
-			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL+"/updateUser")
+			MvcResult mockMvcResult = mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL+"/updateUser")
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(MapToJson(user))).andReturn();
@@ -108,7 +108,6 @@ class UserControllerTest {
 		userDTO.setIsSuscriptor(true);
 		userDTO.setPassword("pass1234");
 		userDTO.setUserName("MariaArgento2023");
-		//userDTO.setEmotion("Triste");
 		userDTO.setLocalidad("La Matanza");
 
 		return userDTO;

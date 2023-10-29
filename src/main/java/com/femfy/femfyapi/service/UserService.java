@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.femfy.femfyapi.entity.TypeUser;
 import com.femfy.femfyapi.entity.User;
+import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.UserRepository;
-
 import dto.UserDTO;
 
 
@@ -48,29 +47,83 @@ public class UserService implements IUserService{
 
 	@Override
 	public UserDTO updateUser(UserDTO userDTO) {
-		try{
-			TypeUser typeUser = new TypeUser();
-			typeUser.setId(userDTO.getTypeUserID());
+//		try{
+//			TypeUser typeUser = new TypeUser();
+//			typeUser.setId(userDTO.getTypeUserID());
 			
-			User user = new User();
-			user.setId(userDTO.getIdUser());
-			user.setTypeUser(typeUser);
-			user.setFirstName(userDTO.getFirstName());
-			user.setLastName(userDTO.getLastName());
-			user.setBirthdate(userDTO.getBirthdate());
-			user.setUserName(userDTO.getUserName());
-			user.setPassword(userDTO.getPassword());
-			user.setIsSuscriptor(userDTO.getIsSuscriptor());
-			user.setBirthdate(userDTO.getBirthdate());
-			user.setPhone(userDTO.getPhone());
-			user.setEmail(userDTO.getEmail());
-			user.setLocalidad(userDTO.getLocalidad());
-			userRepository.save(user);
-		} catch (Exception e) {
-			System.out.print("NO SE LOGRA HACER EL MAPEO PARA ACTUALIZAR ");
-		}
-		return userDTO;
+			User userDB = new User();
+			
+			userDB = userRepository.findById(userDTO.getIdUser()).get();
+			if (userDB.getId() == null) {
+	            throw new IllegalArgumentException("El ID del usuario no puede ser nulo para la actualización");
+	        }
+			
+			//user.setTypeUser(typeUser);
+			if(userDTO.getFirstName() != null){
+				userDB.setFirstName(userDTO.getFirstName());
+			}
+			if(userDTO.getLastName()!= null){
+				userDB.setLastName(userDTO.getLastName());
+			}	
+			if(userDTO.getBirthdate()!= null){
+				userDB.setBirthdate(userDTO.getBirthdate());
+			}
+			if(userDTO.getUserName()!= null){
+				userDB.setUserName(userDTO.getUserName());
+			}
+			if(userDTO.getPassword()!= null){
+				userDB.setPassword(userDTO.getPassword());
+			}
+			if(userDTO.getIsSuscriptor()!= null){
+				userDB.setIsSuscriptor(userDTO.getIsSuscriptor());
+			}
+			if(userDTO.getBirthdate()!= null){
+				userDB.setBirthdate(userDTO.getBirthdate());
+			}
+			if(userDTO.getPhone()!= null){
+				userDB.setPhone(userDTO.getPhone());
+			}
+			if(userDTO.getEmail()!= null){
+				userDB.setEmail(userDTO.getEmail());
+			}
+			if(userDTO.getLocalidad()!= null){
+				userDB.setLocalidad(userDTO.getLocalidad());
+			}
+			
+			User userUpdate = userRepository.save(userDB);	
+			return mapToDTO(userUpdate);
+			
+//		} catch (Exception e) {
+//			System.out.print("NO SE LOGRA HACER EL MAPEO PARA ACTUALIZAR ");
+//		}
+//		
+//		return null;
 	}
+	
+	private UserDTO mapToDTO(User user){
+        if(user == null){
+            throw new EntityNotFoundException("Usuario no encontrado");
+        }
+
+        UserDTO dto = new UserDTO();
+
+        if(user.getId() != null){
+            dto.setIdUser(user.getId());
+        }
+
+        dto.setIdUser(user.getId());
+		dto.setFirstName(user.getFirstName());
+		dto.setLastName(user.getLastName());
+		dto.setBirthdate(user.getBirthdate());
+		dto.setUserName(user.getUserName());
+		dto.setPassword(user.getPassword());
+		dto.setIsSuscriptor(user.getIsSuscriptor());
+		dto.setBirthdate(user.getBirthdate());
+		dto.setPhone(user.getPhone());
+		dto.setEmail(user.getEmail());
+		dto.setLocalidad(user.getLocalidad());
+        return dto;
+    }
 
 	@Override
 	public String deleteUser(Long idUser) {
