@@ -171,6 +171,7 @@ public class RecommendationsController {
 								&& recommendationsDTO.getAgeReference() == 30) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setTypeDisease("BreastCancer");
 							recommedationsByFamilyHist.add(dto);
 						}
 					}
@@ -181,6 +182,7 @@ public class RecommendationsController {
 						if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("BreastCancer")
 								&& recommendationsDTO.getAgeReference() == 50) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
+							dto.setTypeDisease("BreastCancer");
 							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
 							recommedationsByFamilyHist.add(dto);
 						}
@@ -195,6 +197,7 @@ public class RecommendationsController {
 								&& recommendationsDTO.getAgeReference() == 45) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setTypeDisease("EarlyMenopause");
 							recommedationsByFamilyHist.add(dto);
 						}
 					}
@@ -207,6 +210,7 @@ public class RecommendationsController {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("Endometriosis")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 						dto.setDescription(recommendationsDTO.getDescription());
+						dto.setTypeDisease("Endometriosis");
 						recommedationsByFamilyHist.add(dto);
 					}
 				}
@@ -217,6 +221,7 @@ public class RecommendationsController {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("OvarianCancer")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 						dto.setDescription(recommendationsDTO.getDescription());
+						dto.setTypeDisease("OvarianCancer");
 						recommedationsByFamilyHist.add(dto);
 					}
 				}
@@ -228,6 +233,7 @@ public class RecommendationsController {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("Sop")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 						dto.setDescription(recommendationsDTO.getDescription());
+						dto.setTypeDisease("Sop");
 						recommedationsByFamilyHist.add(dto);
 					}
 				}
@@ -239,6 +245,7 @@ public class RecommendationsController {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("UterineFibroids")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 						dto.setDescription(recommendationsDTO.getDescription());
+						dto.setTypeDisease("UterineFibroids");
 						recommedationsByFamilyHist.add(dto);
 					}
 				}
