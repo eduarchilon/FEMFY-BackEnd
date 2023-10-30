@@ -18,12 +18,12 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
     @BeforeEach
     public void setUp() {
         QuestionsUserFamilyHistory questionsUserFamilyHistory = new QuestionsUserFamilyHistory();
-        questionsUserFamilyHistory.setBreastCancer(true);
-        questionsUserFamilyHistory.setOvarianCancer(false);
-        questionsUserFamilyHistory.setEndometriosis(true);
-        questionsUserFamilyHistory.setUterineFibroids(false);
-        questionsUserFamilyHistory.setSop(true);
-        questionsUserFamilyHistory.setEarlyMenopause(false);
+        questionsUserFamilyHistory.setBreastCancer(1);
+        questionsUserFamilyHistory.setOvarianCancer(0);
+        questionsUserFamilyHistory.setEndometriosis(1);
+        questionsUserFamilyHistory.setUterineFibroids(0);
+        questionsUserFamilyHistory.setSop(1);
+        questionsUserFamilyHistory.setEarlyMenopause(0);
 
         questionsUserFamilyHistoryRepository.save(questionsUserFamilyHistory);
     }
@@ -32,7 +32,7 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
     public void testFindById() {
         // Inserta
         QuestionsUserFamilyHistory history = new QuestionsUserFamilyHistory();
-        history.setBreastCancer(true);
+        history.setBreastCancer(1);
         questionsUserFamilyHistoryRepository.save(history);
 
         // Busca
@@ -49,11 +49,11 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
         List<QuestionsUserFamilyHistory> pepino = questionsUserFamilyHistoryRepository.findAll();
         // Inserta
         QuestionsUserFamilyHistory history1 = new QuestionsUserFamilyHistory();
-        history1.setBreastCancer(true);
+        history1.setBreastCancer(1);
         questionsUserFamilyHistoryRepository.save(history1);
 
         QuestionsUserFamilyHistory history2 = new QuestionsUserFamilyHistory();
-        history2.setBreastCancer(false);
+        history2.setBreastCancer(0);
         questionsUserFamilyHistoryRepository.save(history2);
 
         // Obtiene
@@ -67,19 +67,19 @@ public class QuestionsUserFamilyHistoryRepositoryTest {
     public void testSave() {
         // Crea
         QuestionsUserFamilyHistory history = new QuestionsUserFamilyHistory();
-        history.setBreastCancer(true);
+        history.setBreastCancer(1);
         QuestionsUserFamilyHistory savedQuestionsUserFamilyHistory = questionsUserFamilyHistoryRepository.save(history);
 
         // Verifica
         assertThat(savedQuestionsUserFamilyHistory.getId()).isNotNull();
-        assertThat(savedQuestionsUserFamilyHistory.isBreastCancer()).isEqualTo(true);
+        assertThat(savedQuestionsUserFamilyHistory.getBreastCancer()).isEqualTo(1);
     }
 
     @Test
     public void testDeleteById() {
         // Inserta
         QuestionsUserFamilyHistory questionsUserFamilyHistory = new QuestionsUserFamilyHistory();
-        questionsUserFamilyHistory.setBreastCancer(true);
+        questionsUserFamilyHistory.setBreastCancer(1);
         questionsUserFamilyHistoryRepository.save(questionsUserFamilyHistory);
 
         // Elimina

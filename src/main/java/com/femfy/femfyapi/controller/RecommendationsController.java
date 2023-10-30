@@ -164,7 +164,7 @@ public class RecommendationsController {
 
 		for (QuestionsUserFamilyHistoryDTO qUserFamilyHisDTO : ListFamilyHist) {
 
-			if (qUserFamilyHisDTO.isBreastCancer()) {
+			if (qUserFamilyHisDTO.getBreastCancer() == 1) {
 				if (edad > 30) {
 					for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 						if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("BreastCancer")
@@ -190,7 +190,7 @@ public class RecommendationsController {
 				}
 			}
 
-			if (qUserFamilyHisDTO.isEarlyMenopause()) {
+			if (qUserFamilyHisDTO.getEarlyMenopause() == 1) {
 				if (edad < 45) {
 					for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 						if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("EarlyMenopause")
@@ -205,7 +205,7 @@ public class RecommendationsController {
 				}
 			}
 
-			if (qUserFamilyHisDTO.isEndometriosis()) {
+			if (qUserFamilyHisDTO.getEndometriosis() == 1) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("Endometriosis")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
@@ -216,7 +216,7 @@ public class RecommendationsController {
 				}
 			}
 
-			if (qUserFamilyHisDTO.isOvarianCancer()) {
+			if (qUserFamilyHisDTO.getOvarianCancer() == 1) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("OvarianCancer")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
@@ -228,7 +228,7 @@ public class RecommendationsController {
 
 			}
 
-			if (qUserFamilyHisDTO.isSop()) {
+			if (qUserFamilyHisDTO.getSop() == 1) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("Sop")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
@@ -240,7 +240,7 @@ public class RecommendationsController {
 
 			}
 
-			if (qUserFamilyHisDTO.isUterineFibroids()) {
+			if (qUserFamilyHisDTO.getUterineFibroids() == 1) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("UterineFibroids")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
