@@ -2,10 +2,12 @@ package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.entity.ForumTopic;
 import com.femfy.femfyapi.entity.ForumPost;
+import com.femfy.femfyapi.entity.ForumReplay;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.ForumPostRepository;
 import dto.ForumPostDTO;
+import dto.ForumReplayDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,7 +102,23 @@ public class ForumPostService implements IForumPostService {
         dto.setTitle(forumPost.getTitle());
         dto.setContent(forumPost.getContent());
         dto.setCreatedDate(forumPost.getCreatedDate());
+
+        List<ForumReplayDTO> replyDTOs = forumPost.getReplies().stream()
+                .map(this::mapReplayToDTO)
+                .collect(Collectors.toList());
+        dto.setReplies(replyDTOs);
+
         return dto;
+    }
+
+    private ForumReplayDTO mapReplayToDTO(ForumReplay replay) {
+        ForumReplayDTO replyDTO = new ForumReplayDTO();
+        replyDTO.setId(replay.getId());
+        replyDTO.setContent(replay.getContent());
+        replyDTO.setUserId(replay.getUser().getId());
+        replyDTO.setPostId(replay.getPost().getId());
+        replyDTO.setCreatedDate(replay.getCreatedDate());
+        return replyDTO;
     }
 
     private ForumPost mapToEntity(ForumPostDTO dto) {
