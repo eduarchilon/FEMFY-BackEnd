@@ -170,7 +170,7 @@ public class RecommendationsController {
 						if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("BreastCancer")
 								&& recommendationsDTO.getAgeReference() == 30) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
-							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setDescription("Segùn tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
 							dto.setTypeDisease("BreastCancer");
 							recommedationsByFamilyHist.add(dto);
 						}
@@ -183,7 +183,7 @@ public class RecommendationsController {
 								&& recommendationsDTO.getAgeReference() == 50) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 							dto.setTypeDisease("BreastCancer");
-							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setDescription("Segùn tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
 							recommedationsByFamilyHist.add(dto);
 						}
 					}
