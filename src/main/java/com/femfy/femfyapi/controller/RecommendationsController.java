@@ -196,7 +196,7 @@ public class RecommendationsController {
 						if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("EarlyMenopause")
 								&& recommendationsDTO.getAgeReference() == 45) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
-							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setDescription("Segùn tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
 							dto.setTypeDisease("EarlyMenopause");
 							recommedationsByFamilyHist.add(dto);
 						}
