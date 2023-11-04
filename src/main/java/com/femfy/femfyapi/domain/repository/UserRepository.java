@@ -7,5 +7,5 @@ import com.femfy.femfyapi.domain.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
+    User findByEmail(String email);
 }

@@ -1,4 +1,4 @@
-package com.femfy.femfyapi.domain.entity;
+package com.femfy.femfyapi.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,19 +11,22 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "type_study")
-public class TypeStudy {
+@Table(name = "recommendation")
+public class Recommendation {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
+    private String typeDisease;
+    
+    @Column(nullable = false)
     private String description;
     
     @Column(nullable = false)
-    private int validityOfStudy;
+    private int ageReference;
 
-    public TypeStudy() {
+    public Recommendation() {
     }
 }

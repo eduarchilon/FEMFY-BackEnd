@@ -70,11 +70,11 @@ public class TypeStudyController {
     })
     @GetMapping("/getTypeStudys")
     public ResponseEntity<List<TypeStudyDTO>> getTypeStudy() {
-        List<TypeStudyDTO> typeUsers = this.typeStudyService.getTypeStudies().stream().map(TypeStudyMapper::mapToDTO).collect(Collectors.toList());
-        if (!typeUsers.isEmpty()) {
-            return new ResponseEntity<>(typeUsers, HttpStatus.OK);
+        List<TypeStudyDTO> typeStudies = this.typeStudyService.getTypeStudies().stream().map(TypeStudyMapper::mapToDTO).collect(Collectors.toList());
+        if (!typeStudies.isEmpty()) {
+            return new ResponseEntity<>(typeStudies, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(typeUsers, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(typeStudies, HttpStatus.NOT_FOUND);
         }
     }
 

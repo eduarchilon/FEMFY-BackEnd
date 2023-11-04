@@ -80,12 +80,12 @@
 			<artifactId>azure-storage</artifactId>
 			<version>8.6.6</version>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-el</artifactId>
-            <version>10.1.11</version>
-            <scope>test</scope>
-        </dependency>
+	        <dependency>
+	            <groupId>org.apache.tomcat.embed</groupId>
+	            <artifactId>tomcat-embed-el</artifactId>
+	            <version>10.1.11</version>
+	            <scope>test</scope>
+	        </dependency>
     </dependencies>
 
 	<build>

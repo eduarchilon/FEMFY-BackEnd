@@ -30,25 +30,45 @@ class CalendarEventControllerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        openMocks(this);
     }
-
+    private Long userId = 1L;
     @Test
     void testGetEventsByUserSuccess() {
-        Long userId = 1L;
-        List<CalendarEvent> events = new ArrayList<>();
-        events.add(new CalendarEvent());
+        givenUserHasEvents(userId, mockEvents());
 
+        ResponseEntity<List<CalendarEventDTO>> response = whenGetEventsOf(userId);
+
+        thenGetStatus(OK, response);
+
+        thenGetEvents(response, mockEvents());
+
+    }
+
+    private void thenGetEvents(ResponseEntity<List<dto.CalendarEventDTO>> response, List<CalendarEventDTO> calendarEventDTOS) {
+        assertAll(
+                () -> assertEquals(mockEvents(), response.getBody())
+        );
+    }
+
+    private void thenGetStatus(HttpStatus httpStatus, ResponseEntity<List<dto.CalendarEventDTO>> response) {
+        assertAll(
+                () -> assertEquals(OK, response.getStatusCode())
+        );
+    }
+
+    private ResponseEntity<List<CalendarEventDTO>> whenGetEventsOf(Long userId) {
+        return controller.getEventsByUser(userId);
+    }
+
+    private void givenUserHasEvents(Long userId, List<CalendarEventDTO> calendarEventDTOS) {
+        when(service.getCalendarEventByUser(userId)).thenReturn(calendarEventDTOS);
+    }
+
+    private List<CalendarEventDTO> mockEvents() {
         List<CalendarEventDTO> mockEvents = new ArrayList<>();
         mockEvents.add(new CalendarEventDTO());
-        when(service.getCalendarEventByUser(userId)).thenReturn(events);
-
-        ResponseEntity<List<CalendarEventDTO>> response = controller.getEventsByUser(userId);
-
-        assertAll(
-                () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
-                () -> assertEquals(mockEvents, response.getBody())
-        );
+        return mockEvents;
     }
 
     @Test
@@ -58,7 +78,7 @@ class CalendarEventControllerTest {
 
         ResponseEntity<List<CalendarEventDTO>> response = controller.getEventsByUser(userId);
 
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(NOT_FOUND, response.getStatusCode());
     }
 
     @Test

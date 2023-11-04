@@ -18,26 +18,23 @@ public class QuestionsUserFamilyHistory {
     private User user;
 
     @Column(name = "breast_cancer")
-    private boolean breastCancer;
+    private Integer breastCancer;
 
     @Column(name = "ovarian_cancer")
-    private boolean ovarianCancer;
+    private Integer ovarianCancer;
 
     @Column(name = "endometriosis")
-    private boolean endometriosis;
+    private Integer endometriosis;
 
     @Column(name = "uterine_fibroids")
-    private boolean uterineFibroids;
+    private Integer uterineFibroids;
 
     @Column(name = "sop")
-    private boolean sop;
+    private Integer sop;
 
     @Column(name = "early_menopause")
-    private boolean earlyMenopause;
+    private Integer earlyMenopause;
 
-    public QuestionsUserFamilyHistory(){
-
+    public QuestionsUserFamilyHistory() {
     }
-
-
 }

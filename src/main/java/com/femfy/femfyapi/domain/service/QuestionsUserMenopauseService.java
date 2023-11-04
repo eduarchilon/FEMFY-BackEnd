@@ -75,8 +75,8 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
         if (source.getSleepingDifficulties() != null) {
             target.setSleepingDifficulties(source.getSleepingDifficulties());
         }
-        if(source.getAumentoDePeso() != null){
-            target.setAumentoDePeso(source.getAumentoDePeso());
+        if(source.getWeightGain() != null){
+            target.setWeightGain(source.getWeightGain());
         }
         if (source.getLossOfBoneDensity() != null) {
             target.setLossOfBoneDensity(source.getLossOfBoneDensity());

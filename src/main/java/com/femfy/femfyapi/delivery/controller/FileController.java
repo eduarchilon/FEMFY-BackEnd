@@ -37,7 +37,7 @@ public class FileController {
 		this.iFileService = fileService;
 	}
 	
-	@Operation(summary = "Permite subir un docuemento dentro del repositorio de AZURE. todos los datos son requeridos")
+	@Operation(summary = "Permite guardar referencia los estudios realizados por la usuaria")
 	@ApiResponses(value ={// - 
 		@ApiResponse(responseCode = "200", description = "Respuesta OK",
 				content = {@Content (mediaType = "application/json")}),
@@ -63,7 +63,7 @@ public class FileController {
 	}
 
 	
-	@Operation(summary = "Permite eliminar un docuemento del repositorio de AZURE. Solo se requiere id del File para poder ELIMINAR el registro de la base + AZURE")
+	@Operation(summary = "Permite eliminar la referencaia un estudio de la usuaria. Solo se requiere id del File para poder ELIMINAR el registro de la base")
 	@ApiResponses(value ={// - 
 		@ApiResponse(responseCode = "200", description = "Respuesta OK",
 				content = {@Content (mediaType = "application/json")}),
@@ -79,10 +79,7 @@ public class FileController {
 	@DeleteMapping("/deleteFile")
 	public ResponseEntity<String> deleteFile(@RequestBody FileDTO fileDTO)
 	{
-		fileDTO = FileMapper.mapToDTO(iFileService.getFileById(fileDTO.getIdFile()));
-		
-		if(!fileDTO.getFileName().isEmpty() && fileDTO.getFileName()!=null) {
-			fileDTO.setFileName(NameOfDocuement(fileDTO));
+
 				String result = iFileService.deleteFile(FileMapper.mapToEntity(fileDTO));
 				
 				if(result.equalsIgnoreCase("OK")){
@@ -90,10 +87,6 @@ public class FileController {
 				}else {
 					return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
 				}
-				
-		}else {
-			return new ResponseEntity<String>("No se pudo eliminar el Documento",HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 
 	}
 	
@@ -121,9 +114,5 @@ public class FileController {
 		}
 		
 	}
-	
-	public String NameOfDocuement(FileDTO fileDTO) {
-		return fileDTO.getFileName()+"_idUser_"+fileDTO.getIdUser()+"_idFile_"+fileDTO.getIdFile();
-	}
-	
+
 }

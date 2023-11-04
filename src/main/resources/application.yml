@@ -2,5 +2,5 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       dialect : org.hibernate.dialect.SQLServer2012Dialect

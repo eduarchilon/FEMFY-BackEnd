@@ -36,6 +36,50 @@ public class UserService implements IUserService {
 	@Override
 	public User updateUser(User user) {
 		try{
+			User userDB = new User();
+			
+			userDB = userRepository.findById(userDTO.getIdUser()).get();
+			if (userDB.getId() == null) {
+	            throw new IllegalArgumentException("El ID del usuario no puede ser nulo para la actualización");
+	        }
+			
+			if(userDTO.getTypeUserID()!= null) {
+				TypeUser typeUser = new TypeUser();
+				typeUser.setId(userDTO.getTypeUserID());
+				userDB.setTypeUser(typeUser);
+			}
+
+			if(userDTO.getFirstName() != null){
+				userDB.setFirstName(userDTO.getFirstName());
+			}
+			if(userDTO.getLastName()!= null){
+				userDB.setLastName(userDTO.getLastName());
+			}	
+			if(userDTO.getBirthdate()!= null){
+				userDB.setBirthdate(userDTO.getBirthdate());
+			}
+			if(userDTO.getUserName()!= null){
+				userDB.setUserName(userDTO.getUserName());
+			}
+			if(userDTO.getPassword()!= null){
+				userDB.setPassword(userDTO.getPassword());
+			}
+			if(userDTO.getIsSuscriptor()!= null){
+				userDB.setIsSuscriptor(userDTO.getIsSuscriptor());
+			}
+			if(userDTO.getBirthdate()!= null){
+				userDB.setBirthdate(userDTO.getBirthdate());
+			}
+			if(userDTO.getPhone()!= null){
+				userDB.setPhone(userDTO.getPhone());
+			}
+			if(userDTO.getEmail()!= null){
+				userDB.setEmail(userDTO.getEmail());
+			}
+			if(userDTO.getLocalidad()!= null){
+				userDB.setLocalidad(userDTO.getLocalidad());
+			}
+			
 			userRepository.save(user);
 		} catch (Exception e) {
 			System.out.print("NO SE LOGRA HACER EL MAPEO PARA ACTUALIZAR ");
