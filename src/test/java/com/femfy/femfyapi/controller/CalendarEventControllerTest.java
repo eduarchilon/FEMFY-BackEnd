@@ -1,24 +1,32 @@
 package com.femfy.femfyapi.controller;
 
-import com.femfy.femfyapi.delivery.controller.CalendarEventController;
-import com.femfy.femfyapi.domain.entity.CalendarEvent;
-import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
-import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import com.femfy.femfyapi.delivery.mapper.CalendarEventMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import com.femfy.femfyapi.delivery.controller.CalendarEventController;
+import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
+import com.femfy.femfyapi.delivery.mapper.CalendarEventMapper;
+import com.femfy.femfyapi.domain.entity.CalendarEvent;
+import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
+
 
 class CalendarEventControllerTest {
 
@@ -45,29 +53,31 @@ class CalendarEventControllerTest {
 
     }
 
-    private void thenGetEvents(ResponseEntity<List<dto.CalendarEventDTO>> response, List<CalendarEventDTO> calendarEventDTOS) {
+    private void thenGetEvents(ResponseEntity<List<CalendarEventDTO>> response, List<CalendarEvent> calendarEvent) {
+    	
         assertAll(
-                () -> assertEquals(mockEvents(), response.getBody())
+                () -> assertEquals(mockEvents().stream().map(CalendarEventMapper::mapToDTO).collect(Collectors.toList()), response.getBody())
         );
     }
 
-    private void thenGetStatus(HttpStatus httpStatus, ResponseEntity<List<dto.CalendarEventDTO>> response) {
+    private void thenGetStatus(HttpStatus httpStatus, ResponseEntity<List<CalendarEventDTO>> response) {
         assertAll(
                 () -> assertEquals(OK, response.getStatusCode())
         );
     }
 
     private ResponseEntity<List<CalendarEventDTO>> whenGetEventsOf(Long userId) {
-        return controller.getEventsByUser(userId);
+        
+    	return controller.getEventsByUser(userId);
     }
 
-    private void givenUserHasEvents(Long userId, List<CalendarEventDTO> calendarEventDTOS) {
-        when(service.getCalendarEventByUser(userId)).thenReturn(calendarEventDTOS);
+    private void givenUserHasEvents(Long userId, List<CalendarEvent> calendarEvent) {
+        when(service.getCalendarEventByUser(userId)).thenReturn(calendarEvent);
     }
 
-    private List<CalendarEventDTO> mockEvents() {
-        List<CalendarEventDTO> mockEvents = new ArrayList<>();
-        mockEvents.add(new CalendarEventDTO());
+    private List<CalendarEvent> mockEvents() {
+        List<CalendarEvent> mockEvents = new ArrayList<>();
+        mockEvents.add(new CalendarEvent());
         return mockEvents;
     }
 

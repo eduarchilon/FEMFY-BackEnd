@@ -1,10 +1,17 @@
 package com.femfy.femfyapi.controller;
 
-import com.femfy.femfyapi.delivery.controller.QuestionsUserMenopauseController;
-import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
-import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
-import com.femfy.femfyapi.domain.entity.User;
-import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,12 +20,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.femfy.femfyapi.delivery.controller.QuestionsUserMenopauseController;
+import com.femfy.femfyapi.delivery.dto.QuestionsUserMenopauseDTO;
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
 
 class QuestionsUserMenopauseControllerTest {
 
@@ -44,15 +50,15 @@ class QuestionsUserMenopauseControllerTest {
         QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
         mockQuestion.setId(questionId);
         mockQuestion.setUser(user);
-        mockQuestion.setSuffocation(false);
-        mockQuestion.setChangesInMenstrualCycle(false);
-        mockQuestion.setVaginalDryness(false);
-        mockQuestion.setChangesInSkinAndHair(false);
-        mockQuestion.setMoodChanges(false);
-        mockQuestion.setSleepingDifficulties(false);
-        mockQuestion.setAumentoDePeso(false);
-        mockQuestion.setLossOfBoneDensity(false);
-        mockQuestion.setChangesInLibido(false);
+        mockQuestion.setSuffocation(0);
+        mockQuestion.setChangesInMenstrualCycle(0);
+        mockQuestion.setVaginalDryness(0);
+        mockQuestion.setChangesInSkinAndHair(0);
+        mockQuestion.setMoodChanges(0);
+        mockQuestion.setSleepingDifficulties(0);
+        mockQuestion.setWeightGain(0);;
+        mockQuestion.setLossOfBoneDensity(0);
+        mockQuestion.setChangesInLibido(0);
 
         when(service.getQuestionsUserMenopause(questionId)).thenReturn(Optional.of(mockQuestion));
 
@@ -97,15 +103,15 @@ class QuestionsUserMenopauseControllerTest {
         QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
         mockQuestion.setId(1L);
         mockQuestion.setUser(user);
-        mockQuestion.setSuffocation(false);
-        mockQuestion.setChangesInMenstrualCycle(false);
-        mockQuestion.setVaginalDryness(false);
-        mockQuestion.setChangesInSkinAndHair(false);
-        mockQuestion.setMoodChanges(false);
-        mockQuestion.setSleepingDifficulties(false);
-        mockQuestion.setAumentoDePeso(false);
-        mockQuestion.setLossOfBoneDensity(false);
-        mockQuestion.setChangesInLibido(false);
+        mockQuestion.setSuffocation(0);
+        mockQuestion.setChangesInMenstrualCycle(0);
+        mockQuestion.setVaginalDryness(0);
+        mockQuestion.setChangesInSkinAndHair(0);
+        mockQuestion.setMoodChanges(0);
+        mockQuestion.setSleepingDifficulties(0);
+        mockQuestion.setWeightGain(0);
+        mockQuestion.setLossOfBoneDensity(0);
+        mockQuestion.setChangesInLibido(0);
         when(service.saveQuestionsUserMenopause(any(QuestionsUserMenopause.class))).thenReturn(mockQuestion);
 
         ResponseEntity<QuestionsUserMenopauseDTO> response = controller.createQuestion(questionDTO);
@@ -124,27 +130,27 @@ class QuestionsUserMenopauseControllerTest {
         questionDTO.setId(1L);
         questionDTO.setUserId(1L);
         questionDTO.setUserId(1L);
-        questionDTO.setSuffocation(false);
-        questionDTO.setChangesInMenstrualCycle(false);
-        questionDTO.setVaginalDryness(false);
-        questionDTO.setChangesInSkinAndHair(false);
-        questionDTO.setMoodChanges(false);
-        questionDTO.setSleepingDifficulties(false);
-        questionDTO.setAumentoDePeso(false);
-        questionDTO.setLossOfBoneDensity(false);
-        questionDTO.setChangesInLibido(false);
+        questionDTO.setSuffocation(0);
+        questionDTO.setChangesInMenstrualCycle(0);
+        questionDTO.setVaginalDryness(0);
+        questionDTO.setChangesInSkinAndHair(0);
+        questionDTO.setMoodChanges(0);
+        questionDTO.setSleepingDifficulties(0);
+        questionDTO.setWeightGain(0);
+        questionDTO.setLossOfBoneDensity(0);
+        questionDTO.setChangesInLibido(0);
         QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
         mockQuestion.setId(1L);
         mockQuestion.setUser(user);
-        mockQuestion.setSuffocation(false);
-        mockQuestion.setChangesInMenstrualCycle(false);
-        mockQuestion.setVaginalDryness(false);
-        mockQuestion.setChangesInSkinAndHair(false);
-        mockQuestion.setMoodChanges(false);
-        mockQuestion.setSleepingDifficulties(false);
-        mockQuestion.setAumentoDePeso(false);
-        mockQuestion.setLossOfBoneDensity(false);
-        mockQuestion.setChangesInLibido(false);
+        mockQuestion.setSuffocation(0);
+        mockQuestion.setChangesInMenstrualCycle(0);
+        mockQuestion.setVaginalDryness(0);
+        mockQuestion.setChangesInSkinAndHair(0);
+        mockQuestion.setMoodChanges(0);
+        mockQuestion.setSleepingDifficulties(0);
+        mockQuestion.setWeightGain(0);
+        mockQuestion.setLossOfBoneDensity(0);
+        mockQuestion.setChangesInLibido(0);
 
         when(service.updateQuestionsUserMenopause(any(QuestionsUserMenopause.class))).thenReturn(mockQuestion);
 
