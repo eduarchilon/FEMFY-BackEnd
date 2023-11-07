@@ -1,17 +1,23 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.entity.ForumReplay;
-import com.femfy.femfyapi.entity.ForumPost;
-import com.femfy.femfyapi.entity.User;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.femfy.femfyapi.domain.entity.ForumPost;
+import com.femfy.femfyapi.domain.entity.ForumReplay;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.repository.ForumPostRepository;
+import com.femfy.femfyapi.domain.repository.ForumReplayRepository;
+import com.femfy.femfyapi.domain.repository.UserRepository;
 
 @DataJpaTest
 public class ForumReplayRepositoryTest {

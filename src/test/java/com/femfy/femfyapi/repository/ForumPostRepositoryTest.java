@@ -1,16 +1,17 @@
 package com.femfy.femfyapi.repository;
 
-import com.femfy.femfyapi.entity.ForumPost;
-import com.femfy.femfyapi.entity.ForumTopic;
-import com.femfy.femfyapi.entity.User;
+import java.util.Date;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import com.femfy.femfyapi.domain.entity.ForumPost;
+import com.femfy.femfyapi.domain.entity.ForumTopic;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.repository.ForumPostRepository;
+import com.femfy.femfyapi.domain.repository.ForumTopicRepository;
+import com.femfy.femfyapi.domain.repository.UserRepository;
 
 @DataJpaTest
 public class ForumPostRepositoryTest {

@@ -1,8 +1,21 @@
 package com.femfy.femfyapi.service;
 
 
-import com.femfy.femfyapi.domain.service.ForumTopicService;
-import com.femfy.femfyapi.repository.ForumTopicRepository;
+import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,12 +23,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.femfy.femfyapi.domain.entity.ForumTopic;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.repository.ForumTopicRepository;
+import com.femfy.femfyapi.domain.service.ForumTopicService;
 
 class ForumTopicServiceTest {
 
@@ -39,12 +50,12 @@ class ForumTopicServiceTest {
         List<ForumTopic> topics = Collections.singletonList(topic);
         when(repository.findAll()).thenReturn(topics);
 
-        List<ForumTopicDTO> result = service.getAllForumTopics();
+        List<ForumTopic> result = service.getAllForumTopics();
 
         assertNotNull(result);
         assertEquals(1, result.size());
 
-        ForumTopicDTO dto = result.get(0);
+        ForumTopic dto = result.get(0);
         assertEquals(1L, dto.getId());
         assertEquals("Enfermedades", dto.getTitle());
     }
@@ -53,7 +64,7 @@ class ForumTopicServiceTest {
     void testGetAllForumTopicsWithNoData() {
         when(repository.findAll()).thenReturn(Collections.emptyList());
 
-        List<ForumTopicDTO> result = service.getAllForumTopics();
+        List<ForumTopic> result = service.getAllForumTopics();
 
         assertTrue(result.isEmpty());
     }
@@ -68,7 +79,7 @@ class ForumTopicServiceTest {
 
         when(repository.findById(id)).thenReturn(Optional.of(topic));
 
-        Optional<ForumTopicDTO> result = service.getForumTopicById(id);
+        Optional<ForumTopic> result = service.getForumTopicById(id);
 
         assertTrue(result.isPresent());
         assertEquals(id, result.get().getId());
@@ -80,14 +91,14 @@ class ForumTopicServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        Optional<ForumTopicDTO> result = service.getForumTopicById(id);
+        Optional<ForumTopic> result = service.getForumTopicById(id);
 
         assertFalse(result.isPresent());
     }
 
     @Test
     void testSaveForumTopic() {
-        ForumTopicDTO dtoToSave = new ForumTopicDTO();
+        ForumTopic dtoToSave = new ForumTopic();
         dtoToSave.setTitle("Sexualidad");
 
         ForumTopic savedEntity = new ForumTopic();
@@ -96,7 +107,7 @@ class ForumTopicServiceTest {
 
         when(repository.save(any(ForumTopic.class))).thenReturn(savedEntity);
 
-        ForumTopicDTO result = service.saveForumTopic(dtoToSave);
+        ForumTopic result = service.saveForumTopic(dtoToSave);
 
         assertNotNull(result.getId());
         assertEquals("Sexualidad", result.getTitle());
@@ -110,14 +121,14 @@ class ForumTopicServiceTest {
         existingEntity.setId(idToUpdate);
         existingEntity.setTitle("Nutri");
 
-        ForumTopicDTO updatedDTO = new ForumTopicDTO();
+        ForumTopic updatedDTO = new ForumTopic();
         updatedDTO.setId(idToUpdate);
         updatedDTO.setTitle("Nutrición");
 
         when(repository.findById(idToUpdate)).thenReturn(Optional.of(existingEntity));
         when(repository.save(existingEntity)).thenReturn(existingEntity);
 
-        ForumTopicDTO result = service.updateForumTopic(updatedDTO);
+        ForumTopic result = service.updateForumTopic(updatedDTO);
 
         assertEquals(idToUpdate, result.getId());
         assertEquals("Nutrición", result.getTitle());
@@ -126,12 +137,12 @@ class ForumTopicServiceTest {
     @Test
     void testUpdateForumTopicNotFound() {
         Long idToUpdate = 1L;
-        ForumTopicDTO updatedDTO = new ForumTopicDTO();
-        updatedDTO.setId(idToUpdate);
+        ForumTopic updated = new ForumTopic();
+        updated.setId(idToUpdate);
 
         when(repository.findById(idToUpdate)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> service.updateForumTopic(updatedDTO));
+        assertThrows(EntityNotFoundException.class, () -> service.updateForumTopic(updated));
     }
 
     @Test
