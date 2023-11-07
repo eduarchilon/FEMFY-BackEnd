@@ -52,7 +52,7 @@ public class QuestionsUserFamilyHistoryService implements IQuestionsUserFamilyHi
         return questionsUserFamilyHistoryRepository.save(existingFamilyHistory);
     }
 
-    private void copyProperties(QuestionsUserFamilyHistoryDTO source, QuestionsUserFamilyHistory target) {
+    private void copyProperties(QuestionsUserFamilyHistory source, QuestionsUserFamilyHistory target) {
         if(source.getBreastCancer() != null){
             target.setBreastCancer(source.getBreastCancer());
         }
@@ -78,7 +78,8 @@ public class QuestionsUserFamilyHistoryService implements IQuestionsUserFamilyHi
         questionsUserFamilyHistoryRepository.deleteById(id);
     }
 
-
-
-
+	@Override
+	public List<QuestionsUserFamilyHistory> getQuestionsUserFamilyHistoriesByUserId(Long id) {
+        return questionsUserFamilyHistoryRepository.findByUserId(id);
+	}
 }

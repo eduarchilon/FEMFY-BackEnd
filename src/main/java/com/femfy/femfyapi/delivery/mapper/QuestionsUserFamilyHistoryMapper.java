@@ -15,12 +15,12 @@ public class QuestionsUserFamilyHistoryMapper {
         QuestionsUserFamilyHistoryDTO dto = new QuestionsUserFamilyHistoryDTO();
         dto.setId(familyHistory.getId());
         dto.setUserId(familyHistory.getUser().getId());
-        dto.setBreastCancer(familyHistory.isBreastCancer());
-        dto.setOvarianCancer(familyHistory.isOvarianCancer());
-        dto.setEndometriosis(familyHistory.isEndometriosis());
-        dto.setUterineFibroids(familyHistory.isUterineFibroids());
-        dto.setSop(familyHistory.isSop());
-        dto.setEarlyMenopause(familyHistory.isEarlyMenopause());
+        dto.setBreastCancer(familyHistory.getBreastCancer());
+        dto.setOvarianCancer(familyHistory.getOvarianCancer());
+        dto.setEndometriosis(familyHistory.getEndometriosis());
+        dto.setUterineFibroids(familyHistory.getUterineFibroids());
+        dto.setSop(familyHistory.getSop());
+        dto.setEarlyMenopause(familyHistory.getEarlyMenopause());
 
         return dto;
     }
@@ -32,12 +32,12 @@ public class QuestionsUserFamilyHistoryMapper {
         QuestionsUserFamilyHistory familyHistory = new QuestionsUserFamilyHistory();
         familyHistory.setId(dto.getId());
         familyHistory.setUser(user);
-        familyHistory.setBreastCancer(dto.isBreastCancer());
-        familyHistory.setOvarianCancer(dto.isOvarianCancer());
-        familyHistory.setEndometriosis(dto.isEndometriosis());
-        familyHistory.setUterineFibroids(dto.isUterineFibroids());
-        familyHistory.setSop(dto.isSop());
-        familyHistory.setEarlyMenopause(dto.isEarlyMenopause());
+        familyHistory.setBreastCancer(dto.getBreastCancer());
+        familyHistory.setOvarianCancer(dto.getOvarianCancer());
+        familyHistory.setEndometriosis(dto.getEndometriosis());
+        familyHistory.setUterineFibroids(dto.getUterineFibroids());
+        familyHistory.setSop(dto.getSop());
+        familyHistory.setEarlyMenopause(dto.getEarlyMenopause());
         return familyHistory;
     }
 }

@@ -1,10 +1,9 @@
 package com.femfy.femfyapi.domain.interfaces;
 
-import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
-import com.femfy.femfyapi.domain.entity.CalendarEvent;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.femfy.femfyapi.domain.entity.CalendarEvent;
 
 public interface ICalendarEventService {
 

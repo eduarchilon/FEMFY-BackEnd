@@ -21,7 +21,7 @@ public class QuestionsUserMenopauseMapper {
         dto.setChangesInSkinAndHair(menopause.getChangesInSkinAndHair());
         dto.setMoodChanges(menopause.getMoodChanges());
         dto.setSleepingDifficulties(menopause.getSleepingDifficulties());
-        dto.setAumentoDePeso(menopause.getAumentoDePeso());
+        dto.setWeightGain(menopause.getWeightGain());
         dto.setLossOfBoneDensity(menopause.getLossOfBoneDensity());
         dto.setChangesInLibido(menopause.getChangesInLibido());
 
@@ -35,15 +35,15 @@ public class QuestionsUserMenopauseMapper {
         QuestionsUserMenopause menopause = new QuestionsUserMenopause();
         menopause.setId(dto.getId());
         menopause.setUser(user);
-        menopause.setSuffocation(dto.isSuffocation());
-        menopause.setChangesInMenstrualCycle(dto.isChangesInMenstrualCycle());
-        menopause.setVaginalDryness(dto.isVaginalDryness());
-        menopause.setChangesInSkinAndHair(dto.isChangesInSkinAndHair());
-        menopause.setMoodChanges(dto.isMoodChanges());
-        menopause.setSleepingDifficulties(dto.isSleepingDifficulties());
-        menopause.setAumentoDePeso(dto.isAumentoDePeso());
-        menopause.setLossOfBoneDensity(dto.isLossOfBoneDensity());
-        menopause.setChangesInLibido(dto.isChangesInLibido());
+        menopause.setSuffocation(dto.getSuffocation());
+        menopause.setChangesInMenstrualCycle(dto.getChangesInMenstrualCycle());
+        menopause.setVaginalDryness(dto.getVaginalDryness());
+        menopause.setChangesInSkinAndHair(dto.getChangesInSkinAndHair());
+        menopause.setMoodChanges(dto.getMoodChanges());
+        menopause.setSleepingDifficulties(dto.getSleepingDifficulties());
+        menopause.setWeightGain(dto.getWeightGain());
+        menopause.setLossOfBoneDensity(dto.getLossOfBoneDensity());
+        menopause.setChangesInLibido(dto.getChangesInLibido());
         return menopause;
     }
 

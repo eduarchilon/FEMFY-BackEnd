@@ -31,7 +31,6 @@ class UserRepositoryTest {
 		user.setLastName("lopez");
 		user.setPhone("123456789");
 		user.setIsSuscriptor(true);
-		user.setEmotion("Cansada");
 		user.setLocalidad("La Matanza");
 		
 		entityManager.persist(user);

@@ -26,9 +26,7 @@ public class UserMapper {
         dto.setBirthdate(user.getBirthdate() != null ? user.getBirthdate().toString() : null);
         dto.setPhone(user.getPhone());
         dto.setEmail(user.getEmail());
-        dto.setEmotion(user.getEmotion());
         dto.setLocalidad(user.getLocalidad());
-        dto.setAvatar(user.getAvatar());
 
         return dto;
     }
@@ -51,9 +49,7 @@ public class UserMapper {
         user.setBirthdate(Utils.parseDate(dto.getBirthdate()));
         user.setPhone(dto.getPhone());
         user.setEmail(dto.getEmail());
-        user.setEmotion(dto.getEmotion());
         user.setLocalidad(dto.getLocalidad());
-        user.setAvatar(dto.getAvatar());
 
         return user;
     }

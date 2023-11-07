@@ -6,6 +6,7 @@ import com.femfy.femfyapi.domain.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.femfy.femfyapi.domain.entity.TypeUser;
 import com.femfy.femfyapi.domain.entity.User;
 import com.femfy.femfyapi.domain.repository.UserRepository;
 
@@ -38,46 +39,46 @@ public class UserService implements IUserService {
 		try{
 			User userDB = new User();
 			
-			userDB = userRepository.findById(userDTO.getIdUser()).get();
+			userDB = userRepository.findById(user.getId()).get();
 			if (userDB.getId() == null) {
-	            throw new IllegalArgumentException("El ID del usuario no puede ser nulo para la actualización");
+	            throw new IllegalArgumentException("El ID del usuario no puede ser nulo para la actualizaciï¿½n");
 	        }
 			
-			if(userDTO.getTypeUserID()!= null) {
+			if(user.getTypeUser()!= null) {
 				TypeUser typeUser = new TypeUser();
-				typeUser.setId(userDTO.getTypeUserID());
+				typeUser.setId(user.getTypeUser().getId());
 				userDB.setTypeUser(typeUser);
 			}
 
-			if(userDTO.getFirstName() != null){
-				userDB.setFirstName(userDTO.getFirstName());
+			if(user.getFirstName() != null){
+				userDB.setFirstName(user.getFirstName());
 			}
-			if(userDTO.getLastName()!= null){
-				userDB.setLastName(userDTO.getLastName());
+			if(user.getLastName()!= null){
+				userDB.setLastName(user.getLastName());
 			}	
-			if(userDTO.getBirthdate()!= null){
-				userDB.setBirthdate(userDTO.getBirthdate());
+			if(user.getBirthdate()!= null){
+				userDB.setBirthdate(user.getBirthdate());
 			}
-			if(userDTO.getUserName()!= null){
-				userDB.setUserName(userDTO.getUserName());
+			if(user.getUserName()!= null){
+				userDB.setUserName(user.getUserName());
 			}
-			if(userDTO.getPassword()!= null){
-				userDB.setPassword(userDTO.getPassword());
+			if(user.getPassword()!= null){
+				userDB.setPassword(user.getPassword());
 			}
-			if(userDTO.getIsSuscriptor()!= null){
-				userDB.setIsSuscriptor(userDTO.getIsSuscriptor());
+			if(user.getIsSuscriptor()!= null){
+				userDB.setIsSuscriptor(user.getIsSuscriptor());
 			}
-			if(userDTO.getBirthdate()!= null){
-				userDB.setBirthdate(userDTO.getBirthdate());
+			if(user.getBirthdate()!= null){
+				userDB.setBirthdate(user.getBirthdate());
 			}
-			if(userDTO.getPhone()!= null){
-				userDB.setPhone(userDTO.getPhone());
+			if(user.getPhone()!= null){
+				userDB.setPhone(user.getPhone());
 			}
-			if(userDTO.getEmail()!= null){
-				userDB.setEmail(userDTO.getEmail());
+			if(user.getEmail()!= null){
+				userDB.setEmail(user.getEmail());
 			}
-			if(userDTO.getLocalidad()!= null){
-				userDB.setLocalidad(userDTO.getLocalidad());
+			if(user.getLocalidad()!= null){
+				userDB.setLocalidad(user.getLocalidad());
 			}
 			
 			userRepository.save(user);
