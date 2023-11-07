@@ -1,7 +1,9 @@
-package com.femfy.femfyapi.controller;
+package com.femfy.femfyapi.delivery.controller;
 
-import com.femfy.femfyapi.service.IForumTopicService;
-import dto.ForumTopicDTO;
+
+import com.femfy.femfyapi.delivery.dto.ForumTopicDTO;
+import com.femfy.femfyapi.delivery.mapper.ForumTopicMapper;
+import com.femfy.femfyapi.domain.interfaces.IForumTopicService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,7 +40,7 @@ public class ForumTopicController {
     })
     @GetMapping("/getAllForumTopics")
     public ResponseEntity<List<ForumTopicDTO>> getAllForumTopics() {
-        List<ForumTopicDTO> topics = forumTopicService.getAllForumTopics();
+        List<ForumTopicDTO> topics = forumTopicService.getAllForumTopics().stream().map(ForumTopicMapper::mapToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(topics);
     }
 
@@ -52,7 +55,7 @@ public class ForumTopicController {
     })
     @GetMapping("/{topicId}")
     public ResponseEntity<ForumTopicDTO> getForumTopicById(@PathVariable("topicId") Long topicId) {
-        Optional<ForumTopicDTO> topic = forumTopicService.getForumTopicById(topicId);
+        Optional<ForumTopicDTO> topic = forumTopicService.getForumTopicById(topicId).map(ForumTopicMapper::mapToDTO);
         return topic.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -66,7 +69,7 @@ public class ForumTopicController {
     })
     @PostMapping("/createForumTopic")
     public ResponseEntity<ForumTopicDTO> createForumTopic(@RequestBody ForumTopicDTO topicDTO) {
-        ForumTopicDTO createdTopic = forumTopicService.saveForumTopic(topicDTO);
+        ForumTopicDTO createdTopic = ForumTopicMapper.mapToDTO(forumTopicService.saveForumTopic(ForumTopicMapper.mapToEntity(topicDTO)));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTopic);
     }
 
@@ -85,7 +88,7 @@ public class ForumTopicController {
             return ResponseEntity.notFound().build();
         }
 
-        ForumTopicDTO updatedTopic = forumTopicService.updateForumTopic(topicDTO);
+        ForumTopicDTO updatedTopic = ForumTopicMapper.mapToDTO(forumTopicService.updateForumTopic(ForumTopicMapper.mapToEntity(topicDTO)));
 
         if (updatedTopic == null) {
             return ResponseEntity.notFound().build();

@@ -1,12 +1,12 @@
-package com.femfy.femfyapi.service;
+package com.femfy.femfyapi.domain.interfaces;
 
+
+import com.femfy.femfyapi.delivery.dto.TypeRecommendationsDTO;
 import java.util.List;
-
-import dto.TypeRecommendationsDTO;
 
 public interface IRecommendationService {
 	
-    public TypeRecommendationsDTO saveRecommendation(TypeRecommendationsDTO dto);
+    public TypeRecommendations saveRecommendation(TypeRecommendations typeRecommendations);
 
     public String deleteRecommendation(Long idRecommendation);
 

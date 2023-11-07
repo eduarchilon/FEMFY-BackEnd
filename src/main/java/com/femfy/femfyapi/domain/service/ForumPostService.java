@@ -1,13 +1,12 @@
-package com.femfy.femfyapi.service;
+package com.femfy.femfyapi.domain.service;
 
-import com.femfy.femfyapi.entity.ForumTopic;
-import com.femfy.femfyapi.entity.ForumPost;
-import com.femfy.femfyapi.entity.ForumReplay;
-import com.femfy.femfyapi.entity.User;
-import com.femfy.femfyapi.exception.EntityNotFoundException;
-import com.femfy.femfyapi.repository.ForumPostRepository;
-import dto.ForumPostDTO;
-import dto.ForumReplayDTO;
+import com.femfy.femfyapi.domain.entity.ForumPost;
+import com.femfy.femfyapi.domain.entity.ForumReplay;
+import com.femfy.femfyapi.domain.entity.ForumTopic;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.interfaces.IForumPostService;
+import com.femfy.femfyapi.domain.repository.ForumPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,56 +25,42 @@ public class ForumPostService implements IForumPostService {
     }
 
     @Override
-    public List<ForumPostDTO> getAllForumPosts() {
-        List<ForumPost> forumPosts = forumPostRepository.findAll();
-        return forumPosts.stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public List<ForumPost> getAllForumPosts() {
+        return forumPostRepository.findAll();
     }
 
     @Override
-    public Optional<ForumPostDTO> getForumPostById(Long id) {
-        Optional<ForumPost> forumPost = forumPostRepository.findById(id);
-        return forumPost.map(this::mapToDTO);
+    public Optional<ForumPost> getForumPostById(Long id) {
+        return forumPostRepository.findById(id);
     }
 
     @Override
-    public List<ForumPostDTO> getForumPostsByUser(Long userId) {
-        List<ForumPost> forumPosts = forumPostRepository.findByUserId(userId);
-        return forumPosts.stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public List<ForumPost> getForumPostsByUser(Long userId) {
+        return forumPostRepository.findByUserId(userId);
     }
 
     @Override
-    public List<ForumPostDTO> getForumPostsByTopic(Long topicId) {
-        List<ForumPost> forumPosts = forumPostRepository.findByTopicId(topicId);
-        return forumPosts.stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public List<ForumPost> getForumPostsByTopic(Long topicId) {
+        return forumPostRepository.findByTopicId(topicId);
     }
 
     @Override
-    public ForumPostDTO saveForumPost(ForumPostDTO forumPostDTO) {
-        ForumPost forumPost = mapToEntity(forumPostDTO);
-        forumPost = forumPostRepository.save(forumPost);
-        return mapToDTO(forumPost);
+    public ForumPost saveForumPost(ForumPost forumPost) {
+        return forumPostRepository.save(forumPost);
     }
 
     @Override
-    public ForumPostDTO updateForumPost(ForumPostDTO updatedDTO) {
-        Long idToUpdate = updatedDTO.getId();
+    public ForumPost updateForumPost(ForumPost updated) {
+        Long idToUpdate = updated.getId();
         if (idToUpdate == null) {
             throw new IllegalArgumentException("El ID no puede ser nulo para la actualización");
         }
 
         ForumPost existingForumPost = findForumPostById(idToUpdate);
 
-        updateForumPostFields(existingForumPost, updatedDTO);
+        updateForumPostFields(existingForumPost, updated);
 
-        existingForumPost = forumPostRepository.save(existingForumPost);
-
-        return mapToDTO(existingForumPost);
+        return forumPostRepository.save(existingForumPost);
     }
 
     @Override
@@ -83,86 +68,34 @@ public class ForumPostService implements IForumPostService {
         forumPostRepository.deleteById(id);
     }
 
-    private ForumPostDTO mapToDTO(ForumPost forumPost) {
-        if (forumPost == null) {
-            throw new EntityNotFoundException("Publicación de foro no encontrada");
-        }
-
-        ForumPostDTO dto = new ForumPostDTO();
-        dto.setId(forumPost.getId());
-
-        if (forumPost.getTopic() != null) {
-            dto.setTopicId(forumPost.getTopic().getId());
-        }
-
-        if (forumPost.getUser() != null) {
-            dto.setUserId(forumPost.getUser().getId());
-        }
-
-        dto.setTitle(forumPost.getTitle());
-        dto.setContent(forumPost.getContent());
-        dto.setCreatedDate(forumPost.getCreatedDate());
-
-        List<ForumReplayDTO> replyDTOs = forumPost.getReplies().stream()
-                .map(this::mapReplayToDTO)
-                .collect(Collectors.toList());
-        dto.setReplies(replyDTOs);
-
-        return dto;
-    }
-
-    private ForumReplayDTO mapReplayToDTO(ForumReplay replay) {
-        ForumReplayDTO replyDTO = new ForumReplayDTO();
-        replyDTO.setId(replay.getId());
-        replyDTO.setContent(replay.getContent());
-        replyDTO.setUserId(replay.getUser().getId());
-        replyDTO.setPostId(replay.getPost().getId());
-        replyDTO.setCreatedDate(replay.getCreatedDate());
-        return replyDTO;
-    }
-
-    private ForumPost mapToEntity(ForumPostDTO dto) {
-        User user = new User();
-        user.setId(dto.getUserId());
-
-        ForumTopic forumTopic = new ForumTopic();
-        forumTopic.setId(dto.getTopicId());
-
-        ForumPost forumPost = new ForumPost();
-        forumPost.setId(dto.getId());
-        forumPost.setTopic(forumTopic);
-        forumPost.setUser(user);
-        forumPost.setTitle(dto.getTitle());
-        forumPost.setContent(dto.getContent());
-        forumPost.setCreatedDate(dto.getCreatedDate());
-        return forumPost;
-    }
 
     private ForumPost findForumPostById(Long postId) {
         return forumPostRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró una publicación de foro con el ID: " + postId));
     }
 
-    private void updateForumPostFields(ForumPost existingForumPost, ForumPostDTO forumPostDTO) {
-        if (forumPostDTO.getTitle() != null) {
-            existingForumPost.setTitle(forumPostDTO.getTitle());
+    private void updateForumPostFields(ForumPost existingForumPost, ForumPost updated) {
+        if (updated.getTitle() != null) {
+            existingForumPost.setTitle(updated.getTitle());
         }
 
-        if (forumPostDTO.getContent() != null) {
-            existingForumPost.setContent(forumPostDTO.getContent());
+        if (updated.getContent() != null) {
+            existingForumPost.setContent(updated.getContent());
         }
-        if (forumPostDTO.getCreatedDate() != null) {
-            existingForumPost.setCreatedDate(forumPostDTO.getCreatedDate());
+        if (updated.getCreatedDate() != null) {
+            existingForumPost.setCreatedDate(updated.getCreatedDate());
         }
-        if (forumPostDTO.getUserId() != null) {
+        if (updated.getUser().getId() != null) {
             User user = new User();
-            user.setId(forumPostDTO.getUserId());
+            user.setId(updated.getUser().getId());
             existingForumPost.setUser(user);
         }
-        if (forumPostDTO.getTopicId() != null) {
+        if (updated.getTopic().getId() != null) {
             ForumTopic topic = new ForumTopic();
-            topic.setId(forumPostDTO.getTopicId());
+            topic.setId(updated.getTopic().getId());
             existingForumPost.setTopic(topic);
         }
     }
+
+
 }

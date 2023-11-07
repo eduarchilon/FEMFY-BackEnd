@@ -1,9 +1,9 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.entity.ForumTopic;
-import com.femfy.femfyapi.exception.EntityNotFoundException;
+
+import com.femfy.femfyapi.domain.service.ForumTopicService;
 import com.femfy.femfyapi.repository.ForumTopicRepository;
-import dto.ForumTopicDTO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package dto;
+package com.femfy.femfyapi.delivery.dto;
 
 import java.util.List;
 

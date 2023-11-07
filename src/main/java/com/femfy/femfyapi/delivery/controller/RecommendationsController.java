@@ -1,4 +1,4 @@
-package com.femfy.femfyapi.controller;
+package com.femfy.femfyapi.delivery.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.femfy.femfyapi.delivery.dto.*;
+import com.femfy.femfyapi.domain.interfaces.IFileService;
+import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
+import com.femfy.femfyapi.domain.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,16 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.femfy.femfyapi.service.IFileService;
-import com.femfy.femfyapi.service.IQuestionsUserFamilyHistoryService;
-import com.femfy.femfyapi.service.IUserService;
 import com.femfy.femfyapi.service.RecommendationService;
 
-import dto.FileDTO;
-import dto.QuestionsUserFamilyHistoryDTO;
-import dto.RecommendationsDTO;
-import dto.TypeRecommendationsDTO;
-import dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

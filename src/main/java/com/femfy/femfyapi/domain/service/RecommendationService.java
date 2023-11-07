@@ -3,15 +3,14 @@ package com.femfy.femfyapi.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.femfy.femfyapi.domain.interfaces.IRecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.femfy.femfyapi.entity.Recommendation;
 import com.femfy.femfyapi.repository.RecommendationsRepository;
 
-import dto.TypeRecommendationsDTO;
 
 @Service
 public class RecommendationService implements IRecommendationService {

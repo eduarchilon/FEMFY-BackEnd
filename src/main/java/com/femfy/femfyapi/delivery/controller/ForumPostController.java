@@ -1,7 +1,8 @@
-package com.femfy.femfyapi.controller;
+package com.femfy.femfyapi.delivery.controller;
 
-import com.femfy.femfyapi.service.IForumPostService;
-import dto.ForumPostDTO;
+import com.femfy.femfyapi.delivery.dto.ForumPostDTO;
+import com.femfy.femfyapi.delivery.mapper.ForumPostMapper;
+import com.femfy.femfyapi.domain.interfaces.IForumPostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,7 +39,7 @@ public class ForumPostController {
     })
     @GetMapping("/getAllForumPosts")
     public ResponseEntity<List<ForumPostDTO>> getAllForumPosts() {
-        List<ForumPostDTO> posts = forumPostService.getAllForumPosts();
+        List<ForumPostDTO> posts = forumPostService.getAllForumPosts().stream().map(ForumPostMapper::mapToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(posts);
     }
 
@@ -52,7 +54,7 @@ public class ForumPostController {
     })
     @GetMapping("/{postId}")
     public ResponseEntity<ForumPostDTO> getForumPostById(@PathVariable("postId") Long postId) {
-        Optional<ForumPostDTO> post = forumPostService.getForumPostById(postId);
+        Optional<ForumPostDTO> post = forumPostService.getForumPostById(postId).map(ForumPostMapper::mapToDTO);
         return post.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -68,7 +70,7 @@ public class ForumPostController {
     })
     @GetMapping("/getForumPostsByTopic/{topicId}")
     public ResponseEntity<?> getForumPostsByTopic(@PathVariable("topicId") Long topicId) {
-        List<ForumPostDTO> posts = forumPostService.getForumPostsByTopic(topicId);
+        List<ForumPostDTO> posts = forumPostService.getForumPostsByTopic(topicId).stream().map(ForumPostMapper::mapToDTO).collect(Collectors.toList());
         return buildResponse(posts);
     }
 
@@ -83,7 +85,7 @@ public class ForumPostController {
     })
     @GetMapping("/getForumPostsByUser/{userId}")
     public ResponseEntity<?> getForumPostsByUser(@PathVariable("userId") Long userId) {
-        List<ForumPostDTO> posts = forumPostService.getForumPostsByUser(userId);
+        List<ForumPostDTO> posts = forumPostService.getForumPostsByUser(userId).stream().map(ForumPostMapper::mapToDTO).collect(Collectors.toList());
         return buildResponse(posts);
     }
 
@@ -96,7 +98,7 @@ public class ForumPostController {
     })
     @PostMapping("/createForumPost")
     public ResponseEntity<ForumPostDTO> createForumPost(@RequestBody ForumPostDTO postDTO) {
-        ForumPostDTO createdPost = forumPostService.saveForumPost(postDTO);
+        ForumPostDTO createdPost = ForumPostMapper.mapToDTO(forumPostService.saveForumPost(ForumPostMapper.mapToEntity(postDTO)));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
 
@@ -115,7 +117,7 @@ public class ForumPostController {
             return ResponseEntity.notFound().build();
         }
 
-        ForumPostDTO updatedPost = forumPostService.updateForumPost(postDTO);
+        ForumPostDTO updatedPost = ForumPostMapper.mapToDTO(forumPostService.updateForumPost(ForumPostMapper.mapToEntity(postDTO)));
 
         if (updatedPost == null) {
             return ResponseEntity.notFound().build();

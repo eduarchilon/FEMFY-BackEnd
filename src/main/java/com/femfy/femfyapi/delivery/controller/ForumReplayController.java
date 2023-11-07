@@ -1,7 +1,8 @@
-package com.femfy.femfyapi.controller;
+package com.femfy.femfyapi.delivery.controller;
 
-import com.femfy.femfyapi.service.IForumReplayService;
-import dto.ForumReplayDTO;
+import com.femfy.femfyapi.delivery.dto.ForumReplayDTO;
+import com.femfy.femfyapi.delivery.mapper.ForumReplayMapper;
+import com.femfy.femfyapi.domain.interfaces.IForumReplayService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,7 +39,7 @@ public class ForumReplayController {
     })
     @GetMapping("/getAllForumReplies")
     public ResponseEntity<List<ForumReplayDTO>> getAllForumReplies() {
-        List<ForumReplayDTO> replies = forumReplayService.getAllForumReplays();
+        List<ForumReplayDTO> replies = forumReplayService.getAllForumReplays().stream().map(ForumReplayMapper::mapToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(replies);
     }
 
@@ -52,7 +54,7 @@ public class ForumReplayController {
     })
     @GetMapping("/{replyId}")
     public ResponseEntity<ForumReplayDTO> getForumReplayById(@PathVariable("replyId") Long replyId) {
-        Optional<ForumReplayDTO> reply = forumReplayService.getForumReplayById(replyId);
+        Optional<ForumReplayDTO> reply = forumReplayService.getForumReplayById(replyId).map(ForumReplayMapper::mapToDTO);
         return reply.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -68,7 +70,7 @@ public class ForumReplayController {
     })
     @GetMapping("/getForumRepliesByUser/{userId}")
     public ResponseEntity<?> getForumRepliesByUser(@PathVariable("userId") Long userId) {
-        List<ForumReplayDTO> replies = forumReplayService.getForumReplaysByUser(userId);
+        List<ForumReplayDTO> replies = forumReplayService.getForumReplaysByUser(userId).stream().map(ForumReplayMapper::mapToDTO).collect(Collectors.toList());
         return buildResponse(replies);
     }
 
@@ -83,7 +85,7 @@ public class ForumReplayController {
     })
     @GetMapping("/getForumRepliesByPost/{postId}")
     public ResponseEntity<?> getForumRepliesByPost(@PathVariable("postId") Long postId) {
-        List<ForumReplayDTO> replies = forumReplayService.getForumReplaysByPost(postId);
+        List<ForumReplayDTO> replies = forumReplayService.getForumReplaysByPost(postId).stream().map(ForumReplayMapper::mapToDTO).collect(Collectors.toList());
         return buildResponse(replies);
     }
 
@@ -96,7 +98,7 @@ public class ForumReplayController {
     })
     @PostMapping("/createForumReplay")
     public ResponseEntity<ForumReplayDTO> createForumReplay(@RequestBody ForumReplayDTO replyDTO) {
-        ForumReplayDTO createdReply = forumReplayService.saveForumReplay(replyDTO);
+        ForumReplayDTO createdReply = ForumReplayMapper.mapToDTO(forumReplayService.saveForumReplay(ForumReplayMapper.mapToEntity(replyDTO)));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReply);
     }
 
@@ -115,7 +117,7 @@ public class ForumReplayController {
             return ResponseEntity.notFound().build();
         }
 
-        ForumReplayDTO updatedReply = forumReplayService.updateForumReplay(replyDTO);
+        ForumReplayDTO updatedReply = ForumReplayMapper.mapToDTO(forumReplayService.updateForumReplay(ForumReplayMapper.mapToEntity(replyDTO)));
 
         if (updatedReply == null) {
             return ResponseEntity.notFound().build();

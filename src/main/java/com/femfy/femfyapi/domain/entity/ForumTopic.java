@@ -1,4 +1,4 @@
-package com.femfy.femfyapi.entity;
+package com.femfy.femfyapi.domain.entity;
 
 import lombok.Data;
 

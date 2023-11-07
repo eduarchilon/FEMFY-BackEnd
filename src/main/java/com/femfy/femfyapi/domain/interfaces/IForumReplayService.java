@@ -1,23 +1,23 @@
-package com.femfy.femfyapi.service;
+package com.femfy.femfyapi.domain.interfaces;
 
-import dto.ForumReplayDTO;
+import com.femfy.femfyapi.domain.entity.ForumReplay;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IForumReplayService {
 
-    List<ForumReplayDTO> getAllForumReplays();
+    List<ForumReplay> getAllForumReplays();
 
-    Optional<ForumReplayDTO> getForumReplayById(Long id);
+    Optional<ForumReplay> getForumReplayById(Long id);
 
-    List<ForumReplayDTO> getForumReplaysByUser(Long userId);
+    List<ForumReplay> getForumReplaysByUser(Long userId);
 
-    List<ForumReplayDTO> getForumReplaysByPost(Long postId);
+    List<ForumReplay> getForumReplaysByPost(Long postId);
 
-    ForumReplayDTO saveForumReplay(ForumReplayDTO forumReplayDTO);
+    ForumReplay saveForumReplay(ForumReplay forumReplay);
 
-    ForumReplayDTO updateForumReplay(ForumReplayDTO updatedDTO);
+    ForumReplay updateForumReplay(ForumReplay updated);
 
     void deleteForumReplay(Long id);
 }

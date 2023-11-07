@@ -1,23 +1,23 @@
-package com.femfy.femfyapi.service;
+package com.femfy.femfyapi.domain.interfaces;
 
-import dto.ForumPostDTO;
+import com.femfy.femfyapi.domain.entity.ForumPost;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IForumPostService {
 
-    List<ForumPostDTO> getAllForumPosts();
+    List<ForumPost> getAllForumPosts();
 
-    Optional<ForumPostDTO> getForumPostById(Long id);
+    Optional<ForumPost> getForumPostById(Long id);
 
-    List<ForumPostDTO> getForumPostsByUser(Long userId);
+    List<ForumPost> getForumPostsByUser(Long userId);
 
-    List<ForumPostDTO> getForumPostsByTopic(Long topicId);
+    List<ForumPost> getForumPostsByTopic(Long topicId);
 
-    ForumPostDTO saveForumPost(ForumPostDTO forumPostDTO);
+    ForumPost saveForumPost(ForumPost forumPost);
 
-    ForumPostDTO updateForumPost(ForumPostDTO updatedDTO);
+    ForumPost updateForumPost(ForumPost forumPost);
 
     void deleteForumPost(Long id);
 }

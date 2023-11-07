@@ -1,19 +1,22 @@
-package com.femfy.femfyapi.service;
+package com.femfy.femfyapi.domain.interfaces;
 
-import dto.ForumTopicDTO;
+
+
+
+import com.femfy.femfyapi.domain.entity.ForumTopic;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IForumTopicService {
 
-    List<ForumTopicDTO> getAllForumTopics();
+    List<ForumTopic> getAllForumTopics();
 
-    Optional<ForumTopicDTO> getForumTopicById(Long id);
+    Optional<ForumTopic> getForumTopicById(Long id);
 
-    ForumTopicDTO saveForumTopic(ForumTopicDTO forumTopicDTO);
+    ForumTopic saveForumTopic(ForumTopic forumTopic);
 
-    ForumTopicDTO updateForumTopic(ForumTopicDTO forumTopicDTO);
+    ForumTopic updateForumTopic(ForumTopic forumTopic);
 
     void deleteForumTopic(Long id);
 }
