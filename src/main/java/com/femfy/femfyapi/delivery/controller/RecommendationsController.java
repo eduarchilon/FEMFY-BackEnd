@@ -7,11 +7,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.femfy.femfyapi.delivery.dto.*;
+import com.femfy.femfyapi.delivery.mapper.FileMapper;
+import com.femfy.femfyapi.delivery.mapper.QuestionsUserFamilyHistoryMapper;
+import com.femfy.femfyapi.delivery.mapper.RecommendationMapper;
+import com.femfy.femfyapi.delivery.mapper.UserMapper;
 import com.femfy.femfyapi.domain.interfaces.IFileService;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
 import com.femfy.femfyapi.domain.interfaces.IUserService;
+import com.femfy.femfyapi.domain.service.RecommendationService;
+import com.femfy.femfyapi.infraestructura.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.femfy.femfyapi.service.RecommendationService;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -65,7 +72,7 @@ public class RecommendationsController {
 					@Content(mediaType = "application/json") }) })
 	@GetMapping("/getRecommendations")
 	public ResponseEntity<List<TypeRecommendationsDTO>> getRecommendation() {
-		List<TypeRecommendationsDTO> recommendations = this.recommendationService.getRecommendatios();
+		List<TypeRecommendationsDTO> recommendations = this.recommendationService.getRecommendatios().stream().map(RecommendationMapper::mapToDTO).collect(Collectors.toList());
 		if (!recommendations.isEmpty()) {
 			return new ResponseEntity<>(recommendations, HttpStatus.OK);
 		} else {
@@ -84,7 +91,7 @@ public class RecommendationsController {
 	@PostMapping("/createRecommendation")
 	public ResponseEntity<TypeRecommendationsDTO> saveTypeStudy(
 			@RequestBody TypeRecommendationsDTO recommendationsDTO) {
-		recommendationsDTO = this.recommendationService.saveRecommendation(recommendationsDTO);
+		recommendationsDTO = RecommendationMapper.mapToDTO(this.recommendationService.saveRecommendation(RecommendationMapper.mapToEntity(recommendationsDTO)));
 		return new ResponseEntity<>(recommendationsDTO, HttpStatus.CREATED);
 	}
 
@@ -132,8 +139,7 @@ public class RecommendationsController {
 		List<TypeRecommendationsDTO> recommedationsByTypeUsr = new ArrayList<>();
 
 		// Se recuperan los datos del usuraio
-		UserDTO user = new UserDTO();
-		user = iuserService.getUser(userId);
+		UserDTO user = UserMapper.mapToDTO(iuserService.getUser(userId));
 
 		recommedationsByDoc = RecomendationsByDocuments(userId);
 		recommedationsByFamilyHist = RecomendationsByHistoryfamily(user);
@@ -147,16 +153,15 @@ public class RecommendationsController {
 
 	public List<TypeRecommendationsDTO> RecomendationsByHistoryfamily(UserDTO user) {
 
-		List<TypeRecommendationsDTO> recommendations = this.recommendationService.getRecommendatios();
+		List<TypeRecommendationsDTO> recommendations = this.recommendationService.getRecommendatios().stream().map(RecommendationMapper::mapToDTO).collect(Collectors.toList());
 
 		// Genero un objeto de tipo recomendacion
 		List<TypeRecommendationsDTO> recommedationsByFamilyHist = new ArrayList<>();
 
 		// Se recupera la lista de Historial familiar
-		List<QuestionsUserFamilyHistoryDTO> ListFamilyHist = new ArrayList<>();
-		ListFamilyHist = iquestionsUserFamilyHistoryService.getQuestionsUserFamilyHistoriesByUserId(user.getIdUser());
+		List<QuestionsUserFamilyHistoryDTO> ListFamilyHist = iquestionsUserFamilyHistoryService.getQuestionsUserFamilyHistoriesByUserId(user.getIdUser()).stream().map(QuestionsUserFamilyHistoryMapper::mapToDTO).collect(Collectors.toList());
 
-		int edad = calculateAge(user.getBirthdate());
+		int edad = calculateAge(Utils.parseDate(user.getBirthdate()));
 
 		for (QuestionsUserFamilyHistoryDTO qUserFamilyHisDTO : ListFamilyHist) {
 
@@ -258,12 +263,11 @@ public class RecommendationsController {
 		List<TypeRecommendationsDTO> recommedationsByDoc = new ArrayList<>();
 
 		// Se recupera la lista de los estudios existentes
-		List<FileDTO> documents = new ArrayList<>();
-		documents = iFileService.findDocumentsByIdUser(userId);
+		List<FileDTO> documents = iFileService.findDocumentsByIdUser(userId).stream().map(FileMapper::mapToDTO).collect(Collectors.toList());
 
 		for (FileDTO fileDto : documents) {
 			int validDays = fileDto.getTypeStudy().getValidityOfStudy()
-					- calculateDateDifference(fileDto.getStudyDate());
+					- calculateDateDifference(Utils.parseDate(fileDto.getStudyDate()));
 			if (validDays < 30) {
 				TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 				dto.setExpirationDays(validDays);

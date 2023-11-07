@@ -1,15 +1,16 @@
-package com.femfy.femfyapi.service;
+package com.femfy.femfyapi.domain.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.femfy.femfyapi.domain.entity.Recommendation;
 import com.femfy.femfyapi.domain.interfaces.IRecommendationService;
+import com.femfy.femfyapi.domain.repository.RecommendationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.femfy.femfyapi.repository.RecommendationsRepository;
 
 
 @Service
@@ -23,10 +24,9 @@ public class RecommendationService implements IRecommendationService {
     }
 
     @Override
-    public TypeRecommendationsDTO saveRecommendation(TypeRecommendationsDTO dto) {
-    	Recommendation recommendation = mapToRecoomendation(dto);
-    	recommendation = this.recommendationsRepository.save(recommendation);
-        return mapToTypeRecommendationsDTO(recommendation);
+    public Recommendation saveRecommendation(Recommendation recommendation) {
+    	return this.recommendationsRepository.save(recommendation);
+
     }
     
     @Override
@@ -44,25 +44,9 @@ public class RecommendationService implements IRecommendationService {
     }
 
     @Override
-    public List<TypeRecommendationsDTO> getRecommendatios() {
-        List<Recommendation> recommendations = this.recommendationsRepository.findAll();
-        return recommendations.stream().map(this::mapToTypeRecommendationsDTO).collect(Collectors.toList());
+    public List<Recommendation> getRecommendatios() {
+        return this.recommendationsRepository.findAll();
     }
     
-    private TypeRecommendationsDTO mapToTypeRecommendationsDTO (Recommendation recommendation) {
-    	TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
-        dto.setTypeDisease(recommendation.getTypeDisease());
-        dto.setDescription(recommendation.getDescription());
-        dto.setAgeReference(recommendation.getAgeReference());
-        dto.setIdRecommendation(recommendation.getId());
-        return dto;
-    }
 
-    private Recommendation mapToRecoomendation(TypeRecommendationsDTO dto) {
-    	Recommendation recommendation = new Recommendation();
-    	recommendation.setTypeDisease(dto.getTypeDisease());
-    	recommendation.setDescription(dto.getDescription());
-    	recommendation.setAgeReference(dto.getAgeReference());
-        return recommendation;
-    }
 }
