@@ -1,26 +1,32 @@
 package com.femfy.femfyapi.controller;
 
-import com.femfy.femfyapi.delivery.controller.CalendarEventController;
-import com.femfy.femfyapi.domain.entity.CalendarEvent;
-import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
-import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
-import com.femfy.femfyapi.delivery.mapper.CalendarEventMapper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import com.femfy.femfyapi.delivery.controller.CalendarEventController;
+import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
+import com.femfy.femfyapi.delivery.mapper.CalendarEventMapper;
+import com.femfy.femfyapi.domain.entity.CalendarEvent;
+import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
+
 
 class CalendarEventControllerTest {
 
@@ -47,9 +53,10 @@ class CalendarEventControllerTest {
 
     }
 
-    private void thenGetEvents(ResponseEntity<List<CalendarEventDTO>> response, List<CalendarEventDTO> calendarEventDTOS) {
+    private void thenGetEvents(ResponseEntity<List<CalendarEventDTO>> response, List<CalendarEvent> calendarEvent) {
+    	
         assertAll(
-                () -> assertEquals(mockEvents(), response.getBody())
+                () -> assertEquals(mockEvents().stream().map(CalendarEventMapper::mapToDTO).collect(Collectors.toList()), response.getBody())
         );
     }
 
@@ -60,16 +67,17 @@ class CalendarEventControllerTest {
     }
 
     private ResponseEntity<List<CalendarEventDTO>> whenGetEventsOf(Long userId) {
-        return controller.getEventsByUser(userId);
+        
+    	return controller.getEventsByUser(userId);
     }
 
-    private void givenUserHasEvents(Long userId, List<CalendarEventDTO> calendarEventDTOS) {
-        when(service.getCalendarEventByUser(userId)).thenReturn(calendarEventDTOS);
+    private void givenUserHasEvents(Long userId, List<CalendarEvent> calendarEvent) {
+        when(service.getCalendarEventByUser(userId)).thenReturn(calendarEvent);
     }
 
-    private List<CalendarEventDTO> mockEvents() {
-        List<CalendarEventDTO> mockEvents = new ArrayList<>();
-        mockEvents.add(new CalendarEventDTO());
+    private List<CalendarEvent> mockEvents() {
+        List<CalendarEvent> mockEvents = new ArrayList<>();
+        mockEvents.add(new CalendarEvent());
         return mockEvents;
     }
 
@@ -93,7 +101,7 @@ class CalendarEventControllerTest {
         ResponseEntity<CalendarEventDTO> response = controller.getEventById(eventId);
 
         assertAll(
-                () -> assertEquals(OK, response.getStatusCode()),
+                () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
                 () -> assertEquals(dto, response.getBody())
         );
     }
@@ -116,7 +124,7 @@ class CalendarEventControllerTest {
         ResponseEntity<List<CalendarEventDTO>> response = controller.getAllEvents();
 
         assertAll(
-                () -> assertEquals(OK, response.getStatusCode()),
+                () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
                 () -> assertEquals(mockEvents, response.getBody())
         );
     }
@@ -148,7 +156,7 @@ class CalendarEventControllerTest {
         ResponseEntity<CalendarEventDTO> response = controller.updateEvent(eventDTO);
 
         assertAll(
-                () -> assertEquals(OK, response.getStatusCode()),
+                () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
                 () -> assertEquals(eventDTO, response.getBody())
         );
     }
