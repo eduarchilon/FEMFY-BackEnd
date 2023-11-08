@@ -3,6 +3,8 @@ package com.femfy.femfyapi.domain.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -25,8 +27,8 @@ public class CalendarEvent {
     private Date dateEvent;
 
     @Column(name = "hour_alert")
-    @Temporal(TemporalType.DATE)
-    private Date hourAlert;
+    @Temporal(TemporalType.TIME)
+    private LocalTime hourAlert;
 
     @Column(name = "description")
     private String description;

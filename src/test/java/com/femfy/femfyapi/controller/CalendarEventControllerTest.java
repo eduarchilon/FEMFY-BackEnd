@@ -64,7 +64,7 @@ class CalendarEventControllerTest {
         CalendarEvent mockEvent = new CalendarEvent();
         givenEventHasIdEvent(eventId, mockEvent);
         ResponseEntity<CalendarEventDTO> response = whenGetEventOf(eventId);
-        thenGetEventOK("OK",response);
+        thenGetEventOK(OK,response);
     }
 
     @Test
@@ -86,7 +86,7 @@ class CalendarEventControllerTest {
     void testCreateEvent() {
         givenCreateEvent();
         ResponseEntity<CalendarEventDTO> response = whenCreateEvent();
-        thenGetEventOK("CREATED",response);
+        thenGetEventOK(HttpStatus.CREATED,response);
     }
 
     @Test
@@ -168,7 +168,7 @@ class CalendarEventControllerTest {
     	 when(service.getCalendarEvent(idEvent)).thenReturn(Optional.empty());
     }
    
-    private void thenGetEventOK(String httpStatus, ResponseEntity<CalendarEventDTO> response) {
+    private void thenGetEventOK(HttpStatus httpStatus, ResponseEntity<CalendarEventDTO> response) {
     	CalendarEventDTO dto = new CalendarEventDTO();
         assertAll(
                 () -> assertEquals(httpStatus, response.getStatusCode()),

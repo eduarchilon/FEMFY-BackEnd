@@ -6,6 +6,8 @@ import org.springframework.expression.ParseException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Utils {
     private Utils(){}
@@ -23,11 +25,25 @@ public class Utils {
         }
         return addDate(dateSql);
     }
+    
+    public static LocalTime parseHours(String hour) {
+    	LocalTime init = null; 
+    	if(hour != null){
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime hora = LocalTime.parse(hour, formato);
+        	return hora;
+        	}else {
+        		return init;
+        	}
+    }
 
     public static Date addDate(Date date){
-        LocalDate localDate = date.toLocalDate();
-        LocalDate nuevaFecha = localDate.plusDays(1);
-        return Date.valueOf(nuevaFecha);
+    	if (date!=null){
+            LocalDate localDate = date.toLocalDate();
+            LocalDate nuevaFecha = localDate.plusDays(1);
+            return Date.valueOf(nuevaFecha);
+    	}
+    	return null;
     }
 
 }
