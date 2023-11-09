@@ -47,7 +47,9 @@ public class UserService implements IUserService{
 
 	@Override
 	public UserDTO updateUser(UserDTO userDTO) {
-
+//		try{
+//			TypeUser typeUser = new TypeUser();
+//			typeUser.setId(userDTO.getTypeUserID());
 			
 			User userDB = new User();
 			
@@ -56,12 +58,7 @@ public class UserService implements IUserService{
 	            throw new IllegalArgumentException("El ID del usuario no puede ser nulo para la actualización");
 	        }
 			
-			if(userDTO.getTypeUserID()!= null) {
-				TypeUser typeUser = new TypeUser();
-				typeUser.setId(userDTO.getTypeUserID());
-				userDB.setTypeUser(typeUser);
-			}
-
+			//user.setTypeUser(typeUser);
 			if(userDTO.getFirstName() != null){
 				userDB.setFirstName(userDTO.getFirstName());
 			}
@@ -96,6 +93,11 @@ public class UserService implements IUserService{
 			User userUpdate = userRepository.save(userDB);	
 			return mapToDTO(userUpdate);
 			
+//		} catch (Exception e) {
+//			System.out.print("NO SE LOGRA HACER EL MAPEO PARA ACTUALIZAR ");
+//		}
+//		
+//		return null;
 	}
 	
 	private UserDTO mapToDTO(User user){
@@ -110,7 +112,6 @@ public class UserService implements IUserService{
         }
 
         dto.setIdUser(user.getId());
-        dto.setTypeUserID(user.getTypeUser().getId());
 		dto.setFirstName(user.getFirstName());
 		dto.setLastName(user.getLastName());
 		dto.setBirthdate(user.getBirthdate());

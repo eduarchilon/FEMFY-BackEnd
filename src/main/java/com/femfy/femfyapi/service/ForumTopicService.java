@@ -1,12 +1,9 @@
 package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.entity.ForumTopic;
-import com.femfy.femfyapi.entity.ForumReplay;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.ForumTopicRepository;
-import dto.ForumReplayDTO;
 import dto.ForumTopicDTO;
-import dto.ForumPostDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +65,7 @@ public class ForumTopicService implements IForumTopicService {
 
     private ForumTopicDTO mapToDTO(ForumTopic forumTopic) {
         if (forumTopic == null) {
-            throw new EntityNotFoundException("Temática del foro no encontrada");
+            throw new EntityNotFoundException("Temática del foro no encontrado");
         }
 
         ForumTopicDTO dto = new ForumTopicDTO();
@@ -77,36 +74,7 @@ public class ForumTopicService implements IForumTopicService {
         dto.setImage(forumTopic.getImage());
         dto.setCreatedDate(forumTopic.getCreatedDate());
 
-        List<ForumPostDTO> forumPostDTOs = forumTopic.getForumPosts().stream()
-                .map(forumPost -> {
-                    ForumPostDTO postDTO = new ForumPostDTO();
-                    postDTO.setId(forumPost.getId());
-                    postDTO.setTitle(forumPost.getTitle());
-                    postDTO.setContent(forumPost.getContent());
-                    postDTO.setCreatedDate(forumPost.getCreatedDate());
-                    postDTO.setUserId(forumPost.getUser().getId());
-                    postDTO.setTopicId(forumPost.getTopic().getId());
-                    List<ForumReplayDTO> replyDTOs = forumPost.getReplies().stream()
-                            .map(this::mapReplayToDTO)
-                            .collect(Collectors.toList());
-                    postDTO.setReplies(replyDTOs);
-                    return postDTO;
-                })
-                .collect(Collectors.toList());
-
-        dto.setForumPosts(forumPostDTOs);
-
         return dto;
-    }
-
-    private ForumReplayDTO mapReplayToDTO(ForumReplay replay) {
-        ForumReplayDTO replyDTO = new ForumReplayDTO();
-        replyDTO.setId(replay.getId());
-        replyDTO.setPostId(replay.getPost().getId());
-        replyDTO.setCreatedDate(replay.getCreatedDate());
-        replyDTO.setContent(replay.getContent());
-        replyDTO.setUserId(replay.getUser().getId());
-        return replyDTO;
     }
 
     private ForumTopic mapToEntity(ForumTopicDTO dto) {

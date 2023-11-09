@@ -162,23 +162,23 @@ class QuestionsUserFamilyHistoryServiceTest {
     }
 
     private void copyProperties(QuestionsUserFamilyHistoryDTO source, QuestionsUserFamilyHistory target) {
-        if (source.getBreastCancer() != null) {
-            target.setBreastCancer(source.getBreastCancer());
+        if (source.isBreastCancer()) {
+            target.setBreastCancer(source.isBreastCancer());
         }
-        if (source.getOvarianCancer() != null) {
-            target.setOvarianCancer(source.getOvarianCancer());
+        if (source.isOvarianCancer()) {
+            target.setOvarianCancer(source.isOvarianCancer());
         }
-        if (source.getEndometriosis() != null) {
-            target.setEndometriosis(source.getEndometriosis());
+        if (source.isEndometriosis()) {
+            target.setEndometriosis(source.isEndometriosis());
         }
-        if (source.getUterineFibroids() != null) {
-            target.setUterineFibroids(source.getUterineFibroids());
+        if (source.isUterineFibroids()) {
+            target.setUterineFibroids(source.isUterineFibroids());
         }
-        if (source.getSop() != null) {
-            target.setSop(source.getSop());
+        if (source.isSop()) {
+            target.setSop(source.isSop());
         }
-        if (source.getEarlyMenopause() != null) {
-            target.setEarlyMenopause(source.getEarlyMenopause());
+        if (source.isEarlyMenopause()) {
+            target.setEarlyMenopause(source.isEarlyMenopause());
         }
     }
 }
