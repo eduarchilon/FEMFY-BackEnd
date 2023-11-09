@@ -66,34 +66,33 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
     }
 
     private void copyProperties(QuestionsUserMenopauseDTO source, QuestionsUserMenopause target) {
-        if (source.isSuffocation()) {
-            target.setSuffocation(source.isSuffocation());
+        if (source.getSuffocation() != null) {
+            target.setSuffocation(source.getSuffocation());
         }
-        if (source.isChangesInMenstrualCycle()) {
-            target.setChangesInMenstrualCycle(source.isChangesInMenstrualCycle());
+        if (source.getChangesInMenstrualCycle() != null) {
+            target.setChangesInMenstrualCycle(source.getChangesInMenstrualCycle());
         }
-        if (source.isVaginalDryness()) {
-            target.setVaginalDryness(source.isVaginalDryness());
+        if (source.getVaginalDryness() != null) {
+            target.setVaginalDryness(source.getVaginalDryness());
         }
-        if (source.isChangesInSkinAndHair()) {
-            target.setChangesInSkinAndHair(source.isChangesInSkinAndHair());
+        if (source.getChangesInSkinAndHair() != null) {
+            target.setChangesInSkinAndHair(source.getChangesInSkinAndHair());
         }
-        if (source.isMoodChanges()) {
-            target.setMoodChanges(source.isMoodChanges());
+        if (source.getMoodChanges() != null) {
+            target.setMoodChanges(source.getMoodChanges());
         }
-        if (source.isSleepingDifficulties()) {
-            target.setSleepingDifficulties(source.isSleepingDifficulties());
+        if (source.getSleepingDifficulties() != null) {
+            target.setSleepingDifficulties(source.getSleepingDifficulties());
         }
-        if(source.isAumentoDePeso()){
-            target.setAumentoDePeso(source.isAumentoDePeso());
+        if(source.getWeightGain() != null){
+            target.setWeightGain(source.getWeightGain());
         }
-        if (source.isLossOfBoneDensity()) {
-            target.setLossOfBoneDensity(source.isLossOfBoneDensity());
+        if (source.getLossOfBoneDensity() != null) {
+            target.setLossOfBoneDensity(source.getLossOfBoneDensity());
         }
-        if (source.isChangesInLibido()) {
-            target.setChangesInLibido(source.isChangesInLibido());
+        if (source.getChangesInLibido() != null) {
+            target.setChangesInLibido(source.getChangesInLibido());
         }
-
     }
 
     private QuestionsUserMenopauseDTO mapToDTO(QuestionsUserMenopause menopause) {
@@ -110,7 +109,7 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
         dto.setChangesInSkinAndHair(menopause.getChangesInSkinAndHair());
         dto.setMoodChanges(menopause.getMoodChanges());
         dto.setSleepingDifficulties(menopause.getSleepingDifficulties());
-        dto.setAumentoDePeso(menopause.getAumentoDePeso());
+        dto.setWeightGain(menopause.getWeightGain());
         dto.setLossOfBoneDensity(menopause.getLossOfBoneDensity());
         dto.setChangesInLibido(menopause.getChangesInLibido());
 
@@ -124,15 +123,15 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
         QuestionsUserMenopause menopause = new QuestionsUserMenopause();
         menopause.setId(dto.getId());
         menopause.setUser(user);
-        menopause.setSuffocation(dto.isSuffocation());
-        menopause.setChangesInMenstrualCycle(dto.isChangesInMenstrualCycle());
-        menopause.setVaginalDryness(dto.isVaginalDryness());
-        menopause.setChangesInSkinAndHair(dto.isChangesInSkinAndHair());
-        menopause.setMoodChanges(dto.isMoodChanges());
-        menopause.setSleepingDifficulties(dto.isSleepingDifficulties());
-        menopause.setAumentoDePeso(dto.isAumentoDePeso());
-        menopause.setLossOfBoneDensity(dto.isLossOfBoneDensity());
-        menopause.setChangesInLibido(dto.isChangesInLibido());
+        menopause.setSuffocation(dto.getSuffocation());
+        menopause.setChangesInMenstrualCycle(dto.getChangesInMenstrualCycle());
+        menopause.setVaginalDryness(dto.getVaginalDryness());
+        menopause.setChangesInSkinAndHair(dto.getChangesInSkinAndHair());
+        menopause.setMoodChanges(dto.getMoodChanges());
+        menopause.setSleepingDifficulties(dto.getSleepingDifficulties());
+        menopause.setWeightGain(dto.getWeightGain());
+        menopause.setLossOfBoneDensity(dto.getLossOfBoneDensity());
+        menopause.setChangesInLibido(dto.getChangesInLibido());
         return menopause;
     }
 }
