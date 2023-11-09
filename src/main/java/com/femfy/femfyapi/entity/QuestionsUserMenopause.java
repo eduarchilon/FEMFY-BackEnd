@@ -17,31 +17,31 @@ public class QuestionsUserMenopause {
     private User user;
 
     @Column(name = "suffocation")
-    private Integer suffocation;
+    private Boolean suffocation;
 
     @Column(name = "changes_in_menstrual_cycle")
-    private Integer changesInMenstrualCycle;
+    private Boolean changesInMenstrualCycle;
 
     @Column(name = "vaginal_dryness")
-    private Integer vaginalDryness;
+    private Boolean vaginalDryness;
 
     @Column(name = "changes_in_skin_and_hair")
-    private Integer changesInSkinAndHair;
+    private Boolean changesInSkinAndHair;
 
     @Column(name = "mood_changes")
-    private Integer moodChanges;
+    private Boolean moodChanges;
 
     @Column(name = "sleeping_difficulties")
-    private Integer sleepingDifficulties;
+    private Boolean sleepingDifficulties;
 
     @Column(name = "weight_gain")
-    private Integer weightGain;
+    private Boolean aumentoDePeso;
 
     @Column(name = "loss_of_bone_density")
-    private Integer lossOfBoneDensity;
+    private Boolean lossOfBoneDensity;
 
     @Column(name = "changes_in_libido")
-    private Integer changesInLibido;
+    private Boolean changesInLibido;
 
     public QuestionsUserMenopause() {
     }

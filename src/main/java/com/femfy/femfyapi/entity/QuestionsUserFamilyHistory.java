@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+
 @Table(name="questions_user_family_history")
 public class QuestionsUserFamilyHistory {
     @Id
@@ -17,23 +18,26 @@ public class QuestionsUserFamilyHistory {
     private User user;
 
     @Column(name = "breast_cancer")
-    private Integer breastCancer;
+    private boolean breastCancer;
 
     @Column(name = "ovarian_cancer")
-    private Integer ovarianCancer;
+    private boolean ovarianCancer;
 
     @Column(name = "endometriosis")
-    private Integer endometriosis;
+    private boolean endometriosis;
 
     @Column(name = "uterine_fibroids")
-    private Integer uterineFibroids;
+    private boolean uterineFibroids;
 
     @Column(name = "sop")
-    private Integer sop;
+    private boolean sop;
 
     @Column(name = "early_menopause")
-    private Integer earlyMenopause;
+    private boolean earlyMenopause;
 
-    public QuestionsUserFamilyHistory() {
+    public QuestionsUserFamilyHistory(){
+
     }
+
+
 }

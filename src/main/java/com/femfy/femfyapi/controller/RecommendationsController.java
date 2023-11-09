@@ -163,13 +163,14 @@ public class RecommendationsController {
 		int edad = calculateAge(user.getBirthdate());
 
 		for (QuestionsUserFamilyHistoryDTO qUserFamilyHisDTO : ListFamilyHist) {
-			if (qUserFamilyHisDTO.getBreastCancer() == 1) {
+
+			if (qUserFamilyHisDTO.isBreastCancer()) {
 				if (edad > 30) {
 					for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 						if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("BreastCancer")
 								&& recommendationsDTO.getAgeReference() == 30) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
-							dto.setDescription("Segùn tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
 							dto.setTypeDisease("BreastCancer");
 							recommedationsByFamilyHist.add(dto);
 						}
@@ -182,20 +183,20 @@ public class RecommendationsController {
 								&& recommendationsDTO.getAgeReference() == 50) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
 							dto.setTypeDisease("BreastCancer");
-							dto.setDescription("Segùn tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
 							recommedationsByFamilyHist.add(dto);
 						}
 					}
 				}
 			}
 
-			if (qUserFamilyHisDTO.getEarlyMenopause() == 1) {
+			if (qUserFamilyHisDTO.isEarlyMenopause()) {
 				if (edad < 45) {
 					for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 						if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("EarlyMenopause")
 								&& recommendationsDTO.getAgeReference() == 45) {
 							TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
-							dto.setDescription("Segùn tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
+							dto.setDescription("segun tu edad actual: " + edad + ", " + recommendationsDTO.getDescription());
 							dto.setTypeDisease("EarlyMenopause");
 							recommedationsByFamilyHist.add(dto);
 						}
@@ -204,7 +205,7 @@ public class RecommendationsController {
 				}
 			}
 
-			if (qUserFamilyHisDTO.getEndometriosis() == 1) {
+			if (qUserFamilyHisDTO.isEndometriosis()) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("Endometriosis")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
@@ -214,8 +215,8 @@ public class RecommendationsController {
 					}
 				}
 			}
-      
-			if (qUserFamilyHisDTO.getOvarianCancer() == 1) {
+
+			if (qUserFamilyHisDTO.isOvarianCancer()) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("OvarianCancer")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
@@ -227,7 +228,7 @@ public class RecommendationsController {
 
 			}
 
-			if (qUserFamilyHisDTO.getSop() == 1) {
+			if (qUserFamilyHisDTO.isSop()) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("Sop")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
@@ -239,7 +240,7 @@ public class RecommendationsController {
 
 			}
 
-			if (qUserFamilyHisDTO.getUterineFibroids() == 1) {
+			if (qUserFamilyHisDTO.isUterineFibroids()) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("UterineFibroids")) {
 						TypeRecommendationsDTO dto = new TypeRecommendationsDTO();
