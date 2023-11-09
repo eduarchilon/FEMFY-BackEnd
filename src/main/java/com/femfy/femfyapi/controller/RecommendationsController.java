@@ -163,7 +163,6 @@ public class RecommendationsController {
 		int edad = calculateAge(user.getBirthdate());
 
 		for (QuestionsUserFamilyHistoryDTO qUserFamilyHisDTO : ListFamilyHist) {
-
 			if (qUserFamilyHisDTO.getBreastCancer() == 1) {
 				if (edad > 30) {
 					for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
@@ -215,7 +214,7 @@ public class RecommendationsController {
 					}
 				}
 			}
-
+      
 			if (qUserFamilyHisDTO.getOvarianCancer() == 1) {
 				for (TypeRecommendationsDTO recommendationsDTO : recommendations) {
 					if (recommendationsDTO.getTypeDisease().equalsIgnoreCase("OvarianCancer")) {
