@@ -13,28 +13,28 @@ public class QuestionsUserAnotherHormonalCauses {
     private Long id;
 
     @Column(name = "polycystic_ovary_syndrome")
-    private boolean polycysticOvarySyndrome;
+    private Integer polycysticOvarySyndrome;
 
     @Column(name = "hypothyroidism")
-    private boolean hypothyroidism;
+    private Integer hypothyroidism;
 
     @Column(name = "hyperprolactinemia")
-    private boolean hyperprolactinemia;
+    private Integer hyperprolactinemia;
 
     @Column(name = "sheehan_syndrome")
-    private boolean sheehanSyndrome;
+    private Integer sheehanSyndrome;
 
     @Column(name = "premature_ovarian_failure")
-    private boolean prematureOvarianFailure;
+    private Integer prematureOvarianFailure;
 
     @Column(name = "hypothalamic_disorders")
-    private boolean hypothalamicDisorders;
+    private Integer hypothalamicDisorders;
 
     @Column(name = "insulin_resistance")
-    private boolean insulinResistance;
+    private Integer insulinResistance;
 
     @Column(name = "another")
-    private boolean another;
+    private Integer another;
 
     @Column(name = "another_description")
     private String anotherDescription;

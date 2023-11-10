@@ -101,7 +101,7 @@ public class QuestionsUserAnotherService implements IQuestionsUserAnotherService
             dto.setHormonalCauses(hormonalCausesDTO);
         }
 
-        dto.setAnother(questionsUserAnother.isAnother());
+        dto.setAnother(questionsUserAnother.getAnother());
         dto.setAnotherDescription(questionsUserAnother.getAnotherDescription());
 
         return dto;
@@ -110,7 +110,7 @@ public class QuestionsUserAnotherService implements IQuestionsUserAnotherService
     private QuestionsUserAnother mapToEntity(QuestionsUserAnotherDTO dto) {
         User user = new User();
         user.setId(dto.getUserId());
-
+        
         QuestionsUserAnother questionsUserAnother = new QuestionsUserAnother();
         questionsUserAnother.setId(dto.getId());
         questionsUserAnother.setUser(user);
@@ -123,7 +123,7 @@ public class QuestionsUserAnotherService implements IQuestionsUserAnotherService
         hormonalCauses.setId(dto.getHormonalCauses().getId());
         questionsUserAnother.setHormonalCauses(hormonalCauses);
 
-        questionsUserAnother.setAnother(dto.isAnother());
+        questionsUserAnother.setAnother(dto.getAnother());
         questionsUserAnother.setAnotherDescription(dto.getAnotherDescription());
 
         return questionsUserAnother;
@@ -153,8 +153,8 @@ public class QuestionsUserAnotherService implements IQuestionsUserAnotherService
             existingQuestionsUserAnother.setCongenitalCauses(questionsUserAnotherCongenitalCauses);
         }
 
-        if (updatedDTO.isAnother()) {
-            existingQuestionsUserAnother.setAnother(updatedDTO.isAnother());
+        if (updatedDTO.getAnother() != null) {
+            existingQuestionsUserAnother.setAnother(updatedDTO.getAnother());
         }
 
         if (updatedDTO.getAnotherDescription() != null) {
