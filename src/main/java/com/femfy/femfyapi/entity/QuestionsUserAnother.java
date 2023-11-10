@@ -25,7 +25,7 @@ public class QuestionsUserAnother {
     private User user;
 
     @Column(name = "another")
-    private boolean another;
+    private Integer another;
 
     @Column(name = "another_description")
     private String anotherDescription;

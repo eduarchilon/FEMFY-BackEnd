@@ -71,14 +71,14 @@ public class QuestionsUserAnotherHormonalCausesService implements IQuestionsUser
         QuestionsUserAnotherHormonalCausesDTO dto = new QuestionsUserAnotherHormonalCausesDTO();
         dto.setId(entity.getId());
 
-        dto.setPolycysticOvarySyndrome(entity.isPolycysticOvarySyndrome());
-        dto.setHypothyroidism(entity.isHypothyroidism());
-        dto.setHyperprolactinemia(entity.isHyperprolactinemia());
-        dto.setSheehanSyndrome(entity.isSheehanSyndrome());
-        dto.setPrematureOvarianFailure(entity.isPrematureOvarianFailure());
-        dto.setHypothalamicDisorders(entity.isHypothalamicDisorders());
-        dto.setInsulinResistance(entity.isInsulinResistance());
-        dto.setAnother(entity.isAnother());
+        dto.setPolycysticOvarySyndrome(entity.getPolycysticOvarySyndrome());
+        dto.setHypothyroidism(entity.getHypothyroidism());
+        dto.setHyperprolactinemia(entity.getHyperprolactinemia());
+        dto.setSheehanSyndrome(entity.getSheehanSyndrome());
+        dto.setPrematureOvarianFailure(entity.getPrematureOvarianFailure());
+        dto.setHypothalamicDisorders(entity.getHypothalamicDisorders());
+        dto.setInsulinResistance(entity.getInsulinResistance());
+        dto.setAnother(entity.getAnother());
         dto.setAnotherDescription(entity.getAnotherDescription());
 
         return dto;
@@ -88,14 +88,14 @@ public class QuestionsUserAnotherHormonalCausesService implements IQuestionsUser
         QuestionsUserAnotherHormonalCauses entity = new QuestionsUserAnotherHormonalCauses();
         entity.setId(dto.getId());
 
-        entity.setPolycysticOvarySyndrome(dto.isPolycysticOvarySyndrome());
-        entity.setHypothyroidism(dto.isHypothyroidism());
-        entity.setHyperprolactinemia(dto.isHyperprolactinemia());
-        entity.setSheehanSyndrome(dto.isSheehanSyndrome());
-        entity.setPrematureOvarianFailure(dto.isPrematureOvarianFailure());
-        entity.setHypothalamicDisorders(dto.isHypothalamicDisorders());
-        entity.setInsulinResistance(dto.isInsulinResistance());
-        entity.setAnother(dto.isAnother());
+        entity.setPolycysticOvarySyndrome(dto.getPolycysticOvarySyndrome());
+        entity.setHypothyroidism(dto.getHypothyroidism());
+        entity.setHyperprolactinemia(dto.getHyperprolactinemia());
+        entity.setSheehanSyndrome(dto.getSheehanSyndrome());
+        entity.setPrematureOvarianFailure(dto.getPrematureOvarianFailure());
+        entity.setHypothalamicDisorders(dto.getHypothalamicDisorders());
+        entity.setInsulinResistance(dto.getInsulinResistance());
+        entity.setAnother(dto.getAnother());
         entity.setAnotherDescription(dto.getAnotherDescription());
 
         return entity;
@@ -111,36 +111,36 @@ public class QuestionsUserAnotherHormonalCausesService implements IQuestionsUser
             throw new IllegalArgumentException("El DTO no puede ser nulo para la actualización.");
         }
 
-        if (dto.isPolycysticOvarySyndrome()) {
-            existingEntity.setPolycysticOvarySyndrome(dto.isPolycysticOvarySyndrome());
+        if (dto.getPolycysticOvarySyndrome() != null) {
+            existingEntity.setPolycysticOvarySyndrome(dto.getPolycysticOvarySyndrome());
         }
 
-        if (dto.isHypothyroidism()) {
-            existingEntity.setHypothyroidism(dto.isHypothyroidism());
+        if (dto.getHypothyroidism() != null) {
+            existingEntity.setHypothyroidism(dto.getHypothyroidism());
         }
 
-        if (dto.isHyperprolactinemia()) {
-            existingEntity.setHyperprolactinemia(dto.isHyperprolactinemia());
+        if (dto.getHyperprolactinemia() != null) {
+            existingEntity.setHyperprolactinemia(dto.getHyperprolactinemia());
         }
 
-        if (dto.isSheehanSyndrome()) {
-            existingEntity.setSheehanSyndrome(dto.isSheehanSyndrome());
+        if (dto.getSheehanSyndrome() != null) {
+            existingEntity.setSheehanSyndrome(dto.getSheehanSyndrome());
         }
 
-        if (dto.isPrematureOvarianFailure()) {
-            existingEntity.setPrematureOvarianFailure(dto.isPrematureOvarianFailure());
+        if (dto.getPrematureOvarianFailure() != null) {
+            existingEntity.setPrematureOvarianFailure(dto.getPrematureOvarianFailure());
         }
 
-        if (dto.isHypothalamicDisorders()) {
-            existingEntity.setHypothalamicDisorders(dto.isHypothalamicDisorders());
+        if (dto.getHypothalamicDisorders() != null) {
+            existingEntity.setHypothalamicDisorders(dto.getHypothalamicDisorders());
         }
 
-        if (dto.isInsulinResistance()) {
-            existingEntity.setInsulinResistance(dto.isInsulinResistance());
+        if (dto.getInsulinResistance() != null) {
+            existingEntity.setInsulinResistance(dto.getInsulinResistance());
         }
 
-        if (dto.isAnother()) {
-            existingEntity.setAnother(dto.isAnother());
+        if (dto.getAnother() != null) {
+            existingEntity.setAnother(dto.getAnother());
         }
 
         if (dto.getAnotherDescription() != null) {

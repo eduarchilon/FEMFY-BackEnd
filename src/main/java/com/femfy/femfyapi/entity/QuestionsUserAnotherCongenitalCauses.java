@@ -13,13 +13,13 @@ public class QuestionsUserAnotherCongenitalCauses {
     private Long id;
 
     @Column(name = "malformations_uterine")
-    private boolean malformationsUterine;
+    private Integer malformationsUterine;
 
     @Column(name = "turner_syndrome")
-    private boolean turnerSyndrome;
+    private Integer turnerSyndrome;
 
     @Column(name = "another")
-    private boolean another;
+    private Integer another;
 
     @Column(name = "another_description")
     private String anotherDescription;

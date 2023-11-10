@@ -71,16 +71,16 @@ public class QuestionsUserAnotherCongenitalCausesService implements IQuestionsUs
         QuestionsUserAnotherCongenitalCausesDTO dto = new QuestionsUserAnotherCongenitalCausesDTO();
         dto.setId(congenitalCauses.getId());
 
-        if (congenitalCauses.isMalformationsUterine()) {
-            dto.setMalformationsUterine(true);
+        if (congenitalCauses.getMalformationsUterine() != null) {
+            dto.setMalformationsUterine(congenitalCauses.getMalformationsUterine());
         }
 
-        if (congenitalCauses.isTurnerSyndrome()) {
-            dto.setTurnerSyndrome(true);
+        if (congenitalCauses.getTurnerSyndrome() != null) {
+            dto.setTurnerSyndrome(congenitalCauses.getTurnerSyndrome());
         }
 
-        if (congenitalCauses.isAnother()) {
-            dto.setAnother(true);
+        if (congenitalCauses.getAnother() != null) {
+            dto.setAnother(congenitalCauses.getAnother());
         }
 
         if (congenitalCauses.getAnotherDescription() != null) {
@@ -94,9 +94,9 @@ public class QuestionsUserAnotherCongenitalCausesService implements IQuestionsUs
         QuestionsUserAnotherCongenitalCauses congenitalCauses = new QuestionsUserAnotherCongenitalCauses();
         congenitalCauses.setId(dto.getId());
 
-        congenitalCauses.setMalformationsUterine(dto.isMalformationsUterine());
-        congenitalCauses.setTurnerSyndrome(dto.isTurnerSyndrome());
-        congenitalCauses.setAnother(dto.isAnother());
+        congenitalCauses.setMalformationsUterine(dto.getMalformationsUterine());
+        congenitalCauses.setTurnerSyndrome(dto.getTurnerSyndrome());
+        congenitalCauses.setAnother(dto.getAnother());
         congenitalCauses.setAnotherDescription(dto.getAnotherDescription());
 
         return congenitalCauses;
@@ -108,16 +108,16 @@ public class QuestionsUserAnotherCongenitalCausesService implements IQuestionsUs
     }
 
     private void updateCongenitalCausesFields(QuestionsUserAnotherCongenitalCauses existingCongenitalCauses, QuestionsUserAnotherCongenitalCausesDTO updatedDTO) {
-        if (updatedDTO.isMalformationsUterine()) {
-            existingCongenitalCauses.setMalformationsUterine(updatedDTO.isMalformationsUterine());
+        if (updatedDTO.getMalformationsUterine() != null) {
+            existingCongenitalCauses.setMalformationsUterine(updatedDTO.getMalformationsUterine());
         }
 
-        if (updatedDTO.isTurnerSyndrome()) {
-            existingCongenitalCauses.setTurnerSyndrome(updatedDTO.isTurnerSyndrome());
+        if (updatedDTO.getTurnerSyndrome() != null) {
+            existingCongenitalCauses.setTurnerSyndrome(updatedDTO.getTurnerSyndrome());
         }
 
-        if (updatedDTO.isAnother()) {
-            existingCongenitalCauses.setAnother(updatedDTO.isAnother());
+        if (updatedDTO.getAnother() != null) {
+            existingCongenitalCauses.setAnother(updatedDTO.getAnother());
         }
 
         if (updatedDTO.getAnotherDescription() != null) {
