@@ -29,4 +29,15 @@ public class UserDTO {
 	String email;
 	@Schema(description = "Localidad del Usuario", example = "La Matanza")
 	String localidad;
+	@Schema(description = "Emosión del Usuario", example = "Feliz/Angustiada")
+	String emotion;
+	@Schema(description = "Telefono de Amigo del Usuario", example = "1166778899")
+	String friendsPhone;
+	@Schema(description = "Nombre del Amigo del Usuario", example = "Mario")
+	String friendsName;
+	@Schema(description = "Email de Amistad del Usuario", example = "userfriends@gmail.com")
+	String friendsEmail;
+	@Schema(description = "Estado del Usuario", example = "Ovulando/Lutea/Menstruante")
+	String state;
+	
 }
