@@ -11,21 +11,21 @@ public class QuestionsUserFamilyHistoryDTO {
     @Schema(description = "ID del usuario relacionado", example = "1")
     private Long userId;
 
-    @Schema(description = "Historial de cáncer de mama", example = "true")
-    private boolean breastCancer;
+    @Schema(description = "Historial de cáncer de mama", example = "1")
+    private Integer breastCancer;
 
-    @Schema(description = "Historial de cáncer de ovario", example = "true")
-    private boolean ovarianCancer;
+    @Schema(description = "Historial de cáncer de ovario", example = "1")
+    private Integer ovarianCancer;
 
-    @Schema(description = "Historial de endometriosis", example = "true")
-    private boolean endometriosis;
+    @Schema(description = "Historial de endometriosis", example = "1")
+    private Integer endometriosis;
 
-    @Schema(description = "Historial de fibromas uterinos", example = "true")
-    private boolean uterineFibroids;
+    @Schema(description = "Historial de fibromas uterinos", example = "1")
+    private Integer uterineFibroids;
 
-    @Schema(description = "Historial de síndrome de ovario poliquístico (SOP)", example = "true")
-    private boolean sop;
+    @Schema(description = "Historial de síndrome de ovario poliquístico (SOP)", example = "1")
+    private Integer sop;
 
-    @Schema(description = "Historial de menopausia temprana", example = "true")
-    private boolean earlyMenopause;
+    @Schema(description = "Historial de menopausia temprana", example = "1")
+    private Integer earlyMenopause;
 }
