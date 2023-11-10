@@ -35,6 +35,11 @@ public class UserService implements IUserService{
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
 			user.setLocalidad(userDTO.getLocalidad());
+			user.setEmotion(userDTO.getEmotion());
+			user.setFriendsPhone(userDTO.getFriendsPhone());
+			user.setFriendsName(userDTO.getFriendsName());
+			user.setFriendsEmail(userDTO.getFriendsEmail());
+			user.setState(userDTO.getState());
 			userRepository.save(user);
 			
 			userDTO.setIdUser(user.getId());
@@ -92,6 +97,21 @@ public class UserService implements IUserService{
 			if(userDTO.getLocalidad()!= null){
 				userDB.setLocalidad(userDTO.getLocalidad());
 			}
+			if(userDTO.getEmotion()!= null){
+				userDB.setEmotion(userDTO.getEmotion());
+			}
+			if(userDTO.getFriendsPhone()!= null){
+				userDB.setFriendsPhone(userDTO.getFriendsPhone());
+			}
+			if(userDTO.getFriendsName()!= null){
+				userDB.setFriendsName(userDTO.getFriendsName());
+			}
+			if(userDTO.getFriendsEmail()!= null){
+				userDB.setFriendsEmail(userDTO.getFriendsEmail());
+			}
+			if(userDTO.getState()!= null){
+				userDB.setState(userDTO.getState());
+			}
 			
 			User userUpdate = userRepository.save(userDB);	
 			return mapToDTO(userUpdate);
@@ -121,6 +141,11 @@ public class UserService implements IUserService{
 		dto.setPhone(user.getPhone());
 		dto.setEmail(user.getEmail());
 		dto.setLocalidad(user.getLocalidad());
+		dto.setEmotion(user.getEmotion());
+		dto.setFriendsPhone(user.getFriendsPhone());
+		dto.setFriendsName(user.getFriendsName());
+		dto.setFriendsEmail(user.getFriendsEmail());
+		dto.setState(user.getState());
         return dto;
     }
 
@@ -159,6 +184,11 @@ public class UserService implements IUserService{
 				userDTO.setPhone(user.getPhone());
 				userDTO.setEmail(user.getEmail());
 				userDTO.setLocalidad(user.getLocalidad());
+				userDTO.setEmotion(user.getEmotion());
+				userDTO.setFriendsPhone(user.getFriendsPhone());
+				userDTO.setFriendsName(user.getFriendsName());
+				userDTO.setFriendsEmail(user.getFriendsEmail());
+				userDTO.setState(user.getState());
 				return userDTO;
 			}		
 		} catch (Exception e) {
@@ -187,6 +217,11 @@ public class UserService implements IUserService{
 			dto.setPhone(user.getPhone());
 			dto.setEmail(user.getEmail());
 			dto.setLocalidad(user.getLocalidad());
+			dto.setEmotion(user.getEmotion());
+			dto.setFriendsPhone(user.getFriendsPhone());
+			dto.setFriendsName(user.getFriendsName());
+			dto.setFriendsEmail(user.getFriendsEmail());
+			dto.setState(user.getState());
 			userList.add(dto);
 		}
 		return userList;

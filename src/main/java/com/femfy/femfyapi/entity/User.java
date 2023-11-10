@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
@@ -49,6 +50,11 @@ public class User {
 	@Column(name="mailAddress",unique = true, nullable = false)
 	private String email;
 	private String localidad;
+	private String emotion;
+	private String friendsPhone;
+	private String friendsName;
+	private String friendsEmail;
+	private String state;
 
 	public User() {
 		
