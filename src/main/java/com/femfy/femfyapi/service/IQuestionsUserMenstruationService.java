@@ -14,4 +14,6 @@ public interface IQuestionsUserMenstruationService {
     QuestionsUserMenstruationDTO updateQuestionsUserMenstruation(QuestionsUserMenstruationDTO updatedDTO);
     QuestionsUserMenstruationDTO saveQuestionsUserMenstruation(QuestionsUserMenstruationDTO questionsUserMenstruationDTO);
     void deleteQuestionsUserMenstruation(Long id);
+
+    List<QuestionsUserMenstruationDTO> getQuestionsUserMenstruationByUserId(Long id);
 }

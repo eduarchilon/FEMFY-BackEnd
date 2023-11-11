@@ -87,6 +87,14 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
         questionsUserMenstruationRepository.deleteById(id);
     }
 
+    @Override
+    public List<QuestionsUserMenstruationDTO> getQuestionsUserMenstruationByUserId(Long id) {
+        List<QuestionsUserMenstruation> menstruationListByUserId = questionsUserMenstruationRepository.findByUserId(id) ;
+        return menstruationListByUserId.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
     private QuestionsUserMenstruationDTO mapToDTO(QuestionsUserMenstruation menstruation) {
         if (menstruation == null) {
             throw new EntityNotFoundException("Menstruation not found");
