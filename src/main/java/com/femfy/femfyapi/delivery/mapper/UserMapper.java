@@ -23,7 +23,6 @@ public class UserMapper {
         dto.setUserName(user.getUserName());
         dto.setPassword(user.getPassword());
         dto.setIsSuscriptor(user.getIsSuscriptor());
-        dto.setBirthdate(user.getBirthdate() != null ? user.getBirthdate().toString() : null);
         dto.setPhone(user.getPhone());
         dto.setEmail(user.getEmail());
         dto.setLocalidad(user.getLocalidad());
@@ -51,7 +50,6 @@ public class UserMapper {
         user.setUserName(dto.getUserName());
         user.setPassword(dto.getPassword());
         user.setIsSuscriptor(dto.getIsSuscriptor());
-        user.setBirthdate(Utils.parseDate(dto.getBirthdate()));
         user.setPhone(dto.getPhone());
         user.setEmail(dto.getEmail());
         user.setLocalidad(dto.getLocalidad());

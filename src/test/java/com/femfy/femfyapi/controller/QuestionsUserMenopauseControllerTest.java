@@ -47,6 +47,16 @@ class QuestionsUserMenopauseControllerTest {
         QuestionsUserMenopauseDTO dto = new QuestionsUserMenopauseDTO();
         dto.setId(1L);
         dto.setUserId(1L);
+        dto.setSuffocation(0);
+        dto.setChangesInMenstrualCycle(0);
+        dto.setVaginalDryness(0);
+        dto.setChangesInSkinAndHair(0);
+        dto.setMoodChanges(0);
+        dto.setSleepingDifficulties(0);
+        dto.setWeightGain(0);;
+        dto.setLossOfBoneDensity(0);
+        dto.setChangesInLibido(0);
+        
         QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
         mockQuestion.setId(questionId);
         mockQuestion.setUser(user);
@@ -100,6 +110,15 @@ class QuestionsUserMenopauseControllerTest {
         QuestionsUserMenopauseDTO questionDTO = new QuestionsUserMenopauseDTO();
         questionDTO.setId(1L);
         questionDTO.setUserId(1L);
+        questionDTO.setSuffocation(0);
+        questionDTO.setChangesInMenstrualCycle(0);
+        questionDTO.setVaginalDryness(0);
+        questionDTO.setChangesInSkinAndHair(0);
+        questionDTO.setMoodChanges(0);
+        questionDTO.setSleepingDifficulties(0);
+        questionDTO.setWeightGain(0);
+        questionDTO.setLossOfBoneDensity(0);
+        questionDTO.setChangesInLibido(0);
         QuestionsUserMenopause mockQuestion = new QuestionsUserMenopause();
         mockQuestion.setId(1L);
         mockQuestion.setUser(user);

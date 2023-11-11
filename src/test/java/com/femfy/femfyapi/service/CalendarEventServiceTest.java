@@ -1,24 +1,34 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.domain.entity.CalendarEvent;
-import com.femfy.femfyapi.domain.entity.User;
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
-import com.femfy.femfyapi.domain.service.CalendarEventService;
-import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
-import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
-import com.femfy.femfyapi.infraestructura.Utils;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import com.femfy.femfyapi.delivery.dto.CalendarEventDTO;
+import com.femfy.femfyapi.domain.entity.CalendarEvent;
+import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
+import com.femfy.femfyapi.domain.service.CalendarEventService;
+import com.femfy.femfyapi.infraestructura.Utils;
 
 class CalendarEventServiceTest {
 
@@ -76,10 +86,10 @@ class CalendarEventServiceTest {
 
         when(repository.findById(id)).thenReturn(Optional.of(event));
 
-        //Optional<CalendarEventDTO> result = service.getCalendarEvent(id);
+        Optional<CalendarEvent> result = service.getCalendarEvent(id);
 
-        //assertTrue(result.isPresent());
-        //assertEquals(id, result.get().getId());
+        assertTrue(result.isPresent());
+        assertEquals(id, result.get().getId());
     }
 
     @Test
@@ -87,9 +97,9 @@ class CalendarEventServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        //Optional<CalendarEventDTO> result = service.getCalendarEvent(id);
+        Optional<CalendarEvent> result = service.getCalendarEvent(id);
 
-        //assertFalse(result.isPresent());
+        assertFalse(result.isPresent());
     }
 
     @Test
@@ -109,10 +119,10 @@ class CalendarEventServiceTest {
 
         when(repository.save(any(CalendarEvent.class))).thenReturn(savedEntity);
 
-        //CalendarEventDTO result = service.saveCalendarEvent(event);
+        CalendarEvent result = service.saveCalendarEvent(event);
 
-        //assertNotNull(result.getId());
-        //assertEquals(user.getId(), result.getUserId());
+        assertNotNull(result.getId());
+        assertEquals(user.getId(), result.getUser().getId());
     }
 
     @Test
@@ -142,7 +152,7 @@ class CalendarEventServiceTest {
         CalendarEvent result = service.updateCalendarEvent(event);
 
         assertEquals(idToUpdate, result.getId());
-        //assertEquals(user.getId(), result.getUserId());
+        assertEquals(user.getId(), result.getUser().getId());
     }
 
     @Test
@@ -176,7 +186,7 @@ class CalendarEventServiceTest {
             target.setDateEvent(Utils.parseDate(source.getDateEvent()));
         }
         if (source.getHourAlert() != null) {
-            target.setHourAlert(Utils.parseDate(source.getHourAlert()));
+            target.setHourAlert(source.getHourAlert());
         }
         if (source.getDescription() != null) {
             target.setDescription(source.getDescription());
