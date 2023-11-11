@@ -42,6 +42,25 @@ public class QuestionsUserMenstruationController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener preguntas básicas de usuaria menopausica por usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Pregunta no encontrada",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @GetMapping("/getQuestionsByUser/{userId}")
+    public ResponseEntity<List<QuestionsUserMenstruationDTO>> getQuestionsUserMenstruationByUser(@PathVariable("userId") Long userId) {
+        List<QuestionsUserMenstruationDTO> userMenstruationByUserId = questionsUserMenstruationService.getQuestionsUserMenstruationByUserId(userId);
+        if (!userMenstruationByUserId.isEmpty()) {
+            return ResponseEntity.ok(userMenstruationByUserId);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @Operation(summary = "Obtener todas las respuestas básicas sobre personas que menstruan")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Respuesta OK",
