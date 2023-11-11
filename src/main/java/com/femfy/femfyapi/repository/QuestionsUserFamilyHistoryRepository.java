@@ -10,7 +10,6 @@ import com.femfy.femfyapi.entity.QuestionsUserFamilyHistory;
 
 @Repository
 public interface QuestionsUserFamilyHistoryRepository extends JpaRepository<QuestionsUserFamilyHistory, Long> {
-
 	@Transactional
 	public List<QuestionsUserFamilyHistory> findByUserId(Long idUser);
 }
