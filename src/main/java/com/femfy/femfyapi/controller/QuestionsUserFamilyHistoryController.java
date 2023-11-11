@@ -42,6 +42,25 @@ public class QuestionsUserFamilyHistoryController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener historial familiar por usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Pregunta sobre menstruación no encontrada",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @GetMapping("/getEventsByUser/{userId}")
+    public ResponseEntity<List<QuestionsUserFamilyHistoryDTO>> getQuestionsFamilyHistoryByUser(@PathVariable("userId") Long userId) {
+        List<QuestionsUserFamilyHistoryDTO> userFamilyHistoriesByUserId = questionsUserFamilyHistoryService.getQuestionsUserFamilyHistoriesByUserId(userId);
+        if (!userFamilyHistoriesByUserId.isEmpty()) {
+            return ResponseEntity.ok(userFamilyHistoriesByUserId);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @Operation(summary = "Obtener todas las respuestas básicas sobre historia familiar")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Respuesta OK",
