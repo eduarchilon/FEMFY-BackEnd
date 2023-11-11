@@ -36,7 +36,7 @@ public class CalendarEventMapper {
         calendarEvent.setUser(user);
         calendarEvent.setTitle(dto.getTitle());
         calendarEvent.setDateEvent(Utils.parseDate(dto.getDateEvent()));
-        calendarEvent.setHourAlert(Utils.parseHours(dto.getHourAlert()));
+        calendarEvent.setHourAlert(dto.getHourAlert());
         calendarEvent.setDescription(dto.getDescription());
         return calendarEvent;
     }

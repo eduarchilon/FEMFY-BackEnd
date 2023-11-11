@@ -27,6 +27,11 @@ public class UserMapper {
         dto.setPhone(user.getPhone());
         dto.setEmail(user.getEmail());
         dto.setLocalidad(user.getLocalidad());
+        dto.setEmotion(user.getEmotion());
+        dto.setFriendsName(user.getFriendsName());
+        dto.setFriendsPhone(user.getFriendsPhone());
+        dto.setFriendsEmail(user.getFriendsEmail());
+        dto.setState(user.getState());
 
         return dto;
     }
@@ -50,6 +55,11 @@ public class UserMapper {
         user.setPhone(dto.getPhone());
         user.setEmail(dto.getEmail());
         user.setLocalidad(dto.getLocalidad());
+        user.setEmotion(dto.getEmotion());
+        user.setFriendsName(dto.getFriendsName());
+        user.setFriendsPhone(dto.getFriendsPhone());
+        user.setFriendsEmail(dto.getFriendsEmail());
+        user.setState(dto.getState());
 
         return user;
     }

@@ -109,6 +109,11 @@ class UserControllerTest {
 		userDTO.setPassword("pass1234");
 		userDTO.setUserName("MariaArgento2023");
 		userDTO.setLocalidad("La Matanza");
+		userDTO.setEmotion("Enfadada");
+		userDTO.setFriendsName("Mario");
+		userDTO.setFriendsPhone("1166778899");
+		userDTO.setFriendsEmail("mario@gmail.com");
+		userDTO.setState("Ovulando");
 
 		return userDTO;
 	}

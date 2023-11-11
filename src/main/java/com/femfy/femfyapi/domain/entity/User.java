@@ -35,8 +35,12 @@ public class User {
 	@Column(name="mailAddress",unique = true, nullable = false)
 	private String email;
 	private String localidad;
-
-
+	private String emotion;
+	private String friendsPhone;
+	private String friendsName;
+	private String friendsEmail;
+	private String state;
+	
 	public User() {
 		
 	}

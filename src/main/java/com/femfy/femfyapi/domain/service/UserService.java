@@ -80,6 +80,21 @@ public class UserService implements IUserService {
 			if(user.getLocalidad()!= null){
 				userDB.setLocalidad(user.getLocalidad());
 			}
+			if (user.getEmotion()!= null){
+				userDB.setEmotion(user.getEmotion());
+			}
+			if(user.getFriendsName()!= null){
+				userDB.setFriendsName(user.getFriendsName());
+			}
+			if(user.getFriendsPhone()!= null){
+				userDB.setFriendsPhone(user.getFriendsPhone());
+			}
+			if(user.getFriendsEmail()!= null){
+				userDB.setFriendsEmail(user.getFriendsEmail());
+			}
+			if(user.getState()!= null){
+				userDB.setState(user.getState());
+			}
 			
 			userRepository.save(user);
 		} catch (Exception e) {
@@ -120,6 +135,5 @@ public class UserService implements IUserService {
 	public List<User> getUsers() {
 		return userRepository.findAll();
 	}
-
- 
+	
 }

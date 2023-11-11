@@ -27,8 +27,7 @@ public class CalendarEvent {
     private Date dateEvent;
 
     @Column(name = "hour_alert")
-    @Temporal(TemporalType.TIME)
-    private LocalTime hourAlert;
+    private String hourAlert;
 
     @Column(name = "description")
     private String description;
