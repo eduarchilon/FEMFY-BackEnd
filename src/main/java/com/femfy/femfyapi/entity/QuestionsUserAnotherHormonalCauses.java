@@ -11,6 +11,10 @@ public class QuestionsUserAnotherHormonalCauses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "polycystic_ovary_syndrome")
     private Integer polycysticOvarySyndrome;

@@ -16,4 +16,6 @@ public interface IQuestionsUserAnotherCongenitalCausesService {
     QuestionsUserAnotherCongenitalCausesDTO updateQuestionsUserAnotherCongenitalCauses(QuestionsUserAnotherCongenitalCausesDTO updatedDTO);
 
     void deleteQuestionsUserAnotherCongenitalCauses(Long id);
+    
+    List<QuestionsUserAnotherCongenitalCausesDTO> getAQuestionsUserAnotherCongenitalCausesByUserId(Long id);
 }

@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.entity.QuestionsUserAnotherHormonalCauses;
+import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.repository.QuestionsUserAnotherHormonalCausesRepository;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import dto.QuestionsUserAnotherHormonalCausesDTO;
@@ -80,26 +81,60 @@ public class QuestionsUserAnotherHormonalCausesService implements IQuestionsUser
         dto.setInsulinResistance(entity.getInsulinResistance());
         dto.setAnother(entity.getAnother());
         dto.setAnotherDescription(entity.getAnotherDescription());
+        dto.setUserId(entity.getUser().getId());
 
         return dto;
     }
 
-    private QuestionsUserAnotherHormonalCauses mapToEntity(QuestionsUserAnotherHormonalCausesDTO dto) {
-        QuestionsUserAnotherHormonalCauses entity = new QuestionsUserAnotherHormonalCauses();
-        entity.setId(dto.getId());
+	private QuestionsUserAnotherHormonalCauses mapToEntity(QuestionsUserAnotherHormonalCausesDTO dto) {
+		QuestionsUserAnotherHormonalCauses entity = new QuestionsUserAnotherHormonalCauses();
 
-        entity.setPolycysticOvarySyndrome(dto.getPolycysticOvarySyndrome());
-        entity.setHypothyroidism(dto.getHypothyroidism());
-        entity.setHyperprolactinemia(dto.getHyperprolactinemia());
-        entity.setSheehanSyndrome(dto.getSheehanSyndrome());
-        entity.setPrematureOvarianFailure(dto.getPrematureOvarianFailure());
-        entity.setHypothalamicDisorders(dto.getHypothalamicDisorders());
-        entity.setInsulinResistance(dto.getInsulinResistance());
-        entity.setAnother(dto.getAnother());
-        entity.setAnotherDescription(dto.getAnotherDescription());
+		if (dto.getUserId() != null) {
+			User user = new User();
+			user.setId(dto.getUserId());
+			entity.setUser(user);
+		}
 
-        return entity;
-    }
+		entity.setId(dto.getId());
+
+		if (dto.getPolycysticOvarySyndrome() != null) {
+			entity.setPolycysticOvarySyndrome(dto.getPolycysticOvarySyndrome());
+		}
+
+		if (dto.getHypothyroidism() != null) {
+			entity.setHypothyroidism(dto.getHypothyroidism());
+		}
+
+		if (dto.getHyperprolactinemia() != null) {
+			entity.setHyperprolactinemia(dto.getHyperprolactinemia());
+		}
+
+		if (dto.getSheehanSyndrome() != null) {
+			entity.setSheehanSyndrome(dto.getSheehanSyndrome());
+		}
+
+		if (dto.getPrematureOvarianFailure() != null) {
+			entity.setPrematureOvarianFailure(dto.getPrematureOvarianFailure());
+		}
+
+		if (dto.getHypothalamicDisorders() != null) {
+			entity.setHypothalamicDisorders(dto.getHypothalamicDisorders());
+		}
+
+		if (dto.getInsulinResistance() != null) {
+			entity.setInsulinResistance(dto.getInsulinResistance());
+		}
+
+		if (dto.getAnother() != null) {
+			entity.setAnother(dto.getAnother());
+		}
+
+		if (dto.getAnotherDescription() != null) {
+			entity.setAnotherDescription(dto.getAnotherDescription());
+		}
+
+		return entity;
+	}
 
     private QuestionsUserAnotherHormonalCauses findQuestionsUserAnotherHormonalCausesById(Long id) {
         return questionsUserAnotherHormonalCausesRepository.findById(id)
@@ -147,4 +182,12 @@ public class QuestionsUserAnotherHormonalCausesService implements IQuestionsUser
             existingEntity.setAnotherDescription(dto.getAnotherDescription());
         }
     }
+
+	@Override
+	public List<QuestionsUserAnotherHormonalCausesDTO> getAQuestionsUserAnotherHormonalCausesByUserId(Long id) {
+        List<QuestionsUserAnotherHormonalCauses> entities = questionsUserAnotherHormonalCausesRepository.findByUserId(id);
+        return entities.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+	}
 }

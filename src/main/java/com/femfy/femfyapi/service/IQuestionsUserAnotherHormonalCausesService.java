@@ -1,10 +1,9 @@
 package com.femfy.femfyapi.service;
 
-import com.femfy.femfyapi.entity.QuestionsUserAnotherHormonalCauses;
-import dto.QuestionsUserAnotherHormonalCausesDTO;
-
 import java.util.List;
 import java.util.Optional;
+
+import dto.QuestionsUserAnotherHormonalCausesDTO;
 
 public interface IQuestionsUserAnotherHormonalCausesService {
 
@@ -17,4 +16,6 @@ public interface IQuestionsUserAnotherHormonalCausesService {
     QuestionsUserAnotherHormonalCausesDTO updateQuestionsUserAnotherHormonalCauses(QuestionsUserAnotherHormonalCausesDTO updatedDTO);
 
     void deleteQuestionsUserAnotherHormonalCauses(Long id);
+    
+    List<QuestionsUserAnotherHormonalCausesDTO> getAQuestionsUserAnotherHormonalCausesByUserId(Long id);
 }
