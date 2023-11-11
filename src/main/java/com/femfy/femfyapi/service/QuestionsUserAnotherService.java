@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.femfy.femfyapi.entity.QuestionsUserAnother;
+import com.femfy.femfyapi.repository.QuestionsUserAnotherCongenitalCausesRepository;
+import com.femfy.femfyapi.repository.QuestionsUserAnotherHormonalCausesRepository;
 import com.femfy.femfyapi.repository.QuestionsUserAnotherRepository;
 import com.femfy.femfyapi.entity.QuestionsUserAnotherCongenitalCauses;
 import com.femfy.femfyapi.entity.QuestionsUserAnotherHormonalCauses;
@@ -21,10 +23,16 @@ import java.util.Optional;
 public class QuestionsUserAnotherService implements IQuestionsUserAnotherService {
 
     private final QuestionsUserAnotherRepository questionsUserAnotherRepository;
+    
+    private final QuestionsUserAnotherCongenitalCausesRepository anotherCongenitalCausesRepository;
+    
+    private final QuestionsUserAnotherHormonalCausesRepository anotherHormonalCausesRepository;
 
     @Autowired
-    public QuestionsUserAnotherService(QuestionsUserAnotherRepository questionsUserAnotherRepository) {
+    public QuestionsUserAnotherService(QuestionsUserAnotherRepository questionsUserAnotherRepository, QuestionsUserAnotherHormonalCausesRepository anotherHormonalCausesRepository, QuestionsUserAnotherCongenitalCausesRepository anotherCongenitalCausesRepository) {
         this.questionsUserAnotherRepository = questionsUserAnotherRepository;
+		this.anotherCongenitalCausesRepository = anotherCongenitalCausesRepository;
+		this.anotherHormonalCausesRepository = anotherHormonalCausesRepository;
     }
 
     @Override
@@ -128,23 +136,101 @@ public class QuestionsUserAnotherService implements IQuestionsUserAnotherService
     }
 
     private QuestionsUserAnother mapToEntity(QuestionsUserAnotherDTO dto) {
-        User user = new User();
-        user.setId(dto.getUserId());
         
         QuestionsUserAnother questionsUserAnother = new QuestionsUserAnother();
-        questionsUserAnother.setId(dto.getId());
-        questionsUserAnother.setUser(user);
+              
+    	if (dto.getUserId() != null) {
+            User user = new User();
+            user.setId(dto.getUserId());
+            questionsUserAnother.setUser(user);
+        }
 
-        QuestionsUserAnotherCongenitalCauses congenitalCauses = new QuestionsUserAnotherCongenitalCauses();
-        congenitalCauses.setId(dto.getCongenitalCauses().getId());
-        questionsUserAnother.setCongenitalCauses(congenitalCauses);
+        if(dto.getHormonalCauses() != null){
+        	
+            QuestionsUserAnotherHormonalCauses questionsUserAnotherHormonalCauses = new QuestionsUserAnotherHormonalCauses();
+            
+            if(dto.getHormonalCauses().getId()!=null) {
+            	questionsUserAnotherHormonalCauses.setId(dto.getHormonalCauses().getId());
+            }
+            
+            if(dto.getHormonalCauses().getAnother()!= null) {
+            	questionsUserAnotherHormonalCauses.setAnother(dto.getHormonalCauses().getAnother());
+            }
+            
+            if(dto.getHormonalCauses().getAnotherDescription()!=null && !dto.getHormonalCauses().getAnotherDescription().isEmpty()) {
+            	questionsUserAnotherHormonalCauses.setAnotherDescription(dto.getHormonalCauses().getAnotherDescription());	
+            }
+            
+            if(dto.getHormonalCauses().getHyperprolactinemia()!=null) {
+            	questionsUserAnotherHormonalCauses.setHyperprolactinemia(dto.getHormonalCauses().getHyperprolactinemia());
+            }
 
-        QuestionsUserAnotherHormonalCauses hormonalCauses = new QuestionsUserAnotherHormonalCauses();
-        hormonalCauses.setId(dto.getHormonalCauses().getId());
-        questionsUserAnother.setHormonalCauses(hormonalCauses);
+            if(dto.getHormonalCauses().getHypothyroidism()!=null) {
+            	questionsUserAnotherHormonalCauses.setHypothyroidism(dto.getHormonalCauses().getHypothyroidism());
+            }
+            
+            if(dto.getHormonalCauses().getHypothalamicDisorders()!=null) {
+            	questionsUserAnotherHormonalCauses.setHypothalamicDisorders(dto.getHormonalCauses().getHypothalamicDisorders());
+            }
+            
+            if(dto.getHormonalCauses().getPolycysticOvarySyndrome()!=null) {
+            	questionsUserAnotherHormonalCauses.setPolycysticOvarySyndrome(dto.getHormonalCauses().getPolycysticOvarySyndrome());
+            }
+            
+            if(dto.getHormonalCauses().getSheehanSyndrome()!=null) {
+            	questionsUserAnotherHormonalCauses.setSheehanSyndrome(dto.getHormonalCauses().getSheehanSyndrome());
+            }
+            
+            if(dto.getHormonalCauses().getPrematureOvarianFailure()!=null) {
+            	questionsUserAnotherHormonalCauses.setPrematureOvarianFailure(dto.getHormonalCauses().getPrematureOvarianFailure());
+            }
+            
+            if(dto.getHormonalCauses().getInsulinResistance()!=null) {
+            	questionsUserAnotherHormonalCauses.setInsulinResistance(dto.getHormonalCauses().getInsulinResistance());
+            }
+            
+            anotherHormonalCausesRepository.save(questionsUserAnotherHormonalCauses);
+            questionsUserAnother.getHormonalCauses().setId(questionsUserAnotherHormonalCauses.getId());
+            
+        }
 
-        questionsUserAnother.setAnother(dto.getAnother());
-        questionsUserAnother.setAnotherDescription(dto.getAnotherDescription());
+        if(dto.getCongenitalCauses() != null){
+            QuestionsUserAnotherCongenitalCauses questionsUserAnotherCongenitalCauses = new QuestionsUserAnotherCongenitalCauses();
+            
+            if(dto.getCongenitalCauses().getId()!=null) {
+            	questionsUserAnotherCongenitalCauses.setId(dto.getCongenitalCauses().getId());
+            }
+            
+            if(dto.getCongenitalCauses().getMalformationsUterine()!=null) {
+            	questionsUserAnotherCongenitalCauses.setMalformationsUterine(dto.getCongenitalCauses().getMalformationsUterine());
+            }
+            
+            if(dto.getCongenitalCauses().getTurnerSyndrome()!=null) {
+            	questionsUserAnotherCongenitalCauses.setTurnerSyndrome(dto.getCongenitalCauses().getTurnerSyndrome());
+            }
+            
+            if(dto.getCongenitalCauses().getAnother()!= null) {
+            	questionsUserAnotherCongenitalCauses.setAnother(dto.getCongenitalCauses().getAnother());
+            }
+            
+            if(dto.getCongenitalCauses().getAnotherDescription()!=null && !dto.getCongenitalCauses().getAnotherDescription().isEmpty()) {
+            	questionsUserAnotherCongenitalCauses.setAnotherDescription(dto.getCongenitalCauses().getAnotherDescription());	
+            }
+            anotherCongenitalCausesRepository.save(questionsUserAnotherCongenitalCauses);
+            questionsUserAnother.getCongenitalCauses().setId(questionsUserAnotherCongenitalCauses.getId()); 
+        }
+
+        if (dto.getAnother() != null) {
+        	questionsUserAnother.setAnother(dto.getAnother());
+        }
+
+        if (dto.getAnotherDescription() != null) {
+        	questionsUserAnother.setAnotherDescription(dto.getAnotherDescription());
+        }
+        
+        if(dto.getId()!=null) {
+        	questionsUserAnother.setId(dto.getId());
+        }
 
         return questionsUserAnother;
     }
