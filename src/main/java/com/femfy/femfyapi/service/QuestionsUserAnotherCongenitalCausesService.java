@@ -1,6 +1,7 @@
 package com.femfy.femfyapi.service;
 
 import com.femfy.femfyapi.entity.QuestionsUserAnotherCongenitalCauses;
+import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.QuestionsUserAnotherCongenitalCausesRepository;
 import dto.QuestionsUserAnotherCongenitalCausesDTO;
@@ -87,11 +88,20 @@ public class QuestionsUserAnotherCongenitalCausesService implements IQuestionsUs
             dto.setAnotherDescription(congenitalCauses.getAnotherDescription());
         }
 
+        if(congenitalCauses.getUser()!=null && congenitalCauses.getUser().getId() !=null) {
+        	dto.setUserId(congenitalCauses.getUser().getId());
+        }
         return dto;
     }
 
     private QuestionsUserAnotherCongenitalCauses mapToEntity(QuestionsUserAnotherCongenitalCausesDTO dto) {
         QuestionsUserAnotherCongenitalCauses congenitalCauses = new QuestionsUserAnotherCongenitalCauses();
+        
+    	if (dto.getUserId() != null) {
+            User user = new User();
+            user.setId(dto.getUserId());
+            congenitalCauses.setUser(user);
+        }
         congenitalCauses.setId(dto.getId());
 
         congenitalCauses.setMalformationsUterine(dto.getMalformationsUterine());
@@ -124,4 +134,12 @@ public class QuestionsUserAnotherCongenitalCausesService implements IQuestionsUs
             existingCongenitalCauses.setAnotherDescription(updatedDTO.getAnotherDescription());
         }
     }
+
+	@Override
+	public List<QuestionsUserAnotherCongenitalCausesDTO> getAQuestionsUserAnotherCongenitalCausesByUserId(Long id) {
+        List<QuestionsUserAnotherCongenitalCauses> congenitalCausesList = congenitalCausesRepository.findByUserId(id);
+        return congenitalCausesList.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+	}
 }

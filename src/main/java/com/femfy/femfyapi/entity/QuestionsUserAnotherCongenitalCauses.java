@@ -11,6 +11,10 @@ public class QuestionsUserAnotherCongenitalCauses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "malformations_uterine")
     private Integer malformationsUterine;

@@ -34,4 +34,7 @@ public class QuestionsUserAnotherHormonalCausesDTO {
 
     @Schema(description = "Detalle del motivo 'otro' por el cual no menstrúa", example = "No menstrúo por x motivo hormonal")
     private String anotherDescription;
+    
+    @Schema(description = "ID de la usuaria", example = "1")
+    private Long userId;
 }

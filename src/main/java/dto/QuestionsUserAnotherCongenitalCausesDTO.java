@@ -19,4 +19,8 @@ public class QuestionsUserAnotherCongenitalCausesDTO {
 
     @Schema(description = "Detalle del motivo 'otro' por el cual no menstrúa", example = "No menstrúo por x motivo congénito")
     private String anotherDescription;
+    
+    @Schema(description = "ID de la usuaria", example = "1")
+    private Long userId;
+
 }

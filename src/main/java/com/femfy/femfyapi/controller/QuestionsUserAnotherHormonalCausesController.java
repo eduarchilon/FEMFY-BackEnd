@@ -108,6 +108,21 @@ public class QuestionsUserAnotherHormonalCausesController {
         hormonalCausesService.deleteQuestionsUserAnotherHormonalCauses(causeId);
         return ResponseEntity.noContent().build();
     }
+    
+    @Operation(summary = "Obtener todas las causas hormonales de una usuaria")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Causas hormonales no encontradas",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @GetMapping("/getAllHormonalCausesByUser/{userId}")
+    public ResponseEntity<?> getAllHormonalCausesByUser(@PathVariable("userId") Long userId) {
+        List<QuestionsUserAnotherHormonalCausesDTO> hormonalCauses = hormonalCausesService.getAQuestionsUserAnotherHormonalCausesByUserId(userId);
+        return buildResponse(hormonalCauses);
+    }
 
     private ResponseEntity<?> buildResponse(List<QuestionsUserAnotherHormonalCausesDTO> causes) {
         if (!causes.isEmpty()) {

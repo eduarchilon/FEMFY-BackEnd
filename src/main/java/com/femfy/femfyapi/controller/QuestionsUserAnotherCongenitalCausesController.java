@@ -1,18 +1,28 @@
 package com.femfy.femfyapi.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.femfy.femfyapi.service.IQuestionsUserAnotherCongenitalCausesService;
+
 import dto.QuestionsUserAnotherCongenitalCausesDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -109,6 +119,21 @@ public class QuestionsUserAnotherCongenitalCausesController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Obtener todas las causas hormonales de una usuaria")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Causas hormonales no encontradas",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @GetMapping("/getAllCongenitalCausesByUser/{userId}")
+    public ResponseEntity<?> getAllCongenitalCausesByUser(@PathVariable("userId") Long userId) {
+        List<QuestionsUserAnotherCongenitalCausesDTO> congenitalCauses = congenitalCausesService.getAQuestionsUserAnotherCongenitalCausesByUserId(userId);
+        return buildResponse(congenitalCauses);
+    }
+    
     private ResponseEntity<?> buildResponse(List<QuestionsUserAnotherCongenitalCausesDTO> causes) {
         if (!causes.isEmpty()) {
             return ResponseEntity.ok(causes);
