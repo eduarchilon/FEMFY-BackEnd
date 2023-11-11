@@ -65,6 +65,14 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
         questionsUserMenopauseRepository.deleteById(id);
     }
 
+    @Override
+    public List<QuestionsUserMenopauseDTO> getQuestionsUserMenopauseByUserId(Long id) {
+        List<QuestionsUserMenopause> questionsMenopauseListByUserId = questionsUserMenopauseRepository.findByUserId(id) ;
+        return questionsMenopauseListByUserId.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
     private void copyProperties(QuestionsUserMenopauseDTO source, QuestionsUserMenopause target) {
         if (source.getSuffocation() != null) {
             target.setSuffocation(source.getSuffocation());

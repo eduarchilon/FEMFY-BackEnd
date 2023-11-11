@@ -42,6 +42,25 @@ public class QuestionsUserMenopauseController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Obtener preguntas básicas de usuaria menopausica por usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Respuesta OK",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Pregunta no encontrada",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @GetMapping("/getQuestionsByUser/{userId}")
+    public ResponseEntity<List<QuestionsUserMenopauseDTO>> getQuestionsUserMenopauseByUser(@PathVariable("userId") Long userId) {
+        List<QuestionsUserMenopauseDTO> userMenopauseByUserId = questionsUserMenopauseService.getQuestionsUserMenopauseByUserId(userId);
+        if (!userMenopauseByUserId.isEmpty()) {
+            return ResponseEntity.ok(userMenopauseByUserId);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @Operation(summary = "Obtener todas las respuestas básicas sobre las usuarias con menopausia")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Respuesta OK",

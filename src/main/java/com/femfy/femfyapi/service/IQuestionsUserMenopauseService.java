@@ -16,4 +16,6 @@ public interface IQuestionsUserMenopauseService {
     QuestionsUserMenopauseDTO saveQuestionsUserMenopause(QuestionsUserMenopauseDTO questionsUserMenopauseDTO);
 
     void deleteQuestionsUserMenopause(Long id);
+
+    List<QuestionsUserMenopauseDTO> getQuestionsUserMenopauseByUserId(Long id);
 }

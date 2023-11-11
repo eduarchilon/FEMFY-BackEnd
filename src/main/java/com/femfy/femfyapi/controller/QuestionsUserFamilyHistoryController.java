@@ -48,10 +48,10 @@ public class QuestionsUserFamilyHistoryController {
                     content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", description = "Error inesperado del sistema",
                     content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", description = "Pregunta sobre menstruación no encontrada",
+            @ApiResponse(responseCode = "404", description = "Pregunta no encontrada",
                     content = {@Content(mediaType = "application/json")})
     })
-    @GetMapping("/getEventsByUser/{userId}")
+    @GetMapping("/getQuestionsByUser/{userId}")
     public ResponseEntity<List<QuestionsUserFamilyHistoryDTO>> getQuestionsFamilyHistoryByUser(@PathVariable("userId") Long userId) {
         List<QuestionsUserFamilyHistoryDTO> userFamilyHistoriesByUserId = questionsUserFamilyHistoryService.getQuestionsUserFamilyHistoriesByUserId(userId);
         if (!userFamilyHistoriesByUserId.isEmpty()) {
