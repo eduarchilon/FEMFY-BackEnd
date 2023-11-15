@@ -1,14 +1,13 @@
 package com.femfy.femfyapi.domain.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.femfy.femfyapi.domain.entity.QuestionsUserMenstruation;
 import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenstruationService;
 import com.femfy.femfyapi.domain.repository.QuestionsUserMenstruationRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -16,7 +15,6 @@ public class QuestionsUserMenstruationService implements IQuestionsUserMenstruat
 
     private final QuestionsUserMenstruationRepository questionsUserMenstruationRepository;
 
-    @Autowired
     public QuestionsUserMenstruationService(QuestionsUserMenstruationRepository questionsUserMenstruationRepository) {
         this.questionsUserMenstruationRepository = questionsUserMenstruationRepository;
     }

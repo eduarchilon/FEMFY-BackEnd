@@ -2,7 +2,6 @@ package com.femfy.femfyapi.domain.interfaces;
 
 import java.util.List;
 
-import com.femfy.femfyapi.delivery.dto.FileDTO;
 import com.femfy.femfyapi.domain.entity.FileUser;
 
 public interface IFileService {

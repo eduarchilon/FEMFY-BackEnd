@@ -2,13 +2,11 @@ package com.femfy.femfyapi.domain.service;
 
 import java.util.List;
 
-
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
-import com.femfy.femfyapi.domain.interfaces.ITypeStudyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.femfy.femfyapi.domain.entity.TypeStudy;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.interfaces.ITypeStudyService;
 import com.femfy.femfyapi.domain.repository.TypeStudyRepository;
 
 
@@ -18,7 +16,6 @@ public class TypeStudyService implements ITypeStudyService {
 
     private final TypeStudyRepository typeStudyRepository;
 
-    @Autowired
     public TypeStudyService(TypeStudyRepository typeStudyRepository) {
         this.typeStudyRepository = typeStudyRepository;
     }

@@ -1,11 +1,10 @@
 package com.femfy.femfyapi.delivery.dto;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 @Data
 public class CycleDTO {

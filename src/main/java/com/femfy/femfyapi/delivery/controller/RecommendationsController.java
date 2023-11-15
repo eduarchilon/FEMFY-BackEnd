@@ -9,16 +9,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import com.femfy.femfyapi.delivery.dto.*;
-import com.femfy.femfyapi.delivery.mapper.FileMapper;
-import com.femfy.femfyapi.delivery.mapper.QuestionsUserFamilyHistoryMapper;
-import com.femfy.femfyapi.delivery.mapper.RecommendationMapper;
-import com.femfy.femfyapi.delivery.mapper.UserMapper;
-import com.femfy.femfyapi.domain.interfaces.IFileService;
-import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
-import com.femfy.femfyapi.domain.interfaces.IUserService;
-import com.femfy.femfyapi.domain.service.RecommendationService;
-import com.femfy.femfyapi.infraestructura.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,7 +22,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.femfy.femfyapi.delivery.dto.FileDTO;
+import com.femfy.femfyapi.delivery.dto.QuestionsUserFamilyHistoryDTO;
+import com.femfy.femfyapi.delivery.dto.RecommendationsDTO;
+import com.femfy.femfyapi.delivery.dto.TypeRecommendationsDTO;
+import com.femfy.femfyapi.delivery.dto.UserDTO;
+import com.femfy.femfyapi.delivery.mapper.FileMapper;
+import com.femfy.femfyapi.delivery.mapper.QuestionsUserFamilyHistoryMapper;
+import com.femfy.femfyapi.delivery.mapper.RecommendationMapper;
+import com.femfy.femfyapi.delivery.mapper.UserMapper;
+import com.femfy.femfyapi.domain.interfaces.IFileService;
+import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
+import com.femfy.femfyapi.domain.interfaces.IUserService;
+import com.femfy.femfyapi.domain.service.RecommendationService;
+import com.femfy.femfyapi.infraestructura.Utils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,7 +49,6 @@ public class RecommendationsController {
 
 	private RecommendationService recommendationService;
 
-	@Autowired
 	public RecommendationsController(RecommendationService recommendationService) {
 		this.recommendationService = recommendationService;
 	}

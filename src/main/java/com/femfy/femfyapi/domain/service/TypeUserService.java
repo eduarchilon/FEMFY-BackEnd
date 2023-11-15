@@ -1,14 +1,14 @@
 package com.femfy.femfyapi.domain.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.femfy.femfyapi.domain.entity.TypeUser;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.exception.IntegreteDataViolationException;
 import com.femfy.femfyapi.domain.interfaces.ITypeUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.femfy.femfyapi.domain.entity.TypeUser;
 import com.femfy.femfyapi.domain.repository.TypeUserRepository;
-
-import java.util.List;
 
 
 @Service
@@ -16,7 +16,6 @@ public class TypeUserService implements ITypeUserService {
 
     private final TypeUserRepository typeUserRepository;
 
-    @Autowired
     public TypeUserService(TypeUserRepository typeUserRepository) {
         this.typeUserRepository = typeUserRepository;
     }

@@ -1,23 +1,20 @@
 package com.femfy.femfyapi.domain.service;
 
 
-import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
-
-import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
-import com.femfy.femfyapi.domain.repository.QuestionsUserFamilyHistoryRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.femfy.femfyapi.domain.entity.QuestionsUserFamilyHistory;
+import com.femfy.femfyapi.domain.interfaces.IQuestionsUserFamilyHistoryService;
+import com.femfy.femfyapi.domain.repository.QuestionsUserFamilyHistoryRepository;
 
 @Service
 public class QuestionsUserFamilyHistoryService implements IQuestionsUserFamilyHistoryService {
 
     private final QuestionsUserFamilyHistoryRepository questionsUserFamilyHistoryRepository;
 
-    @Autowired
     public QuestionsUserFamilyHistoryService(QuestionsUserFamilyHistoryRepository questionsUserFamilyHistoryRepository) {
         this.questionsUserFamilyHistoryRepository = questionsUserFamilyHistoryRepository;
     }

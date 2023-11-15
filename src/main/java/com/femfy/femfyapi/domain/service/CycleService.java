@@ -1,15 +1,18 @@
 package com.femfy.femfyapi.domain.service;
 
-import com.femfy.femfyapi.infraestructura.Utils;
-import com.femfy.femfyapi.domain.entity.Cycle;
-import com.femfy.femfyapi.domain.interfaces.ICycleService;
-import com.femfy.femfyapi.domain.exception.CustomException;
-import com.femfy.femfyapi.domain.repository.CycleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.*;
+import com.femfy.femfyapi.domain.entity.Cycle;
+import com.femfy.femfyapi.domain.exception.CustomException;
+import com.femfy.femfyapi.domain.interfaces.ICycleService;
+import com.femfy.femfyapi.domain.repository.CycleRepository;
+import com.femfy.femfyapi.infraestructura.Utils;
 
 @Service
 public class CycleService implements ICycleService {
@@ -17,7 +20,6 @@ public class CycleService implements ICycleService {
 
     private final CycleRepository cycleRepository;
 
-    @Autowired
     public CycleService(CycleRepository cycleRepository){
         this.cycleRepository = cycleRepository;
     }

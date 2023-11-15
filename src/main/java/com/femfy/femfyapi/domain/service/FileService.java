@@ -3,15 +3,13 @@ package com.femfy.femfyapi.domain.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
-import com.femfy.femfyapi.domain.interfaces.IFileService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import com.femfy.femfyapi.domain.entity.FileUser;
 import com.femfy.femfyapi.domain.entity.TypeStudy;
 import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.interfaces.IFileService;
 import com.femfy.femfyapi.domain.repository.FileRepository;
 
 @Service
@@ -20,7 +18,6 @@ public class FileService implements IFileService {
 
 	private final FileRepository fileRepository;
 
-	@Autowired
 	public FileService(FileRepository fileRepository){
 		this.fileRepository = fileRepository;
 	}

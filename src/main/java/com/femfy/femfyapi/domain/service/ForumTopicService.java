@@ -2,15 +2,15 @@ package com.femfy.femfyapi.domain.service;
 
 
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.femfy.femfyapi.domain.entity.ForumTopic;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.interfaces.IForumTopicService;
 import com.femfy.femfyapi.domain.repository.ForumTopicRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -18,7 +18,6 @@ public class ForumTopicService implements IForumTopicService {
 
     private final ForumTopicRepository forumTopicRepository;
 
-    @Autowired
     public ForumTopicService(ForumTopicRepository forumTopicRepository) {
         this.forumTopicRepository = forumTopicRepository;
     }

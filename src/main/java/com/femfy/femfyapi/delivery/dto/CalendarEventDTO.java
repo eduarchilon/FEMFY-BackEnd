@@ -3,8 +3,6 @@ package com.femfy.femfyapi.delivery.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 public class CalendarEventDTO {
     @Schema(description = "ID del evento del calendario", example = "1")

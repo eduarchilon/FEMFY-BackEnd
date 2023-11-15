@@ -1,7 +1,5 @@
 package com.femfy.femfyapi.delivery.dto;
 
-import java.sql.Date;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

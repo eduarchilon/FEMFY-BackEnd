@@ -1,14 +1,14 @@
 package com.femfy.femfyapi.domain.service;
 
-import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
-import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
-import com.femfy.femfyapi.domain.repository.QuestionsUserMenopauseRepository;
-import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.femfy.femfyapi.domain.entity.QuestionsUserMenopause;
+import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
+import com.femfy.femfyapi.domain.interfaces.IQuestionsUserMenopauseService;
+import com.femfy.femfyapi.domain.repository.QuestionsUserMenopauseRepository;
 
 
 @Service
@@ -16,7 +16,6 @@ public class QuestionsUserMenopauseService implements IQuestionsUserMenopauseSer
 
     private final QuestionsUserMenopauseRepository questionsUserMenopauseRepository;
 
-    @Autowired
     public QuestionsUserMenopauseService(QuestionsUserMenopauseRepository questionsUserMenopauseRepository) {
         this.questionsUserMenopauseRepository = questionsUserMenopauseRepository;
     }

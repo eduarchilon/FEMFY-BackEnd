@@ -2,12 +2,11 @@ package com.femfy.femfyapi.domain.service;
 
 import java.util.List;
 
-import com.femfy.femfyapi.domain.interfaces.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.femfy.femfyapi.domain.entity.TypeUser;
 import com.femfy.femfyapi.domain.entity.User;
+import com.femfy.femfyapi.domain.interfaces.IUserService;
 import com.femfy.femfyapi.domain.repository.UserRepository;
 
 
@@ -18,7 +17,6 @@ public class UserService implements IUserService {
 
 	private final UserRepository userRepository;
 
-	@Autowired
 	public UserService(UserRepository userRepository){
 		this.userRepository = userRepository;
 	}

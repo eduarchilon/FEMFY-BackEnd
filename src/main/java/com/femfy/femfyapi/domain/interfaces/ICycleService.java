@@ -1,13 +1,12 @@
 package com.femfy.femfyapi.domain.interfaces;
 
 
-import com.femfy.femfyapi.domain.entity.Cycle;
-import com.femfy.femfyapi.domain.exception.CustomException;
-import com.femfy.femfyapi.delivery.dto.CycleDTO;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import com.femfy.femfyapi.domain.entity.Cycle;
+import com.femfy.femfyapi.domain.exception.CustomException;
 
 public interface ICycleService {
 
