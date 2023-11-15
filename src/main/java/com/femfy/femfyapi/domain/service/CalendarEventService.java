@@ -4,7 +4,6 @@ import com.femfy.femfyapi.domain.entity.CalendarEvent;
 import com.femfy.femfyapi.domain.exception.EntityNotFoundException;
 import com.femfy.femfyapi.domain.interfaces.ICalendarEventService;
 import com.femfy.femfyapi.domain.repository.CalendarEventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,6 @@ public class CalendarEventService implements ICalendarEventService {
 
     private final CalendarEventRepository calendarEventRepository;
 
-    @Autowired
     public CalendarEventService(CalendarEventRepository calendarEventRepository) {
         this.calendarEventRepository = calendarEventRepository;
     }

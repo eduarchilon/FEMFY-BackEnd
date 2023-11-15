@@ -1,7 +1,5 @@
 package com.femfy.femfyapi.delivery.dto;
 
-import java.util.Date;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -21,7 +19,7 @@ public class UserDTO {
 	String password;
 	@Schema(description = "Usuario es suscriptor", example = "true")
 	Boolean isSuscriptor;
-	@Schema(description = "Fecha de Nacimiento del Usuario", example = "23/08/1986")
+	@Schema(description = "Fecha de Nacimiento del Usuario", example = "1986-08-23")
 	String birthdate;
 	@Schema(description = "Telefono del Usuario", example = "1122334455")
 	String phone;
