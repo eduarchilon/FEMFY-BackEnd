@@ -37,13 +37,6 @@ class UserRepositoryTest {
 		entityManager.persist(user);
 	}
 
-	@Test
-	@Disabled
-	public void findById() {
-		Optional<User> user = repository.findById(1L);
-		assertEquals(user.get().getFirstName(), "pepe");
-		System.out.println("user.get() =" + user.get());
-	}
 	
 	@Test
 	public void findUsers() {
