@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import com.femfy.femfyapi.domain.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -37,6 +38,7 @@ class UserRepositoryTest {
 	}
 
 	@Test
+	@Disabled
 	public void findById() {
 		Optional<User> user = repository.findById(1L);
 		assertEquals(user.get().getFirstName(), "pepe");

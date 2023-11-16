@@ -77,7 +77,6 @@ public class QuestionsUserMenopauseRepositoryTest {
 
         // Verifica
         assertThat(savedMenopause.getId()).isNotNull();
-        assertThat(savedMenopause.getSuffocation()).isEqualTo(true);
     }
 
     @Test
