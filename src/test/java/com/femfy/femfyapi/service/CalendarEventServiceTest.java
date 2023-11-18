@@ -169,7 +169,7 @@ class CalendarEventServiceTest {
             target.setTitle(source.getTitle());
         }
         if (source.getDateEvent() != null) {
-            target.setDateEvent(Utils.parseDate(source.getDateEvent()));
+            target.setDateEvent((source.getDateEvent()));
         }
         if (source.getHourAlert() != null) {
             target.setHourAlert(source.getHourAlert());
