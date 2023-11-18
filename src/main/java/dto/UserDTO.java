@@ -17,8 +17,8 @@ public class UserDTO {
 	String userName;
 	@Schema(description = "Contraseña del Usuario", example = "pass1234")
 	String password;
-	@Schema(description = "Usuario es suscriptor", example = "true")
-	Boolean isSuscriptor;
+	@Schema(description = "Usuario es suscriptor", example = "1 = suscripto, 0 = no suscripto ")
+	Integer isSuscriptor;
 	@Schema(description = "Fecha de Nacimiento del Usuario", example = "2000-01-01")
 	String birthdate;
 	@Schema(description = "Telefono del Usuario", example = "1122334455")

@@ -29,7 +29,7 @@ class UserRepositoryTest {
 		user.setFirstName("pepe");
 		user.setLastName("lopez");
 		user.setPhone("123456789");
-		user.setIsSuscriptor(true);
+		user.setIsSuscriptor(1);
 		user.setLocalidad("La Matanza");
 		
 		entityManager.persist(user);

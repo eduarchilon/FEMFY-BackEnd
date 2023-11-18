@@ -105,7 +105,7 @@ class UserControllerTest {
 		userDTO.setLastName("Argento");
 		userDTO.setPhone("1122334455");
 		userDTO.setEmail("femfy2023@gmail.com");
-		userDTO.setIsSuscriptor(true);
+		userDTO.setIsSuscriptor(1);
 		userDTO.setPassword("pass1234");
 		userDTO.setUserName("MariaArgento2023");
 		userDTO.setLocalidad("La Matanza");

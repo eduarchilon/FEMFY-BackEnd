@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.TypeUser;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.UserRepository;
+
 import dto.UserDTO;
 
 
