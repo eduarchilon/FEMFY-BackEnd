@@ -54,11 +54,7 @@ public class QuestionsUserMenopauseController {
     @GetMapping("/getQuestionsByUser/{userId}")
     public ResponseEntity<List<QuestionsUserMenopauseDTO>> getQuestionsUserMenopauseByUser(@PathVariable("userId") Long userId) {
         List<QuestionsUserMenopauseDTO> userMenopauseByUserId = questionsUserMenopauseService.getQuestionsUserMenopauseByUserId(userId);
-        if (!userMenopauseByUserId.isEmpty()) {
-            return ResponseEntity.ok(userMenopauseByUserId);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(userMenopauseByUserId);
     }
 
     @Operation(summary = "Obtener todas las respuestas básicas sobre las usuarias con menopausia")
