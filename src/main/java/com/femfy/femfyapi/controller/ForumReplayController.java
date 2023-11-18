@@ -145,7 +145,7 @@ public class ForumReplayController {
         if (!replies.isEmpty()) {
             return ResponseEntity.ok(replies);
         } else {
-        	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(list);
+        	return ResponseEntity.status(HttpStatus.OK).body(list);
         }
     }
 }
