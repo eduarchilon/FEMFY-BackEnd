@@ -24,6 +24,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+import static com.femfy.femfyapi.delivery.mapper.TypeUserMapper.mapToDTO;
+import static com.femfy.femfyapi.delivery.mapper.TypeUserMapper.mapToEntity;
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/typeuser", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,11 +51,11 @@ public class TypeUserController {
     })
     @GetMapping("/{typeUserId}")
     public ResponseEntity<TypeUserDTO> getTypeUserById(@PathVariable("typeUserId") Long typeUserId) {
-        TypeUserDTO typeUser = TypeUserMapper.mapToDTO(this.typeUserService.getTypeUser(typeUserId));
+        TypeUserDTO typeUser = mapToDTO(this.typeUserService.getTypeUser(typeUserId));
         if (typeUser.getIdTypeUser() != null) {
-            return new ResponseEntity<>(typeUser, HttpStatus.OK);
+            return new ResponseEntity<>(typeUser, OK);
         } else {
-            return new ResponseEntity<>(typeUser, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(typeUser, NOT_FOUND);
         }
     }
 
@@ -70,9 +74,9 @@ public class TypeUserController {
     public ResponseEntity<List<TypeUserDTO>> getTypeUsers() {
         List<TypeUserDTO> typeUsers = this.typeUserService.getTypeUsers().stream().map(TypeUserMapper::mapToDTO).collect(Collectors.toList());
         if (!typeUsers.isEmpty()) {
-            return new ResponseEntity<>(typeUsers, HttpStatus.OK);
+            return new ResponseEntity<>(typeUsers, OK);
         } else {
-            return new ResponseEntity<>(typeUsers, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(typeUsers, NOT_FOUND);
         }
     }
 
@@ -87,8 +91,8 @@ public class TypeUserController {
     })
     @PostMapping("/createTypeUser")
     public ResponseEntity<TypeUserDTO> saveTypeUser(@RequestBody TypeUserDTO typeUserDTO) {
-        typeUserDTO = TypeUserMapper.mapToDTO(this.typeUserService.saveTypeUser(TypeUserMapper.mapToEntity(typeUserDTO)));
-        return new ResponseEntity<>(typeUserDTO, HttpStatus.CREATED);
+        typeUserDTO = mapToDTO(this.typeUserService.saveTypeUser(mapToEntity(typeUserDTO)));
+        return new ResponseEntity<>(typeUserDTO, CREATED);
     }
 
     @Operation(summary = "Actualizar un tipo de usuario existente")
@@ -104,8 +108,8 @@ public class TypeUserController {
     })
     @PostMapping("/updateTypeUser")
     public ResponseEntity<TypeUserDTO> updateTypeUser(@RequestBody TypeUserDTO typeUserDTO) {
-        typeUserDTO = TypeUserMapper.mapToDTO(this.typeUserService.updateTypeUser(TypeUserMapper.mapToEntity(typeUserDTO)));
-        return new ResponseEntity<>(typeUserDTO, HttpStatus.OK);
+        typeUserDTO = mapToDTO(this.typeUserService.updateTypeUser(mapToEntity(typeUserDTO)));
+        return new ResponseEntity<>(typeUserDTO, OK);
     }
 
     @Operation(summary = "Eliminar un tipo de usuario por su ID")
@@ -121,11 +125,11 @@ public class TypeUserController {
     })
     @DeleteMapping("/delete/{typeUserId}")
     public ResponseEntity<String> deleteTypeUser(@PathVariable("typeUserId") Long typeUserId) {
-        String responseDelete = this.typeUserService.deleteTypeUser(typeUserId);
-        if (responseDelete.equalsIgnoreCase("OK")) {
-            return new ResponseEntity<>("TypeUser delete OK", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("TypeUser not found", HttpStatus.NOT_FOUND);
-        }
+       try{
+           this.typeUserService.deleteTypeUser(typeUserId);
+           return new ResponseEntity<>("TypeUser delete OK", OK);
+       }catch(Exception e){
+           return new ResponseEntity<>("TypeUser not found", NOT_FOUND);
+       }
     }
 }

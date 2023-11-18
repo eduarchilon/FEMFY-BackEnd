@@ -31,17 +31,8 @@ public class TypeUserService implements ITypeUserService {
     }
 
     @Override
-    public String deleteTypeUser(Long idTypeUser) {
-        try {
-            this.typeUserRepository.deleteById(idTypeUser);
-            return "OK";
-        } catch (EntityNotFoundException e) {
-            return "Error: No se encontró ningún registro con el ID proporcionado.";
-        } catch (IntegreteDataViolationException e) {
-            return "Error: No se puede eliminar este registro debido a restricciones de integridad de datos.";
-        } catch (Exception e) {
-            return "Error: " + e.getMessage();
-        }
+    public void deleteTypeUser(Long idTypeUser) {
+        this.typeUserRepository.deleteById(idTypeUser);
     }
 
     @Override

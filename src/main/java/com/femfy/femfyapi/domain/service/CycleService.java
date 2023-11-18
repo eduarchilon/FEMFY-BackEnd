@@ -25,7 +25,7 @@ public class CycleService implements ICycleService {
     }
 
     @Override
-    public Cycle registerCycleStart(Cycle cycleDto) throws Exception {
+    public Cycle registerCycleStart(Cycle cycleDto)  {
         try{
             Cycle cycle = new Cycle();
             copyProperties(cycleDto, cycle);

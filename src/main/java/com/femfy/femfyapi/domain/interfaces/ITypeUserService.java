@@ -10,7 +10,7 @@ public interface ITypeUserService {
 
     public TypeUser updateTypeUser(TypeUser typeUser);
 
-    public String deleteTypeUser(Long idTypeUser);
+    public void deleteTypeUser(Long idTypeUser);
 
     public TypeUser getTypeUser(Long idTypeUser);
 
