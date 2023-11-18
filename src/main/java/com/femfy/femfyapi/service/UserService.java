@@ -32,7 +32,7 @@ public class UserService implements IUserService{
 			user.setUserName(userDTO.getUserName());
 			user.setPassword(userDTO.getPassword());
 			user.setIsSuscriptor(userDTO.getIsSuscriptor());
-			user.setBirthdate(Utils.parseDate(userDTO.getBirthdate()));
+			user.setBirthdate(userDTO.getBirthdate());
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
 			user.setLocalidad(userDTO.getLocalidad());
@@ -75,7 +75,7 @@ public class UserService implements IUserService{
 				userDB.setLastName(userDTO.getLastName());
 			}	
 			if(userDTO.getBirthdate()!= null){
-				userDB.setBirthdate(Utils.parseDate(userDTO.getBirthdate()));
+				userDB.setBirthdate(userDTO.getBirthdate());
 			}
 			if(userDTO.getUserName()!= null){
 				userDB.setUserName(userDTO.getUserName());
