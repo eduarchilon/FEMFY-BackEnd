@@ -101,7 +101,7 @@ public class CalendarEventService implements ICalendarEventService {
         calendarEvent.setId(dto.getId());
         calendarEvent.setUser(user);
         calendarEvent.setTitle(dto.getTitle());
-        calendarEvent.setDateEvent((dto.getDateEvent()));
+        calendarEvent.setDateEvent(dto.getDateEvent());
         calendarEvent.setHourAlert(dto.getHourAlert());
         calendarEvent.setDescription(dto.getDescription());
         return calendarEvent;
@@ -117,7 +117,7 @@ public class CalendarEventService implements ICalendarEventService {
             existingEvent.setTitle(calendarEventDTO.getTitle());
         }
         if(calendarEventDTO.getDateEvent() != null){
-            existingEvent.setDateEvent((calendarEventDTO.getDateEvent()));
+            existingEvent.setDateEvent(calendarEventDTO.getDateEvent());
         }
         if(calendarEventDTO.getHourAlert() != null){
             existingEvent.setHourAlert(calendarEventDTO.getHourAlert());

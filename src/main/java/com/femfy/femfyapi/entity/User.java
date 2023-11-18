@@ -44,8 +44,7 @@ public class User {
 	private String userName;
 	private String password;
 	private Boolean isSuscriptor;
-	@Temporal(TemporalType.DATE)
-	private Date birthdate;
+	private String birthdate;
 	private String phone;
 	@Column(name="mailAddress",unique = true, nullable = false)
 	private String email;
