@@ -21,7 +21,7 @@ public class CalendarEventRepositoryTest {
         CalendarEvent event = new CalendarEvent();
         event.setTitle("Nuevo evento");
         event.setDateEvent(new Date());
-        event.setHourAlert(new Date());
+        event.setHourAlert("09:00");
         event.setDescription("Descripcion del evento");
 
         calendarEventRepository.save(event);
@@ -33,7 +33,7 @@ public class CalendarEventRepositoryTest {
         CalendarEvent event = new CalendarEvent();
         event.setTitle("Evento 2");
         event.setDateEvent(new Date());
-        event.setHourAlert(new Date());
+        event.setHourAlert("09:00");
         event.setDescription("Descripcion del evento 2");
         calendarEventRepository.save(event);
 
@@ -54,14 +54,14 @@ public class CalendarEventRepositoryTest {
         CalendarEvent event1 = new CalendarEvent();
         event1.setTitle("EEvento 3");
         event1.setDateEvent(new Date());
-        event1.setHourAlert(new Date());
+        event1.setHourAlert("09:00");
         event1.setDescription("Descripcion del evento 3");
         calendarEventRepository.save(event1);
 
         CalendarEvent event2 = new CalendarEvent();
         event2.setTitle("Evento 4");
         event2.setDateEvent(new Date());
-        event2.setHourAlert(new Date());
+        event2.setHourAlert("09:00");
         event2.setDescription("Descripcion del evento 4");
         calendarEventRepository.save(event2);
 
@@ -78,7 +78,7 @@ public class CalendarEventRepositoryTest {
         CalendarEvent event = new CalendarEvent();
         event.setTitle("Evento 5");
         event.setDateEvent(new Date());
-        event.setHourAlert(new Date());
+        event.setHourAlert("09:00");
         event.setDescription("Descripcion del evento 5");
         CalendarEvent savedEvent = calendarEventRepository.save(event);
 
@@ -93,7 +93,7 @@ public class CalendarEventRepositoryTest {
         CalendarEvent event = new CalendarEvent();
         event.setTitle("Evento 6");
         event.setDateEvent(new Date());
-        event.setHourAlert(new Date());
+        event.setHourAlert("09:00");
         event.setDescription("Descripcion del evento 6");
         calendarEventRepository.save(event);
 

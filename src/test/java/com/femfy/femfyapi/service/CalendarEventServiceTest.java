@@ -1,5 +1,6 @@
 package com.femfy.femfyapi.service;
 
+import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.CalendarEvent;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
@@ -168,7 +169,7 @@ class CalendarEventServiceTest {
             target.setTitle(source.getTitle());
         }
         if (source.getDateEvent() != null) {
-            target.setDateEvent(source.getDateEvent());
+            target.setDateEvent(Utils.parseDate(source.getDateEvent()));
         }
         if (source.getHourAlert() != null) {
             target.setHourAlert(source.getHourAlert());

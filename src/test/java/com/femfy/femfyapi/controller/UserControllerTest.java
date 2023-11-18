@@ -100,7 +100,7 @@ class UserControllerTest {
 
 		UserDTO userDTO = new UserDTO();
 
-		userDTO.setBirthdate(new Date());
+		userDTO.setBirthdate("1988-10-10");
 		userDTO.setFirstName("Maria");
 		userDTO.setLastName("Argento");
 		userDTO.setPhone("1122334455");

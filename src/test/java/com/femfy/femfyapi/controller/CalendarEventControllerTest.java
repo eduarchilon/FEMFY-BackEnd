@@ -138,8 +138,8 @@ class CalendarEventControllerTest {
         eventDTO.setId(1L);
         eventDTO.setUserId(2L);
         eventDTO.setTitle("Título");
-        eventDTO.setDateEvent(new java.util.Date());
-        eventDTO.setHourAlert(new java.util.Date());
+        eventDTO.setDateEvent("1990-10-10");
+        eventDTO.setHourAlert("09:00");
         eventDTO.setDescription("Descripción");
 
         CalendarEventDTO updatedEventDTO = new CalendarEventDTO();

@@ -1,5 +1,6 @@
 package com.femfy.femfyapi.service;
 
+import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.CalendarEvent;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Service
 public class CalendarEventService implements ICalendarEventService {
@@ -85,7 +87,7 @@ public class CalendarEventService implements ICalendarEventService {
         }
 
         dto.setTitle(calendarEvent.getTitle());
-        dto.setDateEvent(calendarEvent.getDateEvent());
+        dto.setDateEvent(calendarEvent.getDateEvent().toString());
         dto.setHourAlert(calendarEvent.getHourAlert());
         dto.setDescription(calendarEvent.getDescription());
         return dto;
@@ -99,7 +101,7 @@ public class CalendarEventService implements ICalendarEventService {
         calendarEvent.setId(dto.getId());
         calendarEvent.setUser(user);
         calendarEvent.setTitle(dto.getTitle());
-        calendarEvent.setDateEvent(dto.getDateEvent());
+        calendarEvent.setDateEvent(Utils.parseDate(dto.getDateEvent()));
         calendarEvent.setHourAlert(dto.getHourAlert());
         calendarEvent.setDescription(dto.getDescription());
         return calendarEvent;
@@ -115,7 +117,7 @@ public class CalendarEventService implements ICalendarEventService {
             existingEvent.setTitle(calendarEventDTO.getTitle());
         }
         if(calendarEventDTO.getDateEvent() != null){
-            existingEvent.setDateEvent(calendarEventDTO.getDateEvent());
+            existingEvent.setDateEvent(Utils.parseDate(calendarEventDTO.getDateEvent()));
         }
         if(calendarEventDTO.getHourAlert() != null){
             existingEvent.setHourAlert(calendarEventDTO.getHourAlert());

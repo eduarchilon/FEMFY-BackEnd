@@ -36,6 +36,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+import com.femfy.femfyapi.Utils;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/recommendations", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -160,7 +162,7 @@ public class RecommendationsController {
 		List<QuestionsUserFamilyHistoryDTO> ListFamilyHist = new ArrayList<>();
 		ListFamilyHist = iquestionsUserFamilyHistoryService.getQuestionsUserFamilyHistoriesByUserId(user.getIdUser());
 
-		int edad = calculateAge(user.getBirthdate());
+		int edad = calculateAge(Utils.parseDate(user.getBirthdate()));
 
 		for (QuestionsUserFamilyHistoryDTO qUserFamilyHisDTO : ListFamilyHist) {
 			if (qUserFamilyHisDTO.getBreastCancer() == 1) {

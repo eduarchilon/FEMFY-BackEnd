@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.TypeUser;
 import com.femfy.femfyapi.entity.User;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
@@ -27,11 +29,10 @@ public class UserService implements IUserService{
 			user.setTypeUser(typeUser);
 			user.setFirstName(userDTO.getFirstName());
 			user.setLastName(userDTO.getLastName());
-			user.setBirthdate(userDTO.getBirthdate());
 			user.setUserName(userDTO.getUserName());
 			user.setPassword(userDTO.getPassword());
 			user.setIsSuscriptor(userDTO.getIsSuscriptor());
-			user.setBirthdate(userDTO.getBirthdate());
+			user.setBirthdate(Utils.parseDate(userDTO.getBirthdate()));
 			user.setPhone(userDTO.getPhone());
 			user.setEmail(userDTO.getEmail());
 			user.setLocalidad(userDTO.getLocalidad());
@@ -74,7 +75,7 @@ public class UserService implements IUserService{
 				userDB.setLastName(userDTO.getLastName());
 			}	
 			if(userDTO.getBirthdate()!= null){
-				userDB.setBirthdate(userDTO.getBirthdate());
+				userDB.setBirthdate(Utils.parseDate(userDTO.getBirthdate()));
 			}
 			if(userDTO.getUserName()!= null){
 				userDB.setUserName(userDTO.getUserName());
@@ -85,9 +86,7 @@ public class UserService implements IUserService{
 			if(userDTO.getIsSuscriptor()!= null){
 				userDB.setIsSuscriptor(userDTO.getIsSuscriptor());
 			}
-			if(userDTO.getBirthdate()!= null){
-				userDB.setBirthdate(userDTO.getBirthdate());
-			}
+
 			if(userDTO.getPhone()!= null){
 				userDB.setPhone(userDTO.getPhone());
 			}
@@ -133,11 +132,10 @@ public class UserService implements IUserService{
         dto.setTypeUserID(user.getTypeUser().getId());
 		dto.setFirstName(user.getFirstName());
 		dto.setLastName(user.getLastName());
-		dto.setBirthdate(user.getBirthdate());
+		dto.setBirthdate(user.getBirthdate().toString());
 		dto.setUserName(user.getUserName());
 		dto.setPassword(user.getPassword());
 		dto.setIsSuscriptor(user.getIsSuscriptor());
-		dto.setBirthdate(user.getBirthdate());
 		dto.setPhone(user.getPhone());
 		dto.setEmail(user.getEmail());
 		dto.setLocalidad(user.getLocalidad());
@@ -176,11 +174,10 @@ public class UserService implements IUserService{
 				userDTO.setTypeUserID(user.getTypeUser().getId());
 				userDTO.setFirstName(user.getFirstName());
 				userDTO.setLastName(user.getLastName());
-				userDTO.setBirthdate(user.getBirthdate());
+				userDTO.setBirthdate(user.getBirthdate().toString());
 				userDTO.setUserName(user.getUserName());
 				userDTO.setPassword(user.getPassword());
 				userDTO.setIsSuscriptor(user.getIsSuscriptor());
-				userDTO.setBirthdate(user.getBirthdate());
 				userDTO.setPhone(user.getPhone());
 				userDTO.setEmail(user.getEmail());
 				userDTO.setLocalidad(user.getLocalidad());
@@ -209,11 +206,10 @@ public class UserService implements IUserService{
 			dto.setTypeUserID(user.getTypeUser().getId());
 			dto.setFirstName(user.getFirstName());
 			dto.setLastName(user.getLastName());
-			dto.setBirthdate(user.getBirthdate());
+			dto.setBirthdate(user.getBirthdate().toString());
 			dto.setUserName(user.getUserName());
 			dto.setPassword(user.getPassword());
 			dto.setIsSuscriptor(user.getIsSuscriptor());
-			dto.setBirthdate(user.getBirthdate());
 			dto.setPhone(user.getPhone());
 			dto.setEmail(user.getEmail());
 			dto.setLocalidad(user.getLocalidad());
