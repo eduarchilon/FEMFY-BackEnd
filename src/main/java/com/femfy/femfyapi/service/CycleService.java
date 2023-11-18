@@ -27,8 +27,8 @@ public class CycleService implements ICycleService{
     @Override
     public CycleDTO registerCycleStart(Cycle cycle) throws Exception {
         try{
-        	java.sql.Date dateBegin = Utils.parseDate(cycle.getDateBeging().toString());
-        	cycle.setDateBeging(dateBegin);
+//        	java.sql.Date dateBegin = Utils.parseDate(cycle.getDateBeging().toString());
+//        	cycle.setDateBeging(dateBegin);
         	
             CycleDTO dto = new CycleDTO();
             dto.setStatus(cycle.getStatus());
@@ -52,7 +52,7 @@ public class CycleService implements ICycleService{
             if(cycleBD == null){
                 throw new CustomException("Error al obtener el ciclo");
             }
-            cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+            cycleBD.setDateEnd(cycle.getDateEnd());
 
             cycleRepository.save(cycleBD);
 
@@ -72,7 +72,7 @@ public class CycleService implements ICycleService{
             for(Cycle cycle : cycleList){
                 CycleDTO dto = new CycleDTO();
                 dto.setStatus(cycle.getStatus());
-                dto.setDateBeging((cycle.getDateBeging()));
+                dto.setDateBeging(cycle.getDateBeging());
                 dto.setIdUser(cycle.getIdUser());
                 dto.setDaysOfBleeding(cycle.getDaysOfBleeding());
                 dto.setDateEnd((cycle.getDateEnd()));
@@ -91,8 +91,8 @@ public class CycleService implements ICycleService{
         CycleDTO cycleDTO = new CycleDTO();
 
         try{
-            Date dateSql = Utils.parseDate(dateBeging);
-            Cycle cycle =  cycleRepository.findByIdUserAndDateBeging(idUser, dateSql);
+           // Date dateSql = Utils.parseDate(dateBeging);
+            Cycle cycle =  cycleRepository.findByIdUserAndDateBeging(idUser, dateBeging);
             cycleDTO.setDateBeging((cycle.getDateBeging()));
             cycleDTO.setStatus(cycle.getStatus());
             cycleDTO.setIdUser(cycle.getIdUser());
@@ -130,10 +130,10 @@ public class CycleService implements ICycleService{
             cycleDB.setStatus(cycle.getStatus());
         }
         if(cycle.getDateEnd() != null){
-            cycleDB.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
+            cycleDB.setDateEnd(cycle.getDateEnd());
         }
         if(cycle.getDateBeging() != null){
-            cycleDB.setDateBeging(Utils.parseDate(String.valueOf(cycle.getDateBeging())));
+            cycleDB.setDateBeging(cycle.getDateBeging());
         }
         if(cycle.getDaysOfBleeding() != null){
             cycleDB.setDaysOfBleeding(cycle.getDaysOfBleeding());

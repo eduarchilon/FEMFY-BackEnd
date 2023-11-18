@@ -17,10 +17,10 @@ public class Cycle {
     private Long idUser;
 
 
-    private Date dateBeging;
+    private String dateBeging;
 
 
-    private Date dateEnd;
+    private String dateEnd;
 
     private String status;
 

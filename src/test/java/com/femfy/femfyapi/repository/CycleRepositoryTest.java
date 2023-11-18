@@ -31,8 +31,8 @@ public class  CycleRepositoryTest {
         cycle.setStatus("Alegre");
         cycle.setIdUser(1L);
         cycle.setId(1L);
-        cycle.setDateEnd(Utils.parseDate("2023-10-06"));
-        cycle.setDateBeging(Utils.parseDate("2023-10-06"));
+        cycle.setDateEnd("2023-10-06");
+        cycle.setDateBeging("2023-10-06");
     }
 
     @Test
@@ -50,8 +50,8 @@ public class  CycleRepositoryTest {
         cycle2.setId(2L);
         cycle2.setIdUser(1L);
         cycle2.setStatus("Triste");
-        cycle2.setDateEnd(Utils.parseDate("2023-10-16"));
-        cycle2.setDateBeging(Utils.parseDate("2023-10-16"));
+        cycle2.setDateEnd("2023-10-16");
+        cycle2.setDateBeging("2023-10-16");
         cycleRepository.save(cycle);
         cycleRepository.save(cycle2);
 
@@ -85,8 +85,8 @@ public class  CycleRepositoryTest {
         cycle2.setId(1L);
         cycle2.setIdUser(1L);
         cycle2.setStatus("Triste");
-        cycle2.setDateEnd(Utils.parseDate("2023-10-16"));
-        cycle2.setDateBeging(Utils.parseDate("2023-10-16"));
+        cycle2.setDateEnd("2023-10-16");
+        cycle2.setDateBeging("2023-10-16");
         cycleRepository.save(cycle2);
         Cycle cicloGuardado = cycleRepository.findById(cycle2.getId())
                 .orElseThrow(() -> new CustomException("No se encontró el ciclo con ID " + cycle2.getId()));

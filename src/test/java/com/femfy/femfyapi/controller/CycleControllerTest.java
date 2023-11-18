@@ -58,17 +58,11 @@ public class CycleControllerTest {
         dto.setStatus("Alegre");
         dto.setIdUser(1L);
         
-        try {
-            String fechaInicio = "2023-10-25";
-            String fechaFin = "2023-10-09";
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-			dto.setDateBeging(formato.parse(fechaInicio));
-			dto.setDateEnd(formato.parse(fechaFin));
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        String fechaInicio = "2023-10-25";
+		String fechaFin = "2023-10-09";
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		dto.setDateBeging("2023-10-09");
+		dto.setDateEnd("2023-10-09");
 
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(cycleController)

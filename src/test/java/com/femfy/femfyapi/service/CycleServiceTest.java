@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
@@ -17,7 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.Cycle;
 import com.femfy.femfyapi.exception.CustomException;
 import com.femfy.femfyapi.repository.CycleRepository;
@@ -41,8 +41,8 @@ public class CycleServiceTest {
         cycle.setStatus("Alegre");
         cycle.setIdUser(7L);
         cycle.setId(5L);
-        cycle.setDateEnd(Utils.parseDate("2023-10-06"));
-        cycle.setDateBeging(Utils.parseDate("2023-10-06"));
+        cycle.setDateEnd("2023-10-06");
+        cycle.setDateBeging("2023-10-06");
         cycle.setDaysOfBleeding(4);
     }
     @Test
@@ -79,7 +79,7 @@ public class CycleServiceTest {
 
     @Test
     void registerCycleEndExceptionTest() throws Exception {
-        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenThrow(new RuntimeException(new CustomException("")));
+        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), anyString())).thenThrow(new RuntimeException(new CustomException("")));
 
         assertThrows(CustomException.class, () -> {
             cycleService.registerCycleEnd(cycle);
@@ -94,7 +94,7 @@ public class CycleServiceTest {
         when(cycleRepositoryMock.findById(anyLong())).thenReturn(Optional.of(cycle));
         when(cycleRepositoryMock.save(any(Cycle.class))).thenReturn(cycle);
         when(cycleRepositoryMock.findAllByIdUser(anyLong())).thenReturn(list);
-        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
+        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), anyString())).thenReturn(cycle);
 
 
         CycleDTO resObtenida = cycleService.registerCycleEnd(cycle);
@@ -115,7 +115,7 @@ public class CycleServiceTest {
 
     @Test
     void getCycleByIdUserAndDateBegingTest() throws Exception {
-        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenReturn(cycle);
+        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), anyString())).thenReturn(cycle);
 
         CycleDTO resObtenida = cycleService.getCycleByIdUserAndDateBeging(cycle.getIdUser(), "2023-10-06");
 
@@ -124,7 +124,7 @@ public class CycleServiceTest {
 
     @Test
     void getCycleByIdUserAndDateBegingExceptionTest() throws Exception {
-        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), any(Date.class))).thenThrow(new RuntimeException(new CustomException("")));
+        when(cycleRepositoryMock.findByIdUserAndDateBeging(anyLong(), anyString())).thenThrow(new RuntimeException(new CustomException("")));
 
         assertThrows(CustomException.class, () -> {
             cycleService.getCycleByIdUserAndDateBeging(cycle.getIdUser(), "2023-10-06");

@@ -13,7 +13,7 @@ import com.femfy.femfyapi.entity.Cycle;
 public interface CycleRepository extends JpaRepository<Cycle, Long> {
 
     @Transactional
-    public Cycle findByIdUserAndDateBeging(Long idUser, Date dateBeging);
+    public Cycle findByIdUserAndDateBeging(Long idUser, String dateBeging);
 
     @Transactional
     public List<Cycle> findAllByIdUser(Long idUser);
