@@ -1,17 +1,22 @@
 package com.femfy.femfyapi.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.femfy.femfyapi.Utils;
 import com.femfy.femfyapi.entity.Cycle;
 import com.femfy.femfyapi.exception.CustomException;
 import com.femfy.femfyapi.exception.EntityNotFoundException;
 import com.femfy.femfyapi.repository.CycleRepository;
-import dto.CycleDTO;
-import org.hibernate.sql.OracleJoinFragment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.*;
+import dto.CycleDTO;
 
 @Service
 public class CycleService implements ICycleService{
@@ -22,6 +27,9 @@ public class CycleService implements ICycleService{
     @Override
     public CycleDTO registerCycleStart(Cycle cycle) throws Exception {
         try{
+        	java.sql.Date dateBegin = Utils.parseDate(cycle.getDateBeging().toString());
+        	cycle.setDateBeging(dateBegin);
+        	
             CycleDTO dto = new CycleDTO();
             dto.setStatus(cycle.getStatus());
             dto.setIdUser(cycle.getIdUser());
@@ -46,9 +54,9 @@ public class CycleService implements ICycleService{
             }
             cycleBD.setDateEnd(Utils.parseDate(String.valueOf(cycle.getDateEnd())));
 
-            cycleRepository.save(cycle);
+            cycleRepository.save(cycleBD);
 
-            return mapToDTO(cycle);
+            return mapToDTO(cycleBD);
         }catch (Exception e){
             throw new CustomException("Error al registrar fin del ciclo: " + e.getMessage());
         }
